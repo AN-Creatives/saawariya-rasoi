@@ -57,6 +57,14 @@ interface ContentItem {
   mode: 'delivery' | 'takeaway' | 'both';
 }
 
+// Helper function to validate mode
+const validateMode = (mode: string): 'delivery' | 'takeaway' | 'both' => {
+  if (mode === 'delivery' || mode === 'takeaway' || mode === 'both') {
+    return mode as 'delivery' | 'takeaway' | 'both';
+  }
+  return 'both'; // Default fallback
+};
+
 const emptyContentItem: Omit<ContentItem, 'id'> = {
   section: '',
   title: '',
@@ -93,7 +101,21 @@ const DashboardContent = () => {
         .order('section', { ascending: true });
 
       if (error) throw error;
-      setContents(data || []);
+      
+      // Map and validate the data before setting it to state
+      const validatedContents = (data || []).map(item => ({
+        id: item.id,
+        section: item.section,
+        title: item.title,
+        subtitle: item.subtitle,
+        description: item.description,
+        image_url: item.image_url,
+        order_index: item.order_index || 0,
+        is_active: item.is_active ?? true,
+        mode: validateMode(item.mode || 'both')
+      }));
+      
+      setContents(validatedContents);
     } catch (error: any) {
       toast({
         variant: "destructive",

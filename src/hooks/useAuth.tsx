@@ -9,6 +9,14 @@ interface Profile {
   role: 'admin' | 'editor' | 'viewer';
 }
 
+// Helper function to ensure role is one of the allowed values
+const validateRole = (role: string): 'admin' | 'editor' | 'viewer' => {
+  if (role === 'admin' || role === 'editor' || role === 'viewer') {
+    return role;
+  }
+  return 'viewer'; // Default fallback
+};
+
 export function useAuth() {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
@@ -29,7 +37,13 @@ export function useAuth() {
             .eq('id', currentSession.user.id)
             .single();
           
-          setProfile(profileData);
+          if (profileData) {
+            setProfile({
+              id: profileData.id,
+              full_name: profileData.full_name,
+              role: validateRole(profileData.role)
+            });
+          }
         } else {
           setProfile(null);
         }
@@ -50,7 +64,13 @@ export function useAuth() {
           .eq('id', currentSession.user.id)
           .single();
         
-        setProfile(profileData);
+        if (profileData) {
+          setProfile({
+            id: profileData.id,
+            full_name: profileData.full_name,
+            role: validateRole(profileData.role)
+          });
+        }
       }
       
       setLoading(false);
