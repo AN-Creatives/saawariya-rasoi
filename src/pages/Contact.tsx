@@ -105,7 +105,8 @@ const Contact = () => {
                       <Clock className="text-primary" size={20} />
                     </div>
                     <div>
-                      <h3 className="font-medium mb-1">Hours : 0800 to 2200 All days.</h3>
+                      <h3 className="font-medium mb-1">Hours : 0800 to 2200
+All days.</h3>
                       <p className="text-muted-foreground text-sm">
                         <span className="font-medium text-foreground">Mon - Fri:</span> 11:00 AM - 10:00 PM<br />
                         <span className="font-medium text-foreground">Sat - Sun:</span> 10:00 AM - 11:00 PM<br />
