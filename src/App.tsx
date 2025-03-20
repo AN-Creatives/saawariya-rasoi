@@ -15,6 +15,7 @@ import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Auth from "./pages/Auth";
+import AdminSetup from "./pages/AdminSetup";
 import Dashboard from "./pages/Dashboard";
 import DashboardContent from "./pages/DashboardContent";
 import DashboardPosts from "./pages/DashboardPosts";
@@ -43,6 +44,7 @@ const App = () => (
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/admin-setup" element={<AdminSetup />} />
             
             {/* Protected Dashboard Routes */}
             <Route path="/dashboard" element={<AuthGuard><Dashboard /></AuthGuard>} />
