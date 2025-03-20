@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import { MapPin, Phone, Mail, Clock, Send, MessageSquare } from 'lucide-react';
-
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -10,22 +9,25 @@ const Contact = () => {
     subject: '',
     message: ''
   });
-  
   const [formStatus, setFormStatus] = useState<null | 'success' | 'error'>(null);
-  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    const {
+      name,
+      value
+    } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
-  
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // In a real implementation, you would send this data to a server
     console.log("Form submitted:", formData);
-    
+
     // For demo purposes, simulate a successful submission
     setFormStatus('success');
-    
+
     // Reset the form
     setFormData({
       name: '',
@@ -34,15 +36,13 @@ const Contact = () => {
       subject: '',
       message: ''
     });
-    
+
     // Reset the status after 5 seconds
     setTimeout(() => {
       setFormStatus(null);
     }, 5000);
   };
-  
-  return (
-    <Layout>
+  return <Layout>
       <section className="pt-32 pb-16 px-6">
         <div className="container mx-auto">
           <div className="text-center mb-12 smooth-appear">
@@ -59,7 +59,9 @@ const Contact = () => {
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
             {/* Contact Info */}
-            <div className="lg:col-span-1 smooth-appear" style={{ animationDelay: '0.2s' }}>
+            <div className="lg:col-span-1 smooth-appear" style={{
+            animationDelay: '0.2s'
+          }}>
               <div className="glass-morphism rounded-xl p-6 h-full">
                 <h2 className="text-xl font-semibold mb-6">Contact Information</h2>
                 
@@ -84,9 +86,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-medium mb-1">Phone</h3>
-                      <p className="text-muted-foreground text-sm">
-                        +91 123 456 7890
-                      </p>
+                      <p className="text-muted-foreground text-sm">+91 96515 73635</p>
                     </div>
                   </li>
                   
@@ -96,9 +96,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-medium mb-1">Email</h3>
-                      <p className="text-muted-foreground text-sm">
-                        info@saawariyarasoi.com
-                      </p>
+                      <p className="text-muted-foreground text-sm">saawariyarasoi12@gmail.com</p>
                     </div>
                   </li>
                   
@@ -107,7 +105,8 @@ const Contact = () => {
                       <Clock className="text-primary" size={20} />
                     </div>
                     <div>
-                      <h3 className="font-medium mb-1">Hours</h3>
+                      <h3 className="font-medium mb-1">Hours : 0800 to 2200
+All days.</h3>
                       <p className="text-muted-foreground text-sm">
                         <span className="font-medium text-foreground">Mon - Fri:</span> 11:00 AM - 10:00 PM<br />
                         <span className="font-medium text-foreground">Sat - Sun:</span> 10:00 AM - 11:00 PM<br />
@@ -118,23 +117,17 @@ const Contact = () => {
                 </ul>
                 
                 <div className="mt-8">
-                  <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3506.2233913121413!2d77.1909761!3d28.5269922!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce1f7cce74b95%3A0x75c6f7263fe6a148!2sConnaught%20Place%2C%20New%20Delhi%2C%20Delhi%20110001!5e0!3m2!1sen!2sin!4v1651825207736!5m2!1sen!2sin" 
-                    width="100%" 
-                    height="200" 
-                    style={{ border: 0 }} 
-                    allowFullScreen={false} 
-                    loading="lazy" 
-                    referrerPolicy="no-referrer-when-downgrade"
-                    className="rounded-lg"
-                    title="Restaurant location"
-                  ></iframe>
+                  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3506.2233913121413!2d77.1909761!3d28.5269922!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce1f7cce74b95%3A0x75c6f7263fe6a148!2sConnaught%20Place%2C%20New%20Delhi%2C%20Delhi%20110001!5e0!3m2!1sen!2sin!4v1651825207736!5m2!1sen!2sin" width="100%" height="200" style={{
+                  border: 0
+                }} allowFullScreen={false} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="rounded-lg" title="Restaurant location"></iframe>
                 </div>
               </div>
             </div>
             
             {/* Contact Form */}
-            <div className="lg:col-span-2 smooth-appear" style={{ animationDelay: '0.3s' }}>
+            <div className="lg:col-span-2 smooth-appear" style={{
+            animationDelay: '0.3s'
+          }}>
               <div className="glass-morphism rounded-xl p-6">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
@@ -148,17 +141,13 @@ const Contact = () => {
                   </div>
                 </div>
                 
-                {formStatus === 'success' && (
-                  <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6">
+                {formStatus === 'success' && <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6">
                     Thank you for your message! We'll get back to you soon.
-                  </div>
-                )}
+                  </div>}
                 
-                {formStatus === 'error' && (
-                  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
+                {formStatus === 'error' && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
                     There was an error sending your message. Please try again.
-                  </div>
-                )}
+                  </div>}
                 
                 <form onSubmit={handleSubmit}>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -166,61 +155,28 @@ const Contact = () => {
                       <label htmlFor="name" className="block text-sm font-medium mb-2">
                         Your Name <span className="text-primary">*</span>
                       </label>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-1 focus:ring-primary"
-                        placeholder="John Doe"
-                      />
+                      <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required className="w-full px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-1 focus:ring-primary" placeholder="John Doe" />
                     </div>
                     
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium mb-2">
                         Email Address <span className="text-primary">*</span>
                       </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-1 focus:ring-primary"
-                        placeholder="john@example.com"
-                      />
+                      <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required className="w-full px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-1 focus:ring-primary" placeholder="john@example.com" />
                     </div>
                     
                     <div>
                       <label htmlFor="phone" className="block text-sm font-medium mb-2">
                         Phone Number
                       </label>
-                      <input
-                        type="tel"
-                        id="phone"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-1 focus:ring-primary"
-                        placeholder="+91 1234567890"
-                      />
+                      <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} className="w-full px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-1 focus:ring-primary" placeholder="+91 1234567890" />
                     </div>
                     
                     <div>
                       <label htmlFor="subject" className="block text-sm font-medium mb-2">
                         Subject <span className="text-primary">*</span>
                       </label>
-                      <select
-                        id="subject"
-                        name="subject"
-                        value={formData.subject}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-1 focus:ring-primary"
-                      >
+                      <select id="subject" name="subject" value={formData.subject} onChange={handleChange} required className="w-full px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-1 focus:ring-primary">
                         <option value="">Select a subject</option>
                         <option value="General Inquiry">General Inquiry</option>
                         <option value="Bulk Order">Bulk Order</option>
@@ -235,22 +191,10 @@ const Contact = () => {
                     <label htmlFor="message" className="block text-sm font-medium mb-2">
                       Your Message <span className="text-primary">*</span>
                     </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                      rows={5}
-                      className="w-full px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-1 focus:ring-primary"
-                      placeholder="How can we help you?"
-                    ></textarea>
+                    <textarea id="message" name="message" value={formData.message} onChange={handleChange} required rows={5} className="w-full px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-1 focus:ring-primary" placeholder="How can we help you?"></textarea>
                   </div>
                   
-                  <button
-                    type="submit"
-                    className="flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full font-medium hover:brightness-105 w-full md:w-auto"
-                  >
+                  <button type="submit" className="flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full font-medium hover:brightness-105 w-full md:w-auto">
                     Send Message
                     <Send size={16} />
                   </button>
@@ -260,7 +204,9 @@ const Contact = () => {
           </div>
           
           {/* FAQ Section */}
-          <div className="smooth-appear" style={{ animationDelay: '0.4s' }}>
+          <div className="smooth-appear" style={{
+          animationDelay: '0.4s'
+        }}>
             <div className="text-center mb-10">
               <h2 className="text-2xl font-semibold font-brand">Frequently Asked Questions</h2>
               <p className="text-muted-foreground">
@@ -300,8 +246,6 @@ const Contact = () => {
           </div>
         </div>
       </section>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default Contact;

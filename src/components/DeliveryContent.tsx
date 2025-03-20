@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ArrowRight, ExternalLink, Check } from 'lucide-react';
+import { ArrowRight, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const DeliveryContent = () => {
@@ -11,12 +11,10 @@ const DeliveryContent = () => {
           Delivery Mode
         </span>
         <h2 className="text-3xl md:text-4xl font-medium leading-tight">
-          Delicious Purwanchali Flavors – Delivered to Your Doorstep!
+          Enjoy our cuisine from the comfort of your home
         </h2>
         <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-          Craving authentic Purwanchali dishes? At Saawariya Rasoi, we bring homemade goodness
-          directly to you through our trusted Zomato delivery service. Enjoy fresh, flavorful meals prepared
-          with love and tradition.
+          We've partnered with Zomato to bring our authentic flavors directly to your doorstep.
         </p>
       </section>
 
@@ -28,29 +26,18 @@ const DeliveryContent = () => {
               <img src="https://b.zmtcdn.com/images/logo/zomato_logo_2017.png" alt="Zomato" className="h-4" />
               Exclusive Partner
             </span>
-            <h3 className="text-2xl md:text-3xl font-medium">Why Choose Our Delivery Service?</h3>
-            <ul className="space-y-3">
-              <li className="flex items-start gap-2">
-                <Check size={18} className="text-green-500 mt-1 flex-shrink-0" />
-                <span>Authentic Purwanchali Recipes</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <Check size={18} className="text-green-500 mt-1 flex-shrink-0" />
-                <span>Carefully Packed for Freshness</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <Check size={18} className="text-green-500 mt-1 flex-shrink-0" />
-                <span>Quick & Reliable Delivery via Zomato</span>
-              </li>
-            </ul>
+            <h3 className="text-2xl md:text-3xl font-medium">Order via Zomato for exclusive deals</h3>
+            <p className="text-muted-foreground">
+              Enjoy special discounts, faster delivery, and a seamless ordering experience through our official Zomato page.
+            </p>
             <div className="flex flex-wrap gap-4">
               <a 
-                href="https://link.zomato.com/xqzv/rshare?id=75078797305635b1" 
+                href="https://www.zomato.com" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full font-medium hover:brightness-105 hover-lift"
               >
-                Order on Zomato
+                Order Now
                 <ExternalLink size={16} />
               </a>
               <Link 
@@ -93,17 +80,22 @@ const DeliveryContent = () => {
 
       {/* Special Offers */}
       <section className="space-y-6">
-        <h3 className="text-xl font-medium">Exclusive Offers (For Zomato Users)</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <h3 className="text-xl font-medium">Zomato Exclusive Offers</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
             {
-              title: "Flat ₹50 OFF on orders above ₹299",
-              description: "Use code PURWANCHAL50 when ordering through Zomato",
+              title: "20% OFF on first order",
+              description: "Use code FIRST20 when ordering through Zomato",
               image: "https://images.unsplash.com/photo-1631515242808-497c3fbd3972?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
             },
             {
-              title: "FREE Dessert on orders above ₹499",
-              description: "Complimentary sweet surprise with your meal",
+              title: "Free delivery on orders above ₹499",
+              description: "No code needed, just order through Zomato",
+              image: "https://images.unsplash.com/photo-1613545325278-f24b0cae1224?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+            },
+            {
+              title: "Buy 1 Get 1 on weekday lunches",
+              description: "Valid Monday to Friday, 12PM to 3PM",
               image: "https://images.unsplash.com/photo-1600335895229-6e75511892c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
             }
           ].map((offer, index) => (
@@ -127,13 +119,27 @@ const DeliveryContent = () => {
         </div>
       </section>
 
-      {/* Our Story */}
+      {/* Delivery Areas */}
       <section className="glass-morphism rounded-2xl p-6 md:p-10 space-y-6">
-        <h3 className="text-xl font-medium">Our Story</h3>
+        <h3 className="text-xl font-medium">Delivery Areas</h3>
         <p className="text-muted-foreground">
-          Founded by Shail Kumari, Saawariya Rasoi is inspired by the rich traditions of Purwanchali
-          cuisine. Every dish carries the warmth of home-cooked food, prepared with pure vegetarian
-          ingredients and authentic flavors.
+          We currently deliver to the following areas through Zomato:
+        </p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[
+            "Andheri East", "Andheri West", "Bandra East", "Bandra West",
+            "Juhu", "Santacruz", "Vile Parle", "Powai"
+          ].map((area, index) => (
+            <div 
+              key={index}
+              className="px-4 py-3 bg-white rounded-lg text-center text-sm neo-shadow"
+            >
+              {area}
+            </div>
+          ))}
+        </div>
+        <p className="text-sm text-muted-foreground">
+          For areas not listed, please contact us for special delivery arrangements.
         </p>
       </section>
     </div>
