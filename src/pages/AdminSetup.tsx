@@ -15,7 +15,7 @@ const AdminSetup = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const email = 'admin@saawariyarasoi.shop';
+  const email = 'saawariyarasoi12@gmail.com';
   const password = 'Saawariya@123';
   const fullName = 'Saawariya Admin';
 
