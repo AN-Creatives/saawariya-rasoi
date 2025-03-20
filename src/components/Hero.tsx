@@ -20,12 +20,12 @@ const Hero = () => {
             </span>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-              Authentic Indian Cuisine at{' '}
+              Authentic Purwanchali Cuisine at{' '}
               <span className="text-primary">Saawariya Rasoi</span>
             </h1>
             
             <p className="text-lg text-muted-foreground">
-              Experience the rich flavors and aromatic spices of traditional Indian cuisine from Kanpur, 
+              Experience the rich flavors and aromatic spices of traditional Purwanchali cuisine from Kanpur, 
               {mode === 'delivery' 
                 ? ' delivered fresh to your doorstep through Zomato.' 
                 : ' available for convenient takeaway.'}
