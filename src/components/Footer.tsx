@@ -1,10 +1,14 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram, Facebook, Twitter, Phone, Mail, MapPin } from 'lucide-react';
 import Logo from './Logo';
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  return <footer className="border-t border-border/40 pt-16 pb-8 bg-secondary/30">
+  
+  return (
+    <footer className="border-t border-border/40 pt-16 pb-8 bg-secondary/30">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           <div className="space-y-4">
@@ -60,7 +64,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center space-x-3">
                 <Phone size={16} className="text-primary" />
-                <span className="text-sm text-muted-foreground">+91 96515 73635</span>
+                <span className="text-sm text-muted-foreground">+91 123 456 7890</span>
               </li>
               <li className="flex items-center space-x-3">
                 <Mail size={16} className="text-primary" />
@@ -99,6 +103,8 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>;
+    </footer>
+  );
 };
+
 export default Footer;
