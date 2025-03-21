@@ -7,6 +7,7 @@ import { Menu, X, User, LogIn } from 'lucide-react';
 import Logo from './Logo';
 import ModeToggle from './ModeToggle';
 import { useAuth } from '@/hooks/useAuth';
+import { Button } from './ui/button';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -79,6 +80,7 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             <ModeToggle />
             
+            {/* Login/Dashboard Button - Always visible */}
             {!loading && (
               user ? (
                 <Link 
