@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { MenuItem } from '@/data/menuData';
 import { Flame, Info, Clock, Tag, ChevronRight, Loader2 } from 'lucide-react';
@@ -67,7 +66,7 @@ const MenuSubcategory = ({ title, items, zomatoLink }: MenuSubcategoryProps) => 
       const orderItem = {
         id: selectedItem.id,
         name: selectedItem.name,
-        price: parseFloat(selectedItem.takeawayPrice?.replace('₹', '') || selectedItem.price.replace('₹', '')),
+        price: selectedItem.takeawayPrice || selectedItem.price,
         quantity: 1
       };
       
