@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -44,6 +43,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Eye, Trash2, Loader2 } from 'lucide-react';
 import { format } from 'date-fns';
+import { Json } from '@/integrations/supabase/types';
 
 type OrderStatus = 'pending' | 'confirmed' | 'preparing' | 'ready' | 'completed' | 'cancelled';
 type OrderType = 'delivery' | 'takeaway';
@@ -68,6 +68,22 @@ interface Order {
   order_notes: string | null;
   created_at: string;
   updated_at: string;
+}
+
+interface RawOrder {
+  id: string;
+  customer_name: string;
+  email: string;
+  phone: string;
+  address: string | null;
+  order_type: string;
+  order_items: Json;
+  total_amount: number;
+  status: string;
+  order_notes: string | null;
+  created_at: string;
+  updated_at: string;
+  user_id: string | null;
 }
 
 const statusColors: Record<OrderStatus, string> = {
@@ -112,7 +128,14 @@ const DashboardOrders = () => {
       throw new Error(error.message);
     }
     
-    return { orders: data as Order[], totalCount: count || 0 };
+    const transformedOrders: Order[] = (data as RawOrder[]).map(order => ({
+      ...order,
+      order_type: order.order_type as OrderType,
+      status: order.status as OrderStatus,
+      order_items: order.order_items as unknown as OrderItem[],
+    }));
+    
+    return { orders: transformedOrders, totalCount: count || 0 };
   };
 
   const { data, isLoading, isError, refetch } = useQuery({
@@ -138,7 +161,6 @@ const DashboardOrders = () => {
         description: `Order status changed to ${newStatus}`,
       });
       
-      // Update the selected order if it's open in the details modal
       if (selectedOrder && selectedOrder.id === orderId) {
         setSelectedOrder({
           ...selectedOrder,
@@ -171,7 +193,6 @@ const DashboardOrders = () => {
         description: 'Order has been removed from the system',
       });
       
-      // Close the modal if the deleted order was displayed
       if (selectedOrder && selectedOrder.id === orderId) {
         setOrderDetailsOpen(false);
       }
@@ -305,7 +326,6 @@ const DashboardOrders = () => {
         )}
       </div>
 
-      {/* Order Details Modal */}
       {selectedOrder && (
         <AlertDialog open={orderDetailsOpen} onOpenChange={setOrderDetailsOpen}>
           <AlertDialogContent className="max-w-3xl">
