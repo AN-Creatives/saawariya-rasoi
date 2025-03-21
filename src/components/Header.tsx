@@ -14,6 +14,8 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { user, loading, signOut } = useAuth();
   
+  console.log('Header component rendered, auth state:', { user, loading });
+  
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -46,13 +48,16 @@ const Header = () => {
     { name: 'Contact', path: '/contact' },
   ];
 
-  // Separate component for auth button to avoid conditional rendering issues
-  const AuthButton = () => {
+  // Always render an auth button, regardless of loading state
+  const renderAuthButton = () => {
     if (loading) {
       return (
-        <div className="flex items-center gap-2 px-4 py-2 bg-gray-300 text-gray-600 rounded-full font-medium text-sm">
+        <Button 
+          disabled
+          className="flex items-center gap-2 px-4 py-2 bg-gray-300 text-gray-600 rounded-full font-medium text-sm"
+        >
           Loading...
-        </div>
+        </Button>
       );
     }
     
@@ -80,12 +85,15 @@ const Header = () => {
   };
 
   // Mobile version of the auth button
-  const MobileAuthButton = () => {
+  const renderMobileAuthButton = () => {
     if (loading) {
       return (
-        <div className="flex items-center justify-center gap-2 px-8 py-3 bg-gray-300 text-gray-600 rounded-full font-medium w-full mt-4">
+        <Button
+          disabled
+          className="flex items-center justify-center gap-2 px-8 py-3 bg-gray-300 text-gray-600 rounded-full font-medium w-full mt-4"
+        >
           Loading...
-        </div>
+        </Button>
       );
     }
     
@@ -150,9 +158,9 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             <ModeToggle />
             
-            {/* Auth Button - Always visible on desktop */}
-            <div className="hidden md:block">
-              <AuthButton />
+            {/* Auth Button - ALWAYS visible on desktop */}
+            <div className="hidden md:block md:flex">
+              {renderAuthButton()}
             </div>
             
             <button 
@@ -193,7 +201,7 @@ const Header = () => {
           ))}
           
           {/* Mobile Auth Button */}
-          <MobileAuthButton />
+          {renderMobileAuthButton()}
         </div>
       </div>
     </header>

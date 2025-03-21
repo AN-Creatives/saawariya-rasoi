@@ -27,6 +27,7 @@ export function useAuth() {
 
   useEffect(() => {
     console.log('Setting up auth listeners');
+    setLoading(true); // Ensure loading is true when initializing
     
     // First set up the auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
@@ -99,6 +100,7 @@ export function useAuth() {
 
   const signOut = async () => {
     console.log('Signing out user');
+    setLoading(true);
     await supabase.auth.signOut();
   };
 

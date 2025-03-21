@@ -33,6 +33,7 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
         setIsAdmin(isAdminUser);
         setAuthenticated(true);
       } else {
+        console.log("AuthGuard: No session found");
         setIsAdmin(false);
         setAuthenticated(false);
       }
@@ -55,6 +56,7 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
           setIsAdmin(isAdminUser);
           setAuthenticated(true);
         } else {
+          console.log("AuthGuard: No session after auth state change");
           setIsAdmin(false);
           setAuthenticated(false);
         }
