@@ -54,6 +54,54 @@ export type Database = {
         }
         Relationships: []
       }
+      orders: {
+        Row: {
+          address: string | null
+          created_at: string
+          customer_name: string
+          email: string
+          id: string
+          order_items: Json
+          order_notes: string | null
+          order_type: string
+          phone: string
+          status: string
+          total_amount: number
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          customer_name: string
+          email: string
+          id?: string
+          order_items: Json
+          order_notes?: string | null
+          order_type: string
+          phone: string
+          status?: string
+          total_amount: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          customer_name?: string
+          email?: string
+          id?: string
+          order_items?: Json
+          order_notes?: string | null
+          order_type?: string
+          phone?: string
+          status?: string
+          total_amount?: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       posts: {
         Row: {
           author_id: string | null

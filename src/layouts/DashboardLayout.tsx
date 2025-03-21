@@ -12,6 +12,7 @@ import {
   LogOut,
   Menu,
   X,
+  ShoppingBag,
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -75,6 +76,11 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
       name: 'Blog Posts',
       icon: <FileText size={20} />,
       path: '/dashboard/posts',
+    },
+    {
+      name: 'Orders',
+      icon: <ShoppingBag size={20} />,
+      path: '/dashboard/orders',
     },
     {
       name: 'Media',

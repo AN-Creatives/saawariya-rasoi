@@ -6,24 +6,27 @@ import { useAuth } from '@/hooks/useAuth';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Loader2, Edit, FileText, ImageIcon } from 'lucide-react';
+import { Loader2, Edit, FileText, ImageIcon, ShoppingBag } from 'lucide-react';
 
 const Dashboard = () => {
   const { profile } = useAuth();
   const [contentCount, setContentCount] = useState<number | null>(null);
   const [postsCount, setPostsCount] = useState<number | null>(null);
+  const [ordersCount, setOrdersCount] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCounts = async () => {
       try {
-        const [contentResult, postsResult] = await Promise.all([
+        const [contentResult, postsResult, ordersResult] = await Promise.all([
           supabase.from('content').select('id', { count: 'exact', head: true }),
-          supabase.from('posts').select('id', { count: 'exact', head: true })
+          supabase.from('posts').select('id', { count: 'exact', head: true }),
+          supabase.from('orders').select('id', { count: 'exact', head: true })
         ]);
         
         setContentCount(contentResult.count);
         setPostsCount(postsResult.count);
+        setOrdersCount(ordersResult.count);
       } catch (error) {
         console.error('Error fetching counts:', error);
       } finally {
@@ -43,7 +46,7 @@ const Dashboard = () => {
         </p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-lg">Content Sections</CardTitle>
@@ -85,6 +88,30 @@ const Dashboard = () => {
                 <Button className="mt-4 w-full" asChild>
                   <Link to="/dashboard/posts">
                     <FileText className="mr-2 h-4 w-4" /> Manage Posts
+                  </Link>
+                </Button>
+              </>
+            )}
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-lg">Orders</CardTitle>
+            <CardDescription>Manage customer orders</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {loading ? (
+              <div className="flex justify-center py-4">
+                <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+              </div>
+            ) : (
+              <>
+                <div className="text-3xl font-bold">{ordersCount || 0}</div>
+                <p className="text-sm text-muted-foreground">Delivery & takeaway orders</p>
+                <Button className="mt-4 w-full" asChild>
+                  <Link to="/dashboard/orders">
+                    <ShoppingBag className="mr-2 h-4 w-4" /> Manage Orders
                   </Link>
                 </Button>
               </>

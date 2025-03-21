@@ -22,6 +22,7 @@ import DashboardPosts from "./pages/DashboardPosts";
 import DashboardMedia from "./pages/DashboardMedia";
 import DashboardProfile from "./pages/DashboardProfile";
 import DashboardSettings from "./pages/DashboardSettings";
+import DashboardOrders from "./pages/DashboardOrders";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -53,6 +54,7 @@ const App = () => (
             <Route path="/dashboard/media" element={<AuthGuard><DashboardMedia /></AuthGuard>} />
             <Route path="/dashboard/profile" element={<AuthGuard><DashboardProfile /></AuthGuard>} />
             <Route path="/dashboard/settings" element={<AuthGuard><DashboardSettings /></AuthGuard>} />
+            <Route path="/dashboard/orders" element={<AuthGuard><DashboardOrders /></AuthGuard>} />
             
             {/* Catch-all route for 404 */}
             <Route path="*" element={<NotFound />} />
