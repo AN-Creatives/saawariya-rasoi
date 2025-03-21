@@ -1,38 +1,19 @@
 
 import React, { useEffect, useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
 import { Loader2 } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
 
 interface AuthGuardProps {
   children: React.ReactNode;
+  adminOnly?: boolean;
 }
 
-const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
-  const [loading, setLoading] = useState(true);
-  const [authenticated, setAuthenticated] = useState(false);
+const AuthGuard: React.FC<AuthGuardProps> = ({ children, adminOnly = true }) => {
+  const { user, isAdmin, loading } = useAuth();
   const location = useLocation();
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      const { data } = await supabase.auth.getSession();
-      setAuthenticated(!!data.session);
-      setLoading(false);
-    };
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setAuthenticated(!!session);
-        setLoading(false);
-      }
-    );
-
-    checkAuth();
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
+  console.log("AuthGuard:", { user: !!user, isAdmin, loading, adminOnly });
 
   if (loading) {
     return (
@@ -43,8 +24,16 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
     );
   }
 
-  if (!authenticated) {
+  // If no user is authenticated, redirect to auth page
+  if (!user) {
+    console.log("No user authenticated, redirecting to auth page");
     return <Navigate to="/auth" state={{ from: location }} replace />;
+  }
+
+  // If adminOnly and user is not admin, redirect to home
+  if (adminOnly && !isAdmin) {
+    console.log("User is not admin, redirecting to home");
+    return <Navigate to="/" replace />;
   }
 
   return <>{children}</>;
