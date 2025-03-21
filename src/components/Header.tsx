@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useOrderMode } from '@/contexts/OrderModeContext';
 import { cn } from '@/lib/utils';
-import { Menu, X, User, LogIn } from 'lucide-react';
+import { Menu, X, User, LogIn, LogOut } from 'lucide-react';
 import Logo from './Logo';
 import ModeToggle from './ModeToggle';
 import { useAuth } from '@/hooks/useAuth';
@@ -12,7 +12,7 @@ import { Button } from './ui/button';
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { user, loading } = useAuth();
+  const { user, loading, signOut } = useAuth();
   
   useEffect(() => {
     const handleScroll = () => {
@@ -45,6 +45,76 @@ const Header = () => {
     { name: 'Reviews', path: '/reviews' },
     { name: 'Contact', path: '/contact' },
   ];
+
+  // Separate component for auth button to avoid conditional rendering issues
+  const AuthButton = () => {
+    if (loading) {
+      return (
+        <div className="flex items-center gap-2 px-4 py-2 bg-gray-300 text-gray-600 rounded-full font-medium text-sm">
+          Loading...
+        </div>
+      );
+    }
+    
+    if (user) {
+      return (
+        <Button 
+          onClick={signOut}
+          className="flex items-center gap-2 px-4 py-2 bg-saawariya-red text-white rounded-full font-medium text-sm transition-all hover:brightness-105 hover-lift"
+        >
+          <LogOut size={16} />
+          <span>Logout</span>
+        </Button>
+      );
+    }
+    
+    return (
+      <Link 
+        to="/auth" 
+        className="flex items-center gap-2 px-4 py-2 bg-saawariya-red text-white rounded-full font-medium text-sm transition-all hover:brightness-105 hover-lift"
+      >
+        <LogIn size={16} />
+        <span>Login</span>
+      </Link>
+    );
+  };
+
+  // Mobile version of the auth button
+  const MobileAuthButton = () => {
+    if (loading) {
+      return (
+        <div className="flex items-center justify-center gap-2 px-8 py-3 bg-gray-300 text-gray-600 rounded-full font-medium w-full mt-4">
+          Loading...
+        </div>
+      );
+    }
+    
+    if (user) {
+      return (
+        <Button 
+          onClick={() => {
+            signOut();
+            setIsMobileMenuOpen(false);
+          }}
+          className="flex items-center justify-center gap-2 px-8 py-3 bg-saawariya-red text-white rounded-full font-medium w-full mt-4 hover:brightness-105"
+        >
+          <LogOut size={18} />
+          <span>Logout</span>
+        </Button>
+      );
+    }
+    
+    return (
+      <Link 
+        to="/auth" 
+        className="flex items-center justify-center gap-2 px-8 py-3 bg-saawariya-red text-white rounded-full font-medium w-full mt-4 hover:brightness-105"
+        onClick={() => setIsMobileMenuOpen(false)}
+      >
+        <LogIn size={18} />
+        <span>Login</span>
+      </Link>
+    );
+  };
 
   return (
     <header
@@ -80,26 +150,10 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             <ModeToggle />
             
-            {/* Login/Dashboard Button - Always visible */}
-            {!loading && (
-              user ? (
-                <Link 
-                  to="/dashboard" 
-                  className="hidden md:flex items-center gap-2 px-4 py-2 bg-saawariya-red text-white rounded-full font-medium text-sm transition-all hover:brightness-105 hover-lift"
-                >
-                  <User size={16} />
-                  <span>Dashboard</span>
-                </Link>
-              ) : (
-                <Link 
-                  to="/auth" 
-                  className="hidden md:flex items-center gap-2 px-4 py-2 bg-saawariya-red text-white rounded-full font-medium text-sm transition-all hover:brightness-105 hover-lift"
-                >
-                  <LogIn size={16} />
-                  <span>Login</span>
-                </Link>
-              )
-            )}
+            {/* Auth Button - Always visible on desktop */}
+            <div className="hidden md:block">
+              <AuthButton />
+            </div>
             
             <button 
               className="block md:hidden text-foreground"
@@ -138,27 +192,8 @@ const Header = () => {
             </NavLink>
           ))}
           
-          {!loading && (
-            user ? (
-              <Link 
-                to="/dashboard" 
-                className="flex items-center justify-center gap-2 px-8 py-3 bg-saawariya-red text-white rounded-full font-medium w-full mt-4 hover:brightness-105"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <User size={18} />
-                <span>Dashboard</span>
-              </Link>
-            ) : (
-              <Link 
-                to="/auth" 
-                className="flex items-center justify-center gap-2 px-8 py-3 bg-saawariya-red text-white rounded-full font-medium w-full mt-4 hover:brightness-105"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <LogIn size={18} />
-                <span>Login</span>
-              </Link>
-            )
-          )}
+          {/* Mobile Auth Button */}
+          <MobileAuthButton />
         </div>
       </div>
     </header>
