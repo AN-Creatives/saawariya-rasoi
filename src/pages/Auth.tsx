@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
@@ -10,7 +10,6 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AlertCircle } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { useAuth } from '@/hooks/useAuth';
 
 const Auth = () => {
   const [email, setEmail] = useState('');
@@ -20,18 +19,6 @@ const Auth = () => {
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { user } = useAuth();
-  
-  // Redirect if already logged in
-  useEffect(() => {
-    if (user) {
-      if (user.email === 'saawariyarasoi12@gmail.com') {
-        navigate('/dashboard');
-      } else {
-        navigate('/');
-      }
-    }
-  }, [user, navigate]);
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,8 +43,10 @@ const Auth = () => {
         description: "Registration successful. Please check your email for confirmation.",
       });
       
-      // Regular users are automatically redirected to home page
-      navigate('/');
+      // Automatically sign in after signup for better UX in development
+      if (data.user) {
+        navigate('/dashboard');
+      }
     } catch (error: any) {
       setError(error.message || 'An error occurred during sign up');
       toast({
@@ -88,12 +77,7 @@ const Auth = () => {
         description: "You've successfully signed in.",
       });
       
-      // Redirect admin to dashboard, others to home page
-      if (email === 'saawariyarasoi12@gmail.com') {
-        navigate('/dashboard');
-      } else {
-        navigate('/');
-      }
+      navigate('/dashboard');
     } catch (error: any) {
       setError(error.message || 'An error occurred during sign in');
       toast({

@@ -47,7 +47,7 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/admin-setup" element={<AdminSetup />} />
             
-            {/* Protected Dashboard Routes - Admin Only */}
+            {/* Protected Dashboard Routes */}
             <Route path="/dashboard" element={<AuthGuard><Dashboard /></AuthGuard>} />
             <Route path="/dashboard/content" element={<AuthGuard><DashboardContent /></AuthGuard>} />
             <Route path="/dashboard/posts" element={<AuthGuard><DashboardPosts /></AuthGuard>} />
