@@ -3,16 +3,17 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useOrderMode } from '@/contexts/OrderModeContext';
 import { cn } from '@/lib/utils';
-import { Menu, X, User, LogIn } from 'lucide-react';
+import { Menu, X, User, LogIn, LogOut } from 'lucide-react';
 import Logo from './Logo';
 import ModeToggle from './ModeToggle';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from './ui/button';
+import { toast } from '@/components/ui/use-toast';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { user, loading } = useAuth();
+  const { user, loading, signOut, isAdmin } = useAuth();
   
   useEffect(() => {
     const handleScroll = () => {
@@ -36,6 +37,14 @@ const Header = () => {
   }, [isMobileMenuOpen]);
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+
+  const handleLogout = async () => {
+    await signOut();
+    toast({
+      title: "Logged out successfully",
+      description: "You have been logged out of your account.",
+    });
+  };
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -80,16 +89,26 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             <ModeToggle />
             
-            {/* Login/Dashboard Button - Always visible */}
+            {/* Auth Button - Login/Logout/Dashboard */}
             {!loading && (
               user ? (
-                <Link 
-                  to="/dashboard" 
-                  className="hidden md:flex items-center gap-2 px-4 py-2 bg-saawariya-red text-white rounded-full font-medium text-sm transition-all hover:brightness-105 hover-lift"
-                >
-                  <User size={16} />
-                  <span>Dashboard</span>
-                </Link>
+                isAdmin ? (
+                  <Link 
+                    to="/dashboard" 
+                    className="hidden md:flex items-center gap-2 px-4 py-2 bg-saawariya-red text-white rounded-full font-medium text-sm transition-all hover:brightness-105 hover-lift"
+                  >
+                    <User size={16} />
+                    <span>Dashboard</span>
+                  </Link>
+                ) : (
+                  <Button 
+                    onClick={handleLogout}
+                    className="hidden md:flex items-center gap-2 px-4 py-2 bg-saawariya-red text-white rounded-full font-medium text-sm transition-all hover:brightness-105 hover-lift"
+                  >
+                    <LogOut size={16} />
+                    <span>Logout</span>
+                  </Button>
+                )
               ) : (
                 <Link 
                   to="/auth" 
@@ -140,14 +159,27 @@ const Header = () => {
           
           {!loading && (
             user ? (
-              <Link 
-                to="/dashboard" 
-                className="flex items-center justify-center gap-2 px-8 py-3 bg-saawariya-red text-white rounded-full font-medium w-full mt-4 hover:brightness-105"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <User size={18} />
-                <span>Dashboard</span>
-              </Link>
+              isAdmin ? (
+                <Link 
+                  to="/dashboard" 
+                  className="flex items-center justify-center gap-2 px-8 py-3 bg-saawariya-red text-white rounded-full font-medium w-full mt-4 hover:brightness-105"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <User size={18} />
+                  <span>Dashboard</span>
+                </Link>
+              ) : (
+                <Button
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    signOut();
+                  }}
+                  className="flex items-center justify-center gap-2 px-8 py-3 bg-saawariya-red text-white rounded-full font-medium w-full mt-4 hover:brightness-105"
+                >
+                  <LogOut size={18} />
+                  <span>Logout</span>
+                </Button>
+              )
             ) : (
               <Link 
                 to="/auth" 
