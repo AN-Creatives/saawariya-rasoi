@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useOrderMode } from '@/contexts/OrderModeContext';
 import { cn } from '@/lib/utils';
-import { Menu, X, User, LogIn, UserPlus } from 'lucide-react';
+import { Menu, X, User, LogIn } from 'lucide-react';
 import Logo from './Logo';
 import ModeToggle from './ModeToggle';
 import { useAuth } from '@/hooks/useAuth';
@@ -89,23 +89,13 @@ const Header = () => {
                   <span>Dashboard</span>
                 </Link>
               ) : (
-                <div className="hidden md:flex items-center space-x-2">
-                  <Link 
-                    to="/auth" 
-                    className="flex items-center gap-2 px-4 py-2 border border-saawariya-red text-saawariya-red rounded-full font-medium text-sm transition-all hover:brightness-105 hover-lift"
-                  >
-                    <LogIn size={16} />
-                    <span>Log In</span>
-                  </Link>
-                  
-                  <Link 
-                    to="/auth?tab=signup" 
-                    className="flex items-center gap-2 px-4 py-2 bg-saawariya-red text-white rounded-full font-medium text-sm transition-all hover:brightness-105 hover-lift"
-                  >
-                    <UserPlus size={16} />
-                    <span>Sign Up</span>
-                  </Link>
-                </div>
+                <Link 
+                  to="/auth" 
+                  className="hidden md:flex items-center gap-2 px-4 py-2 bg-saawariya-red text-white rounded-full font-medium text-sm transition-all hover:brightness-105 hover-lift"
+                >
+                  <LogIn size={16} />
+                  <span>Login</span>
+                </Link>
               )
             )}
             
@@ -157,25 +147,14 @@ const Header = () => {
                 <span>Dashboard</span>
               </Link>
             ) : (
-              <>
-                <Link 
-                  to="/auth" 
-                  className="flex items-center justify-center gap-2 px-8 py-3 border border-saawariya-red text-saawariya-red rounded-full font-medium w-full mt-4 hover:brightness-105"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <LogIn size={18} />
-                  <span>Log In</span>
-                </Link>
-                
-                <Link 
-                  to="/auth?tab=signup" 
-                  className="flex items-center justify-center gap-2 px-8 py-3 bg-saawariya-red text-white rounded-full font-medium w-full mt-4 hover:brightness-105"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <UserPlus size={18} />
-                  <span>Sign Up</span>
-                </Link>
-              </>
+              <Link 
+                to="/auth" 
+                className="flex items-center justify-center gap-2 px-8 py-3 bg-saawariya-red text-white rounded-full font-medium w-full mt-4 hover:brightness-105"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <LogIn size={18} />
+                <span>Login</span>
+              </Link>
             )
           )}
         </div>
