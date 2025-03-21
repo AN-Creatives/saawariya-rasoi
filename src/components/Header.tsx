@@ -89,35 +89,39 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             <ModeToggle />
             
-            {/* Auth Button - Login/Logout/Dashboard */}
-            {!loading && (
-              user ? (
-                isAdmin ? (
-                  <Link 
-                    to="/dashboard" 
-                    className="hidden md:flex items-center gap-2 px-4 py-2 bg-saawariya-red text-white rounded-full font-medium text-sm transition-all hover:brightness-105 hover-lift"
-                  >
-                    <User size={16} />
-                    <span>Dashboard</span>
-                  </Link>
+            {/* Auth Button - Login/Logout/Dashboard - Always visible on desktop */}
+            {loading ? (
+              <div className="w-24 h-10"></div> // Placeholder during loading to prevent layout shift
+            ) : (
+              <>
+                {user ? (
+                  isAdmin ? (
+                    <Link 
+                      to="/dashboard" 
+                      className="md:flex items-center gap-2 px-4 py-2 bg-saawariya-red text-white rounded-full font-medium text-sm transition-all hover:brightness-105 hover-lift"
+                    >
+                      <User size={16} />
+                      <span>Dashboard</span>
+                    </Link>
+                  ) : (
+                    <Button 
+                      onClick={handleLogout}
+                      className="md:flex items-center gap-2 px-4 py-2 bg-saawariya-red text-white rounded-full font-medium text-sm transition-all hover:brightness-105 hover-lift"
+                    >
+                      <LogOut size={16} />
+                      <span>Logout</span>
+                    </Button>
+                  )
                 ) : (
-                  <Button 
-                    onClick={handleLogout}
-                    className="hidden md:flex items-center gap-2 px-4 py-2 bg-saawariya-red text-white rounded-full font-medium text-sm transition-all hover:brightness-105 hover-lift"
+                  <Link 
+                    to="/auth" 
+                    className="md:flex items-center gap-2 px-4 py-2 bg-saawariya-red text-white rounded-full font-medium text-sm transition-all hover:brightness-105 hover-lift"
                   >
-                    <LogOut size={16} />
-                    <span>Logout</span>
-                  </Button>
-                )
-              ) : (
-                <Link 
-                  to="/auth" 
-                  className="hidden md:flex items-center gap-2 px-4 py-2 bg-saawariya-red text-white rounded-full font-medium text-sm transition-all hover:brightness-105 hover-lift"
-                >
-                  <LogIn size={16} />
-                  <span>Login</span>
-                </Link>
-              )
+                    <LogIn size={16} />
+                    <span>Login</span>
+                  </Link>
+                )}
+              </>
             )}
             
             <button 
@@ -157,39 +161,42 @@ const Header = () => {
             </NavLink>
           ))}
           
+          {/* Auth Button - Always visible in mobile menu */}
           {!loading && (
-            user ? (
-              isAdmin ? (
+            <>
+              {user ? (
+                isAdmin ? (
+                  <Link 
+                    to="/dashboard" 
+                    className="flex items-center justify-center gap-2 px-8 py-3 bg-saawariya-red text-white rounded-full font-medium w-full mt-4 hover:brightness-105"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <User size={18} />
+                    <span>Dashboard</span>
+                  </Link>
+                ) : (
+                  <Button
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      signOut();
+                    }}
+                    className="flex items-center justify-center gap-2 px-8 py-3 bg-saawariya-red text-white rounded-full font-medium w-full mt-4 hover:brightness-105"
+                  >
+                    <LogOut size={18} />
+                    <span>Logout</span>
+                  </Button>
+                )
+              ) : (
                 <Link 
-                  to="/dashboard" 
+                  to="/auth" 
                   className="flex items-center justify-center gap-2 px-8 py-3 bg-saawariya-red text-white rounded-full font-medium w-full mt-4 hover:brightness-105"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <User size={18} />
-                  <span>Dashboard</span>
+                  <LogIn size={18} />
+                  <span>Login</span>
                 </Link>
-              ) : (
-                <Button
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    signOut();
-                  }}
-                  className="flex items-center justify-center gap-2 px-8 py-3 bg-saawariya-red text-white rounded-full font-medium w-full mt-4 hover:brightness-105"
-                >
-                  <LogOut size={18} />
-                  <span>Logout</span>
-                </Button>
-              )
-            ) : (
-              <Link 
-                to="/auth" 
-                className="flex items-center justify-center gap-2 px-8 py-3 bg-saawariya-red text-white rounded-full font-medium w-full mt-4 hover:brightness-105"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <LogIn size={18} />
-                <span>Login</span>
-              </Link>
-            )
+              )}
+            </>
           )}
         </div>
       </div>
