@@ -38,10 +38,15 @@ export function useAuth() {
             .single();
           
           if (profileData) {
+            // Only set admin role if the email matches the designated admin email
+            const role = profileData.role;
+            const isDesignatedAdmin = currentSession.user.email === 'saawariyarasoi12@gmail.com';
+            
             setProfile({
               id: profileData.id,
               full_name: profileData.full_name,
-              role: validateRole(profileData.role)
+              // Override role to admin only if it's the designated admin email
+              role: isDesignatedAdmin && role === 'admin' ? 'admin' : validateRole(role)
             });
           }
         } else {
@@ -65,10 +70,15 @@ export function useAuth() {
           .single();
         
         if (profileData) {
+          // Only set admin role if the email matches the designated admin email
+          const role = profileData.role;
+          const isDesignatedAdmin = currentSession.user.email === 'saawariyarasoi12@gmail.com';
+          
           setProfile({
             id: profileData.id,
             full_name: profileData.full_name,
-            role: validateRole(profileData.role)
+            // Override role to admin only if it's the designated admin email
+            role: isDesignatedAdmin && role === 'admin' ? 'admin' : validateRole(role)
           });
         }
       }
@@ -85,7 +95,7 @@ export function useAuth() {
     await supabase.auth.signOut();
   };
 
-  const isAdmin = !!profile && profile.role === 'admin';
+  const isAdmin = !!profile && profile.role === 'admin' && user?.email === 'saawariyarasoi12@gmail.com';
   const isEditor = !!profile && (profile.role === 'editor' || profile.role === 'admin');
 
   return {

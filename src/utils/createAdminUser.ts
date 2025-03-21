@@ -7,6 +7,11 @@ import { supabase } from '@/integrations/supabase/client';
  */
 export async function createAdminUser(email: string, password: string, fullName: string = 'Admin') {
   try {
+    // Check if the email is the authorized admin email
+    if (email !== 'saawariyarasoi12@gmail.com') {
+      throw new Error('Unauthorized: Only the designated admin email can be used');
+    }
+
     // 1. Sign up the user
     const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
       email,
