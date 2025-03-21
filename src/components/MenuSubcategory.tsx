@@ -4,7 +4,7 @@ import { MenuItem } from '@/data/menuData';
 import { Flame, Info, Clock, Tag, ChevronRight } from 'lucide-react';
 import { useOrderMode } from '@/contexts/OrderModeContext';
 import { Card, CardContent } from './ui/card';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import {
   Dialog,
   DialogContent,
@@ -18,6 +18,8 @@ import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/use-toast";
+import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/integrations/supabase/client';
 
 interface MenuSubcategoryProps {
   title: string;
@@ -28,13 +30,56 @@ interface MenuSubcategoryProps {
 const MenuSubcategory = ({ title, items, zomatoLink }: MenuSubcategoryProps) => {
   const { mode } = useOrderMode();
   const navigate = useNavigate();
+  const { user, isAuthenticated } = useAuth();
   
-  const handleTakeawayOrder = (item: MenuItem) => {
-    // When ordering via takeaway, we'll show a dialog to choose between normal or bulk order
-    toast({
-      title: "Order Placed",
-      description: `Your order for ${item.name} has been received. We'll contact you shortly to confirm.`,
-    });
+  const handleTakeawayOrder = async (item: MenuItem) => {
+    if (!isAuthenticated || !user) {
+      toast({
+        title: "Authentication Required",
+        description: "Please log in to place an order",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    try {
+      // Create the order in the database associated with the user
+      const { data, error } = await supabase
+        .from('orders')
+        .insert({
+          user_id: user.id,
+          customer_name: user.email || 'Customer',
+          email: user.email || '',
+          phone: '',  // This could be collected from the user profile if available
+          order_type: 'takeaway',
+          order_items: [
+            {
+              id: item.id,
+              name: item.name,
+              price: item.takeawayPrice || item.price,
+              quantity: 1
+            }
+          ],
+          total_amount: parseFloat((item.takeawayPrice || item.price).replace(/[^0-9.]/g, '')),
+          status: 'pending',
+          order_notes: ''
+        });
+      
+      if (error) throw error;
+      
+      toast({
+        title: "Order Placed",
+        description: `Your order for ${item.name} has been received. We'll contact you shortly to confirm.`,
+      });
+      
+    } catch (error) {
+      console.error("Error placing order:", error);
+      toast({
+        title: "Order Failed",
+        description: "There was an error placing your order. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
   
   return (
@@ -128,48 +173,69 @@ const MenuSubcategory = ({ title, items, zomatoLink }: MenuSubcategoryProps) => 
                       <ChevronRight size={16} className="ml-1" />
                     </a>
                   ) : (
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <button className="px-4 py-2 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:brightness-105 flex items-center">
-                          Order Now
-                          <ChevronRight size={16} className="ml-1" />
-                        </button>
-                      </DialogTrigger>
-                      <DialogContent className="sm:max-w-[425px]">
-                        <DialogHeader>
-                          <DialogTitle>Takeaway Order</DialogTitle>
-                          <DialogDescription>
-                            Choose your order type for {item.name}
-                          </DialogDescription>
-                        </DialogHeader>
-                        <div className="grid gap-4 py-4">
-                          <RadioGroup defaultValue="normal" className="gap-4">
-                            <div className="flex items-center space-x-2 border p-3 rounded-md">
-                              <RadioGroupItem value="normal" id="normal" />
-                              <Label htmlFor="normal" className="flex flex-col">
-                                <span className="font-medium">Normal Takeaway</span>
-                                <span className="text-xs text-muted-foreground">Ready in 15-20 mins</span>
-                              </Label>
-                            </div>
-                            <div className="flex items-center space-x-2 border p-3 rounded-md">
-                              <RadioGroupItem value="bulk" id="bulk" />
-                              <Label htmlFor="bulk" className="flex flex-col">
-                                <span className="font-medium">Bulk Order</span>
-                                <span className="text-xs text-muted-foreground">For events, parties or office</span>
-                              </Label>
-                            </div>
-                          </RadioGroup>
-                        </div>
-                        <DialogFooter>
-                          <Button 
-                            type="submit" 
-                            onClick={() => handleTakeawayOrder(item)}
-                          >
-                            Proceed to Checkout
-                          </Button>
-                        </DialogFooter>
-                      </DialogContent>
-                    </Dialog>
+                    isAuthenticated ? (
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <button className="px-4 py-2 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:brightness-105 flex items-center">
+                            Order Now
+                            <ChevronRight size={16} className="ml-1" />
+                          </button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-[425px]">
+                          <DialogHeader>
+                            <DialogTitle>Takeaway Order</DialogTitle>
+                            <DialogDescription>
+                              Choose your order type for {item.name}
+                            </DialogDescription>
+                          </DialogHeader>
+                          <div className="grid gap-4 py-4">
+                            <RadioGroup defaultValue="normal" className="gap-4">
+                              <div className="flex items-center space-x-2 border p-3 rounded-md">
+                                <RadioGroupItem value="normal" id="normal" />
+                                <Label htmlFor="normal" className="flex flex-col">
+                                  <span className="font-medium">Normal Takeaway</span>
+                                  <span className="text-xs text-muted-foreground">Ready in 15-20 mins</span>
+                                </Label>
+                              </div>
+                              <div className="flex items-center space-x-2 border p-3 rounded-md">
+                                <RadioGroupItem value="bulk" id="bulk" />
+                                <Label htmlFor="bulk" className="flex flex-col">
+                                  <span className="font-medium">Bulk Order</span>
+                                  <span className="text-xs text-muted-foreground">For events, parties or office</span>
+                                </Label>
+                              </div>
+                            </RadioGroup>
+                          </div>
+                          <DialogFooter>
+                            <Button 
+                              type="submit" 
+                              onClick={() => handleTakeawayOrder(item)}
+                            >
+                              Proceed to Checkout
+                            </Button>
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
+                    ) : (
+                      <div className="flex gap-2">
+                        <Button 
+                          variant="outline" 
+                          className="px-4 py-2 rounded-full text-sm font-medium" 
+                          asChild
+                        >
+                          <Link to="/auth?tab=signup">Sign Up</Link>
+                        </Button>
+                        <Button 
+                          className="px-4 py-2 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:brightness-105 flex items-center"
+                          asChild
+                        >
+                          <Link to="/auth">
+                            Log In
+                            <ChevronRight size={16} className="ml-1" />
+                          </Link>
+                        </Button>
+                      </div>
+                    )
                   )}
                 </div>
               </div>
