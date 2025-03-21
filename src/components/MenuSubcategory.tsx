@@ -1,10 +1,10 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { MenuItem } from '@/data/menuData';
-import { Flame, Info, Clock, Tag, ChevronRight } from 'lucide-react';
+import { Flame, Info, Clock, Tag, ChevronRight, Loader2 } from 'lucide-react';
 import { useOrderMode } from '@/contexts/OrderModeContext';
 import { Card, CardContent } from './ui/card';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   Dialog,
   DialogContent,
@@ -18,7 +18,8 @@ import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/use-toast";
-import { useAuth } from '@/hooks/useAuth';
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { supabase } from '@/integrations/supabase/client';
 
 interface MenuSubcategoryProps {
@@ -30,55 +31,91 @@ interface MenuSubcategoryProps {
 const MenuSubcategory = ({ title, items, zomatoLink }: MenuSubcategoryProps) => {
   const { mode } = useOrderMode();
   const navigate = useNavigate();
-  const { user, isAuthenticated } = useAuth();
+  const [customerInfo, setCustomerInfo] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    notes: ''
+  });
+  const [selectedOrderType, setSelectedOrderType] = useState('normal');
+  const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showCustomerForm, setShowCustomerForm] = useState(false);
   
   const handleTakeawayOrder = async (item: MenuItem) => {
-    if (!isAuthenticated || !user) {
+    setSelectedItem(item);
+    setShowCustomerForm(true);
+  };
+
+  const submitOrder = async () => {
+    if (!selectedItem) return;
+    
+    // Validate customer info
+    if (!customerInfo.name || !customerInfo.email || !customerInfo.phone) {
       toast({
-        title: "Authentication Required",
-        description: "Please log in to place an order",
         variant: "destructive",
+        title: "Missing information",
+        description: "Please fill in all required fields",
       });
       return;
     }
     
     try {
-      // Create the order in the database associated with the user
+      setIsSubmitting(true);
+      
+      // Create order object
+      const orderItem = {
+        id: selectedItem.id,
+        name: selectedItem.name,
+        price: parseFloat(selectedItem.takeawayPrice?.replace('₹', '') || selectedItem.price.replace('₹', '')),
+        quantity: 1
+      };
+      
+      // Calculate total amount
+      const totalAmount = orderItem.price * orderItem.quantity;
+      
+      // Save order to database
       const { data, error } = await supabase
         .from('orders')
         .insert({
-          user_id: user.id,
-          customer_name: user.email || 'Customer',
-          email: user.email || '',
-          phone: '',  // This could be collected from the user profile if available
+          customer_name: customerInfo.name,
+          email: customerInfo.email,
+          phone: customerInfo.phone,
           order_type: 'takeaway',
-          order_items: [
-            {
-              id: item.id,
-              name: item.name,
-              price: item.takeawayPrice || item.price,
-              quantity: 1
-            }
-          ],
-          total_amount: parseFloat((item.takeawayPrice || item.price).replace(/[^0-9.]/g, '')),
+          order_items: [orderItem],
+          total_amount: totalAmount,
           status: 'pending',
-          order_notes: ''
-        });
+          order_notes: customerInfo.notes || null
+        })
+        .select();
       
       if (error) throw error;
       
-      toast({
-        title: "Order Placed",
-        description: `Your order for ${item.name} has been received. We'll contact you shortly to confirm.`,
+      // Reset the form
+      setCustomerInfo({
+        name: '',
+        email: '',
+        phone: '',
+        notes: ''
       });
+      setShowCustomerForm(false);
       
-    } catch (error) {
-      console.error("Error placing order:", error);
+      // Show success toast
       toast({
-        title: "Order Failed",
-        description: "There was an error placing your order. Please try again.",
-        variant: "destructive",
+        title: "Order Placed Successfully",
+        description: "We'll contact you shortly to confirm your order.",
       });
+
+      // Send notification to admin (this will be handled by the webhook function)
+    } catch (error: any) {
+      console.error('Error placing order:', error);
+      toast({
+        variant: "destructive",
+        title: "Error placing order",
+        description: error.message || "There was an error placing your order. Please try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
   
@@ -173,69 +210,13 @@ const MenuSubcategory = ({ title, items, zomatoLink }: MenuSubcategoryProps) => 
                       <ChevronRight size={16} className="ml-1" />
                     </a>
                   ) : (
-                    isAuthenticated ? (
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <button className="px-4 py-2 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:brightness-105 flex items-center">
-                            Order Now
-                            <ChevronRight size={16} className="ml-1" />
-                          </button>
-                        </DialogTrigger>
-                        <DialogContent className="sm:max-w-[425px]">
-                          <DialogHeader>
-                            <DialogTitle>Takeaway Order</DialogTitle>
-                            <DialogDescription>
-                              Choose your order type for {item.name}
-                            </DialogDescription>
-                          </DialogHeader>
-                          <div className="grid gap-4 py-4">
-                            <RadioGroup defaultValue="normal" className="gap-4">
-                              <div className="flex items-center space-x-2 border p-3 rounded-md">
-                                <RadioGroupItem value="normal" id="normal" />
-                                <Label htmlFor="normal" className="flex flex-col">
-                                  <span className="font-medium">Normal Takeaway</span>
-                                  <span className="text-xs text-muted-foreground">Ready in 15-20 mins</span>
-                                </Label>
-                              </div>
-                              <div className="flex items-center space-x-2 border p-3 rounded-md">
-                                <RadioGroupItem value="bulk" id="bulk" />
-                                <Label htmlFor="bulk" className="flex flex-col">
-                                  <span className="font-medium">Bulk Order</span>
-                                  <span className="text-xs text-muted-foreground">For events, parties or office</span>
-                                </Label>
-                              </div>
-                            </RadioGroup>
-                          </div>
-                          <DialogFooter>
-                            <Button 
-                              type="submit" 
-                              onClick={() => handleTakeawayOrder(item)}
-                            >
-                              Proceed to Checkout
-                            </Button>
-                          </DialogFooter>
-                        </DialogContent>
-                      </Dialog>
-                    ) : (
-                      <div className="flex gap-2">
-                        <Button 
-                          variant="outline" 
-                          className="px-4 py-2 rounded-full text-sm font-medium" 
-                          asChild
-                        >
-                          <Link to="/auth?tab=signup">Sign Up</Link>
-                        </Button>
-                        <Button 
-                          className="px-4 py-2 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:brightness-105 flex items-center"
-                          asChild
-                        >
-                          <Link to="/auth">
-                            Log In
-                            <ChevronRight size={16} className="ml-1" />
-                          </Link>
-                        </Button>
-                      </div>
-                    )
+                    <Button
+                      onClick={() => handleTakeawayOrder(item)}
+                      className="px-4 py-2 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:brightness-105 flex items-center"
+                    >
+                      Order Now
+                      <ChevronRight size={16} className="ml-1" />
+                    </Button>
                   )}
                 </div>
               </div>
@@ -243,6 +224,98 @@ const MenuSubcategory = ({ title, items, zomatoLink }: MenuSubcategoryProps) => 
           </Card>
         ))}
       </div>
+
+      {/* Customer Information Dialog */}
+      <Dialog open={showCustomerForm} onOpenChange={setShowCustomerForm}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Complete Your Order</DialogTitle>
+            <DialogDescription>
+              Please provide your contact information to place your order.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="name">Name</Label>
+              <Input 
+                id="name" 
+                value={customerInfo.name}
+                onChange={(e) => setCustomerInfo({...customerInfo, name: e.target.value})}
+                placeholder="Your full name"
+                required
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="email">Email</Label>
+              <Input 
+                id="email" 
+                type="email"
+                value={customerInfo.email}
+                onChange={(e) => setCustomerInfo({...customerInfo, email: e.target.value})}
+                placeholder="Your email address"
+                required
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="phone">Phone</Label>
+              <Input 
+                id="phone" 
+                value={customerInfo.phone}
+                onChange={(e) => setCustomerInfo({...customerInfo, phone: e.target.value})}
+                placeholder="Your phone number"
+                required
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="notes">Order Notes (Optional)</Label>
+              <Textarea 
+                id="notes" 
+                value={customerInfo.notes}
+                onChange={(e) => setCustomerInfo({...customerInfo, notes: e.target.value})}
+                placeholder="Any special instructions for your order"
+              />
+            </div>
+            <div className="mt-2">
+              <p className="text-sm font-medium">Order Type</p>
+              <RadioGroup 
+                value={selectedOrderType} 
+                onValueChange={setSelectedOrderType}
+                className="flex flex-col space-y-2 mt-2"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="normal" id="normal" />
+                  <Label htmlFor="normal">Normal Takeaway (15-20 min)</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="express" id="express" />
+                  <Label htmlFor="express">Express Takeaway (10 min)</Label>
+                </div>
+              </RadioGroup>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setShowCustomerForm(false)}
+            >
+              Cancel
+            </Button>
+            <Button 
+              onClick={submitOrder}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Processing
+                </>
+              ) : (
+                'Place Order'
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
