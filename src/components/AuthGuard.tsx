@@ -11,56 +11,18 @@ interface AuthGuardProps {
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     const checkAuth = async () => {
-      console.log("AuthGuard: Checking authentication");
       const { data } = await supabase.auth.getSession();
-      const session = data.session;
-      
-      console.log("AuthGuard: Session retrieved", !!session);
-      
-      if (session) {
-        const userEmail = session.user.email;
-        console.log("AuthGuard: User email", userEmail);
-        
-        // Check if user is admin (has the specific email)
-        const isAdminUser = userEmail === 'saawariyarasoi12@gmail.com';
-        console.log("AuthGuard: Is admin?", isAdminUser);
-        
-        setIsAdmin(isAdminUser);
-        setAuthenticated(true);
-      } else {
-        console.log("AuthGuard: No session found");
-        setIsAdmin(false);
-        setAuthenticated(false);
-      }
-      
+      setAuthenticated(!!data.session);
       setLoading(false);
     };
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
-        console.log("AuthGuard: Auth state changed", event);
-        
-        if (session) {
-          const userEmail = session.user.email;
-          console.log("AuthGuard: User email updated", userEmail);
-          
-          // Check if user is admin (has the specific email)
-          const isAdminUser = userEmail === 'saawariyarasoi12@gmail.com';
-          console.log("AuthGuard: Is admin updated?", isAdminUser);
-          
-          setIsAdmin(isAdminUser);
-          setAuthenticated(true);
-        } else {
-          console.log("AuthGuard: No session after auth state change");
-          setIsAdmin(false);
-          setAuthenticated(false);
-        }
-        
+        setAuthenticated(!!session);
         setLoading(false);
       }
     );
@@ -82,16 +44,9 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   }
 
   if (!authenticated) {
-    console.log("AuthGuard: Not authenticated, redirecting to /auth");
     return <Navigate to="/auth" state={{ from: location }} replace />;
   }
 
-  if (!isAdmin) {
-    console.log("AuthGuard: Not admin, redirecting to /");
-    return <Navigate to="/" replace />;
-  }
-
-  console.log("AuthGuard: Authentication passed, rendering children");
   return <>{children}</>;
 };
 
