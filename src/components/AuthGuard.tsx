@@ -6,13 +6,14 @@ import { Loader2 } from 'lucide-react';
 
 interface AuthGuardProps {
   children: React.ReactNode;
+  adminOnly?: boolean;
 }
 
-const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
-  const { loading, isAuthenticated } = useAuth();
+const AuthGuard: React.FC<AuthGuardProps> = ({ children, adminOnly = true }) => {
+  const { loading, isAuthenticated, isAdmin } = useAuth();
   const location = useLocation();
   
-  console.log('[AuthGuard] Current state:', { loading, isAuthenticated, path: location.pathname });
+  console.log('[AuthGuard] Current state:', { loading, isAuthenticated, isAdmin, path: location.pathname, adminOnly });
 
   // Always show loading state when authentication is being checked
   if (loading) {
@@ -31,8 +32,14 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
     return <Navigate to="/auth" state={{ from: location }} replace />;
   }
 
-  // Allow access to children if authenticated
-  console.log('[AuthGuard] Authenticated, rendering children');
+  // Check for admin access if adminOnly is true
+  if (adminOnly && !isAdmin) {
+    console.log('[AuthGuard] Not an admin, redirecting to homepage');
+    return <Navigate to="/" state={{ from: location }} replace />;
+  }
+
+  // Allow access to children if authenticated and has proper permissions
+  console.log('[AuthGuard] Authenticated with proper permissions, rendering children');
   return <>{children}</>;
 };
 

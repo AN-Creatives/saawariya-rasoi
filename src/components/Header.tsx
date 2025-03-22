@@ -12,7 +12,7 @@ import { Button } from './ui/button';
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { loading, isAuthenticated, signOut } = useAuth();
+  const { loading, isAuthenticated, isAdmin, signOut } = useAuth();
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -43,7 +43,7 @@ const Header = () => {
     navigate('/');
   };
 
-  console.log('[Header] Auth state:', { loading, isAuthenticated });
+  console.log('[Header] Auth state:', { loading, isAuthenticated, isAdmin });
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -93,13 +93,15 @@ const Header = () => {
               <div className="h-9 w-24 bg-gray-200 animate-pulse rounded-full"></div>
             ) : isAuthenticated ? (
               <>
-                <Link
-                  to="/dashboard"
-                  className="hidden md:flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-full font-medium text-sm transition-all hover:brightness-105"
-                >
-                  <User size={16} />
-                  <span>Dashboard</span>
-                </Link>
+                {isAdmin && (
+                  <Link
+                    to="/dashboard"
+                    className="hidden md:flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-full font-medium text-sm transition-all hover:brightness-105"
+                  >
+                    <User size={16} />
+                    <span>Dashboard</span>
+                  </Link>
+                )}
                 <Button
                   variant="outline"
                   size="sm"
@@ -162,14 +164,16 @@ const Header = () => {
             <div className="h-12 w-full bg-gray-200 animate-pulse rounded-full"></div>
           ) : isAuthenticated ? (
             <>
-              <Link
-                to="/dashboard"
-                className="flex items-center justify-center gap-2 px-8 py-3 bg-primary text-primary-foreground rounded-full font-medium w-full hover:brightness-105"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <User size={18} />
-                <span>Dashboard</span>
-              </Link>
+              {isAdmin && (
+                <Link
+                  to="/dashboard"
+                  className="flex items-center justify-center gap-2 px-8 py-3 bg-primary text-primary-foreground rounded-full font-medium w-full hover:brightness-105"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <User size={18} />
+                  <span>Dashboard</span>
+                </Link>
+              )}
               <Button
                 variant="outline"
                 className="w-full flex items-center justify-center"

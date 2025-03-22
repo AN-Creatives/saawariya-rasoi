@@ -47,14 +47,14 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/admin-setup" element={<AdminSetup />} />
             
-            {/* Protected Dashboard Routes */}
-            <Route path="/dashboard" element={<AuthGuard><Dashboard /></AuthGuard>} />
-            <Route path="/dashboard/content" element={<AuthGuard><DashboardContent /></AuthGuard>} />
-            <Route path="/dashboard/posts" element={<AuthGuard><DashboardPosts /></AuthGuard>} />
-            <Route path="/dashboard/media" element={<AuthGuard><DashboardMedia /></AuthGuard>} />
-            <Route path="/dashboard/profile" element={<AuthGuard><DashboardProfile /></AuthGuard>} />
-            <Route path="/dashboard/settings" element={<AuthGuard><DashboardSettings /></AuthGuard>} />
-            <Route path="/dashboard/orders" element={<AuthGuard><DashboardOrders /></AuthGuard>} />
+            {/* Protected Dashboard Routes - Admin Only */}
+            <Route path="/dashboard" element={<AuthGuard adminOnly={true}><Dashboard /></AuthGuard>} />
+            <Route path="/dashboard/content" element={<AuthGuard adminOnly={true}><DashboardContent /></AuthGuard>} />
+            <Route path="/dashboard/posts" element={<AuthGuard adminOnly={true}><DashboardPosts /></AuthGuard>} />
+            <Route path="/dashboard/media" element={<AuthGuard adminOnly={true}><DashboardMedia /></AuthGuard>} />
+            <Route path="/dashboard/profile" element={<AuthGuard adminOnly={false}><DashboardProfile /></AuthGuard>} />
+            <Route path="/dashboard/settings" element={<AuthGuard adminOnly={true}><DashboardSettings /></AuthGuard>} />
+            <Route path="/dashboard/orders" element={<AuthGuard adminOnly={true}><DashboardOrders /></AuthGuard>} />
             
             {/* Catch-all route for 404 */}
             <Route path="*" element={<NotFound />} />
