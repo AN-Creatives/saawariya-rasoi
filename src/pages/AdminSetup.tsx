@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createAdminUser } from '@/utils/createAdminUser';
@@ -17,7 +16,7 @@ const AdminSetup = () => {
 
   const email = 'saawariyarasoi12@gmail.com';
   const password = 'Saawariya@123';
-  const fullName = 'Saawariya Admin';
+  const fullName = 'Saawariya Rasoi Admin';
 
   useEffect(() => {
     if (success) {
