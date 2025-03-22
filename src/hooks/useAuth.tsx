@@ -24,9 +24,12 @@ export function useAuth() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log('useAuth hook initialized');
+    
     // First set up the auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, currentSession) => {
+        console.log('Auth state changed:', event, !!currentSession);
         setSession(currentSession);
         setUser(currentSession?.user ?? null);
         
@@ -54,6 +57,7 @@ export function useAuth() {
 
     // Then check for existing session
     supabase.auth.getSession().then(async ({ data: { session: currentSession } }) => {
+      console.log('Existing session check:', !!currentSession);
       setSession(currentSession);
       setUser(currentSession?.user ?? null);
       
@@ -85,6 +89,7 @@ export function useAuth() {
     await supabase.auth.signOut();
   };
 
+  const isAuthenticated = !!user;
   const isAdmin = !!profile && profile.role === 'admin';
   const isEditor = !!profile && (profile.role === 'editor' || profile.role === 'admin');
 
@@ -94,7 +99,7 @@ export function useAuth() {
     profile,
     loading,
     signOut,
-    isAuthenticated: !!user,
+    isAuthenticated,
     isAdmin,
     isEditor
   };

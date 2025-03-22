@@ -14,14 +14,18 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   const location = useLocation();
 
   useEffect(() => {
+    console.log('AuthGuard mounted');
+    
     const checkAuth = async () => {
       const { data } = await supabase.auth.getSession();
+      console.log('AuthGuard session check:', !!data.session);
       setAuthenticated(!!data.session);
       setLoading(false);
     };
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
+        console.log('AuthGuard auth state changed:', event, !!session);
         setAuthenticated(!!session);
         setLoading(false);
       }
@@ -44,9 +48,11 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   }
 
   if (!authenticated) {
+    console.log('AuthGuard redirecting to /auth');
     return <Navigate to="/auth" state={{ from: location }} replace />;
   }
 
+  console.log('AuthGuard rendering children');
   return <>{children}</>;
 };
 

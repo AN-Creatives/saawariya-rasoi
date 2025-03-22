@@ -1,15 +1,18 @@
 
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { useOrderMode } from '@/contexts/OrderModeContext';
 import { cn } from '@/lib/utils';
-import { Menu, X, ShoppingBag } from 'lucide-react';
+import { Menu, X, ShoppingBag, LogIn, LogOut, User } from 'lucide-react';
 import Logo from './Logo';
 import ModeToggle from './ModeToggle';
+import { useAuth } from '@/hooks/useAuth';
+import { Button } from './ui/button';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { loading, isAuthenticated, signOut } = useAuth();
   
   useEffect(() => {
     const handleScroll = () => {
@@ -77,15 +80,34 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             <ModeToggle />
             
-            <a 
-              href="https://www.zomato.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="hidden md:flex items-center gap-2 px-4 py-2 bg-saawariya-red text-white rounded-full font-medium text-sm transition-all hover:brightness-105 hover-lift"
-            >
-              <ShoppingBag size={16} />
-              <span>Order Now</span>
-            </a>
+            {isAuthenticated ? (
+              <>
+                <Link
+                  to="/dashboard"
+                  className="hidden md:flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-full font-medium text-sm transition-all hover:brightness-105"
+                >
+                  <User size={16} />
+                  <span>Dashboard</span>
+                </Link>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="hidden md:flex"
+                  onClick={signOut}
+                >
+                  <LogOut size={16} className="mr-2" />
+                  Log out
+                </Button>
+              </>
+            ) : (
+              <Link
+                to="/auth"
+                className="hidden md:flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-full font-medium text-sm transition-all hover:brightness-105"
+              >
+                <LogIn size={16} />
+                <span>Log in</span>
+              </Link>
+            )}
             
             <button 
               className="block md:hidden text-foreground"
@@ -124,16 +146,38 @@ const Header = () => {
             </NavLink>
           ))}
           
-          <a 
-            href="https://www.zomato.com" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 px-8 py-3 bg-saawariya-red text-white rounded-full font-medium w-full mt-4 hover:brightness-105"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            <ShoppingBag size={18} />
-            <span>Order Now</span>
-          </a>
+          {isAuthenticated ? (
+            <>
+              <Link
+                to="/dashboard"
+                className="flex items-center justify-center gap-2 px-8 py-3 bg-primary text-primary-foreground rounded-full font-medium w-full hover:brightness-105"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <User size={18} />
+                <span>Dashboard</span>
+              </Link>
+              <Button
+                variant="outline"
+                className="w-full flex items-center justify-center"
+                onClick={() => {
+                  signOut();
+                  setIsMobileMenuOpen(false);
+                }}
+              >
+                <LogOut size={18} className="mr-2" />
+                Log out
+              </Button>
+            </>
+          ) : (
+            <Link
+              to="/auth"
+              className="flex items-center justify-center gap-2 px-8 py-3 bg-primary text-primary-foreground rounded-full font-medium w-full hover:brightness-105"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <LogIn size={18} />
+              <span>Log in</span>
+            </Link>
+          )}
         </div>
       </div>
     </header>
