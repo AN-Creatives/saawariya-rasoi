@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { useOrderMode } from '@/contexts/OrderModeContext';
 import { cn } from '@/lib/utils';
 import { Menu, X, ShoppingBag, LogIn, LogOut, User } from 'lucide-react';
@@ -13,6 +13,7 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { loading, isAuthenticated, signOut } = useAuth();
+  const navigate = useNavigate();
   
   useEffect(() => {
     const handleScroll = () => {
@@ -36,6 +37,13 @@ const Header = () => {
   }, [isMobileMenuOpen]);
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+  
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/');
+  };
+
+  console.log('[Header] Auth state:', { loading, isAuthenticated });
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -80,7 +88,10 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             <ModeToggle />
             
-            {isAuthenticated ? (
+            {loading ? (
+              // Show a loading state for auth buttons
+              <div className="h-9 w-24 bg-gray-200 animate-pulse rounded-full"></div>
+            ) : isAuthenticated ? (
               <>
                 <Link
                   to="/dashboard"
@@ -93,7 +104,7 @@ const Header = () => {
                   variant="outline"
                   size="sm"
                   className="hidden md:flex"
-                  onClick={signOut}
+                  onClick={handleSignOut}
                 >
                   <LogOut size={16} className="mr-2" />
                   Log out
@@ -146,7 +157,10 @@ const Header = () => {
             </NavLink>
           ))}
           
-          {isAuthenticated ? (
+          {loading ? (
+            // Show a loading state for auth buttons in mobile menu
+            <div className="h-12 w-full bg-gray-200 animate-pulse rounded-full"></div>
+          ) : isAuthenticated ? (
             <>
               <Link
                 to="/dashboard"
@@ -160,7 +174,7 @@ const Header = () => {
                 variant="outline"
                 className="w-full flex items-center justify-center"
                 onClick={() => {
-                  signOut();
+                  handleSignOut();
                   setIsMobileMenuOpen(false);
                 }}
               >

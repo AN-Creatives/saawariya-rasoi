@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
 import { Loader2 } from 'lucide-react';
 
 interface AuthGuardProps {
@@ -9,50 +9,30 @@ interface AuthGuardProps {
 }
 
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
-  const [loading, setLoading] = useState(true);
-  const [authenticated, setAuthenticated] = useState(false);
+  const { loading, isAuthenticated } = useAuth();
   const location = useLocation();
+  
+  console.log('[AuthGuard] Current state:', { loading, isAuthenticated, path: location.pathname });
 
-  useEffect(() => {
-    console.log('AuthGuard mounted');
-    
-    const checkAuth = async () => {
-      const { data } = await supabase.auth.getSession();
-      console.log('AuthGuard session check:', !!data.session);
-      setAuthenticated(!!data.session);
-      setLoading(false);
-    };
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        console.log('AuthGuard auth state changed:', event, !!session);
-        setAuthenticated(!!session);
-        setLoading(false);
-      }
-    );
-
-    checkAuth();
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
-
+  // Always show loading state when authentication is being checked
   if (loading) {
+    console.log('[AuthGuard] Loading authentication state...');
     return (
       <div className="flex h-screen items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        <span className="ml-2">Loading...</span>
+        <span className="ml-2">Verifying authentication...</span>
       </div>
     );
   }
 
-  if (!authenticated) {
-    console.log('AuthGuard redirecting to /auth');
+  // Redirect to auth page if not authenticated
+  if (!isAuthenticated) {
+    console.log('[AuthGuard] Not authenticated, redirecting to /auth');
     return <Navigate to="/auth" state={{ from: location }} replace />;
   }
 
-  console.log('AuthGuard rendering children');
+  // Allow access to children if authenticated
+  console.log('[AuthGuard] Authenticated, rendering children');
   return <>{children}</>;
 };
 
