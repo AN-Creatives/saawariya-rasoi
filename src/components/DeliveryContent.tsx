@@ -118,30 +118,6 @@ const DeliveryContent = () => {
           ))}
         </div>
       </section>
-
-      {/* Delivery Areas */}
-      <section className="glass-morphism rounded-2xl p-6 md:p-10 space-y-6">
-        <h3 className="text-xl font-medium">Delivery Areas</h3>
-        <p className="text-muted-foreground">
-          We currently deliver to the following areas through Zomato:
-        </p>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[
-            "Andheri East", "Andheri West", "Bandra East", "Bandra West",
-            "Juhu", "Santacruz", "Vile Parle", "Powai"
-          ].map((area, index) => (
-            <div 
-              key={index}
-              className="px-4 py-3 bg-white rounded-lg text-center text-sm neo-shadow"
-            >
-              {area}
-            </div>
-          ))}
-        </div>
-        <p className="text-sm text-muted-foreground">
-          For areas not listed, please contact us for special delivery arrangements.
-        </p>
-      </section>
     </div>
   );
 };
