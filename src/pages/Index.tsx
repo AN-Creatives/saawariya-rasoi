@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import Hero from '@/components/Hero';
 import FeaturedMenu from '@/components/FeaturedMenu';
@@ -14,8 +14,17 @@ import { LayoutDashboard } from 'lucide-react';
 
 const Index = () => {
   const { mode } = useOrderMode();
-  const { isAuthenticated, isAdmin } = useAuth();
+  const { isAuthenticated, isAdmin, loading } = useAuth();
+  const navigate = useNavigate();
   
+  // Redirect admin users to dashboard
+  useEffect(() => {
+    if (!loading && isAuthenticated && isAdmin) {
+      console.log('[Index] Admin user detected, redirecting to dashboard');
+      navigate('/dashboard');
+    }
+  }, [isAuthenticated, isAdmin, loading, navigate]);
+
   return (
     <Layout>
       <Hero />
