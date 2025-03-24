@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { useOrderMode } from '@/contexts/OrderModeContext';
 import { cn } from '@/lib/utils';
-import { Menu, X, ShoppingBag, LogIn, LogOut, User } from 'lucide-react';
+import { Menu, X, LogIn, LogOut, User } from 'lucide-react';
 import Logo from './Logo';
 import ModeToggle from './ModeToggle';
 import { useAuth } from '@/hooks/useAuth';
@@ -92,34 +92,48 @@ const Header = () => {
               // Show a loading state for auth buttons
               <div className="h-9 w-24 bg-gray-200 animate-pulse rounded-full"></div>
             ) : isAuthenticated ? (
-              <>
+              // User is authenticated - show dashboard link for admins and logout button
+              <div className="hidden md:flex items-center gap-2">
                 {isAdmin && (
-                  <Link
-                    to="/dashboard"
-                    className="hidden md:flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-full font-medium text-sm transition-all hover:brightness-105"
+                  <Button
+                    variant="default"
+                    size="sm"
+                    className="gap-2"
+                    onClick={() => navigate('/dashboard')}
                   >
                     <User size={16} />
-                    <span>Dashboard</span>
-                  </Link>
+                    Dashboard
+                  </Button>
                 )}
                 <Button
                   variant="outline"
                   size="sm"
-                  className="hidden md:flex"
                   onClick={handleSignOut}
                 >
                   <LogOut size={16} className="mr-2" />
                   Log out
                 </Button>
-              </>
+              </div>
             ) : (
-              <Link
-                to="/auth"
-                className="hidden md:flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-full font-medium text-sm transition-all hover:brightness-105"
-              >
-                <LogIn size={16} />
-                <span>Log in</span>
-              </Link>
+              // User is not authenticated - show login/signup buttons
+              <div className="hidden md:flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => navigate('/auth')}
+                >
+                  Login
+                </Button>
+                <Button
+                  variant="default"
+                  size="sm"
+                  className="bg-saawariya-red hover:bg-saawariya-darkred"
+                  onClick={() => navigate('/auth?tab=signup')}
+                >
+                  <LogIn size={16} className="mr-2" />
+                  Sign up
+                </Button>
+              </div>
             )}
             
             <button 
@@ -163,16 +177,20 @@ const Header = () => {
             // Show a loading state for auth buttons in mobile menu
             <div className="h-12 w-full bg-gray-200 animate-pulse rounded-full"></div>
           ) : isAuthenticated ? (
+            // User is authenticated - show dashboard link for admins and logout button
             <>
               {isAdmin && (
-                <Link
-                  to="/dashboard"
-                  className="flex items-center justify-center gap-2 px-8 py-3 bg-primary text-primary-foreground rounded-full font-medium w-full hover:brightness-105"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                <Button
+                  variant="default"
+                  className="w-full flex items-center justify-center gap-2"
+                  onClick={() => {
+                    navigate('/dashboard');
+                    setIsMobileMenuOpen(false);
+                  }}
                 >
                   <User size={18} />
-                  <span>Dashboard</span>
-                </Link>
+                  Dashboard
+                </Button>
               )}
               <Button
                 variant="outline"
@@ -187,14 +205,30 @@ const Header = () => {
               </Button>
             </>
           ) : (
-            <Link
-              to="/auth"
-              className="flex items-center justify-center gap-2 px-8 py-3 bg-primary text-primary-foreground rounded-full font-medium w-full hover:brightness-105"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              <LogIn size={18} />
-              <span>Log in</span>
-            </Link>
+            // User is not authenticated - show login/signup buttons
+            <>
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={() => {
+                  navigate('/auth');
+                  setIsMobileMenuOpen(false);
+                }}
+              >
+                Login
+              </Button>
+              <Button
+                variant="default"
+                className="w-full flex items-center justify-center gap-2 bg-saawariya-red hover:bg-saawariya-darkred"
+                onClick={() => {
+                  navigate('/auth?tab=signup');
+                  setIsMobileMenuOpen(false);
+                }}
+              >
+                <LogIn size={18} />
+                Sign up
+              </Button>
+            </>
           )}
         </div>
       </div>

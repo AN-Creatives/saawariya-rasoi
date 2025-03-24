@@ -1,6 +1,6 @@
 
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
@@ -17,8 +17,21 @@ const Auth = () => {
   const [fullName, setFullName] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState('signin');
   const { toast } = useToast();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Check for tab parameter in URL
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const tabParam = searchParams.get('tab');
+    if (tabParam === 'signup') {
+      setActiveTab('signup');
+    } else {
+      setActiveTab('signin');
+    }
+  }, [location.search]);
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,7 +58,7 @@ const Auth = () => {
       
       // Automatically sign in after signup for better UX in development
       if (data.user) {
-        navigate('/dashboard');
+        navigate('/');
       }
     } catch (error: any) {
       setError(error.message || 'An error occurred during sign up');
@@ -77,7 +90,7 @@ const Auth = () => {
         description: "You've successfully signed in.",
       });
       
-      navigate('/dashboard');
+      navigate('/');
     } catch (error: any) {
       setError(error.message || 'An error occurred during sign in');
       toast({
@@ -97,7 +110,7 @@ const Auth = () => {
           <CardTitle className="text-2xl font-bold">Saawariya Rasoi Dashboard</CardTitle>
           <CardDescription>Manage your restaurant website content</CardDescription>
         </CardHeader>
-        <Tabs defaultValue="signin" className="w-full">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="signin">Sign In</TabsTrigger>
             <TabsTrigger value="signup">Sign Up</TabsTrigger>
