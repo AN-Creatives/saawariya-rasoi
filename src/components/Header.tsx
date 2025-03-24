@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { useOrderMode } from '@/contexts/OrderModeContext';
@@ -7,15 +8,6 @@ import Logo from './Logo';
 import ModeToggle from './ModeToggle';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from './ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -49,10 +41,6 @@ const Header = () => {
   const handleSignOut = async () => {
     await signOut();
     navigate('/');
-  };
-
-  const handleAuthNavigation = (tab?: 'signin' | 'signup') => {
-    navigate(`/auth${tab === 'signup' ? '?tab=signup' : ''}`);
   };
 
   console.log('[Header] Auth state:', { loading, isAuthenticated, isAdmin });
@@ -101,8 +89,10 @@ const Header = () => {
             <ModeToggle />
             
             {loading ? (
+              // Show a loading state for auth buttons
               <div className="h-9 w-24 bg-gray-200 animate-pulse rounded-full"></div>
             ) : isAuthenticated ? (
+              // User is authenticated - show dashboard link for admins and logout button
               <div className="hidden md:flex items-center gap-2">
                 {isAdmin && (
                   <Button
@@ -125,44 +115,25 @@ const Header = () => {
                 </Button>
               </div>
             ) : (
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button
-                    variant="default"
-                    size="sm"
-                    className="bg-saawariya-red hover:bg-saawariya-darkred"
-                  >
-                    <LogIn size={16} className="mr-2" />
-                    Login
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-md">
-                  <DialogHeader>
-                    <DialogTitle>Welcome to Saawariya Rasoi</DialogTitle>
-                    <DialogDescription>
-                      Sign in to your account or create a new one to get started.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="grid gap-4 py-4">
-                    <Button
-                      variant="default"
-                      className="w-full"
-                      onClick={() => handleAuthNavigation('signin')}
-                    >
-                      <LogIn className="mr-2 h-4 w-4" />
-                      Sign In
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="w-full"
-                      onClick={() => handleAuthNavigation('signup')}
-                    >
-                      <User className="mr-2 h-4 w-4" />
-                      Create Account
-                    </Button>
-                  </div>
-                </DialogContent>
-              </Dialog>
+              // User is not authenticated - show login/signup buttons
+              <div className="hidden md:flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => navigate('/auth')}
+                >
+                  Login
+                </Button>
+                <Button
+                  variant="default"
+                  size="sm"
+                  className="bg-saawariya-red hover:bg-saawariya-darkred"
+                  onClick={() => navigate('/auth?tab=signup')}
+                >
+                  <LogIn size={16} className="mr-2" />
+                  Sign up
+                </Button>
+              </div>
             )}
             
             <button 
@@ -203,8 +174,10 @@ const Header = () => {
           ))}
           
           {loading ? (
+            // Show a loading state for auth buttons in mobile menu
             <div className="h-12 w-full bg-gray-200 animate-pulse rounded-full"></div>
           ) : isAuthenticated ? (
+            // User is authenticated - show dashboard link for admins and logout button
             <>
               {isAdmin && (
                 <Button
@@ -232,49 +205,30 @@ const Header = () => {
               </Button>
             </>
           ) : (
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button
-                  variant="default"
-                  className="w-full bg-saawariya-red hover:bg-saawariya-darkred"
-                >
-                  <LogIn size={18} className="mr-2" />
-                  Login
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-md">
-                <DialogHeader>
-                  <DialogTitle>Welcome to Saawariya Rasoi</DialogTitle>
-                  <DialogDescription>
-                    Sign in to your account or create a new one to get started.
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  <Button
-                    variant="default"
-                    className="w-full"
-                    onClick={() => {
-                      handleAuthNavigation('signin');
-                      setIsMobileMenuOpen(false);
-                    }}
-                  >
-                    <LogIn className="mr-2 h-4 w-4" />
-                    Sign In
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full"
-                    onClick={() => {
-                      handleAuthNavigation('signup');
-                      setIsMobileMenuOpen(false);
-                    }}
-                  >
-                    <User className="mr-2 h-4 w-4" />
-                    Create Account
-                  </Button>
-                </div>
-              </DialogContent>
-            </Dialog>
+            // User is not authenticated - show login/signup buttons
+            <>
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={() => {
+                  navigate('/auth');
+                  setIsMobileMenuOpen(false);
+                }}
+              >
+                Login
+              </Button>
+              <Button
+                variant="default"
+                className="w-full flex items-center justify-center gap-2 bg-saawariya-red hover:bg-saawariya-darkred"
+                onClick={() => {
+                  navigate('/auth?tab=signup');
+                  setIsMobileMenuOpen(false);
+                }}
+              >
+                <LogIn size={18} />
+                Sign up
+              </Button>
+            </>
           )}
         </div>
       </div>
