@@ -8,10 +8,12 @@ import Logo from './Logo';
 import ModeToggle from './ModeToggle';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from './ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showAuthDialog, setShowAuthDialog] = useState(false);
   const { loading, isAuthenticated, isAdmin, signOut } = useAuth();
   const navigate = useNavigate();
   
@@ -41,6 +43,16 @@ const Header = () => {
   const handleSignOut = async () => {
     await signOut();
     navigate('/');
+  };
+
+  const handleSignIn = () => {
+    setShowAuthDialog(false);
+    navigate('/auth');
+  };
+
+  const handleSignUp = () => {
+    setShowAuthDialog(false);
+    navigate('/auth?tab=signup');
   };
 
   console.log('[Header] Auth state:', { loading, isAuthenticated, isAdmin });
@@ -115,24 +127,45 @@ const Header = () => {
                 </Button>
               </div>
             ) : (
-              // User is not authenticated - show login/signup buttons
-              <div className="hidden md:flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => navigate('/auth')}
-                >
-                  Login
-                </Button>
-                <Button
-                  variant="default"
-                  size="sm"
-                  className="bg-saawariya-red hover:bg-saawariya-darkred"
-                  onClick={() => navigate('/auth?tab=signup')}
-                >
-                  <LogIn size={16} className="mr-2" />
-                  Sign up
-                </Button>
+              // User is not authenticated - show login/signup dialog trigger
+              <div className="hidden md:flex items-center">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button
+                      variant="default"
+                      size="sm"
+                      className="bg-saawariya-red hover:bg-saawariya-darkred"
+                    >
+                      <LogIn size={16} className="mr-2" />
+                      Login / Sign up
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle className="text-2xl font-bold">Welcome to Saawariya</DialogTitle>
+                      <DialogDescription>
+                        Choose how you want to continue
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="flex flex-col gap-4 py-4">
+                      <Button 
+                        variant="outline" 
+                        onClick={handleSignIn}
+                        className="w-full justify-start"
+                      >
+                        <LogIn size={18} className="mr-2" />
+                        Log in with existing account
+                      </Button>
+                      <Button
+                        className="w-full justify-start bg-saawariya-red hover:bg-saawariya-darkred"
+                        onClick={handleSignUp}
+                      >
+                        <User size={18} className="mr-2" />
+                        Create a new account
+                      </Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </div>
             )}
             
@@ -209,13 +242,14 @@ const Header = () => {
             <>
               <Button
                 variant="outline"
-                className="w-full"
+                className="w-full flex items-center justify-center"
                 onClick={() => {
                   navigate('/auth');
                   setIsMobileMenuOpen(false);
                 }}
               >
-                Login
+                <LogIn size={18} className="mr-2" />
+                Log in
               </Button>
               <Button
                 variant="default"
@@ -225,7 +259,7 @@ const Header = () => {
                   setIsMobileMenuOpen(false);
                 }}
               >
-                <LogIn size={18} />
+                <User size={18} />
                 Sign up
               </Button>
             </>
