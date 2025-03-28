@@ -12,25 +12,25 @@ const ModeToggle = () => {
       <button
         onClick={() => setMode('delivery')}
         className={cn(
-          'flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300',
+          'flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300',
           mode === 'delivery'
             ? 'bg-saawariya-red text-white shadow-sm' 
             : 'text-muted-foreground hover:text-foreground'
         )}
       >
-        <Truck size={14} />
+        <Truck size={16} />
         <span>Delivery</span>
       </button>
       <button
         onClick={() => setMode('takeaway')}
         className={cn(
-          'flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300',
+          'flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300',
           mode === 'takeaway'
             ? 'bg-saawariya-red text-white shadow-sm' 
             : 'text-muted-foreground hover:text-foreground'
         )}
       >
-        <UtensilsCrossed size={14} />
+        <UtensilsCrossed size={16} />
         <span>Takeaway</span>
       </button>
     </div>

@@ -96,7 +96,9 @@ const Header = () => {
           </nav>
           
           <div className="flex items-center space-x-4">
-            <ModeToggle />
+            <div className="hidden md:block">
+              <ModeToggle />
+            </div>
             
             {loading ? (
               // Show a loading state for auth buttons
@@ -218,6 +220,10 @@ const Header = () => {
               {link.name}
             </NavLink>
           ))}
+          
+          <div className="md:hidden mt-4 mb-6">
+            <ModeToggle />
+          </div>
           
           {loading ? (
             // Show a loading state for auth buttons in mobile menu
