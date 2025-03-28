@@ -9,11 +9,11 @@ import ModeToggle from './ModeToggle';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from './ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [showAuthDialog, setShowAuthDialog] = useState(false);
   const { loading, isAuthenticated, isAdmin, signOut } = useAuth();
   const navigate = useNavigate();
   
@@ -46,12 +46,10 @@ const Header = () => {
   };
 
   const handleSignIn = () => {
-    setShowAuthDialog(false);
     navigate('/auth');
   };
 
   const handleSignUp = () => {
-    setShowAuthDialog(false);
     navigate('/auth?tab=signup');
   };
 
@@ -117,14 +115,29 @@ const Header = () => {
                     Dashboard
                   </Button>
                 )}
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleSignOut}
-                >
-                  <LogOut size={16} className="mr-2" />
-                  Log out
-                </Button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                    >
+                      <LogOut size={16} className="mr-2" />
+                      Log out
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Are you sure you want to log out?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        You will need to log in again to access your account.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction onClick={handleSignOut}>Log out</AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
             ) : (
               // User is not authenticated - show login/signup dialog trigger
