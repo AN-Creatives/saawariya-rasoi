@@ -144,43 +144,15 @@ const Header = () => {
             ) : (
               // User is not authenticated - show login/signup dialog trigger
               <div className="hidden md:flex items-center">
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button
-                      variant="default"
-                      size="sm"
-                      className="bg-saawariya-red hover:bg-saawariya-darkred"
-                    >
-                      <LogIn size={16} className="mr-2" />
-                      Login / Sign up
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle className="text-2xl font-bold">Welcome to Saawariya</DialogTitle>
-                      <DialogDescription>
-                        Choose how you want to continue
-                      </DialogDescription>
-                    </DialogHeader>
-                    <div className="flex flex-col gap-4 py-4">
-                      <Button 
-                        variant="outline" 
-                        onClick={handleSignIn}
-                        className="w-full justify-start"
-                      >
-                        <LogIn size={18} className="mr-2" />
-                        Log in with existing account
-                      </Button>
-                      <Button
-                        className="w-full justify-start bg-saawariya-red hover:bg-saawariya-darkred"
-                        onClick={handleSignUp}
-                      >
-                        <User size={18} className="mr-2" />
-                        Create a new account
-                      </Button>
-                    </div>
-                  </DialogContent>
-                </Dialog>
+                <Button
+                  variant="default"
+                  size="sm"
+                  className="bg-saawariya-red hover:bg-saawariya-darkred"
+                  onClick={handleSignIn}
+                >
+                  <LogIn size={16} className="mr-2" />
+                  Login / Sign up
+                </Button>
               </div>
             )}
             
