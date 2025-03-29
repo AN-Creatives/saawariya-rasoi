@@ -62,7 +62,7 @@ export const menuItems: MenuItem[] = [
     takeawayPrice: "₹135",
     category: "Saawariya Specialty",
     veg: true,
-    image: "/images/food/farra.jpg",
+    image: "/lovable-uploads/d732eba0-f1e3-4ddb-86d6-b6463755436e.png",
     description: "Steamed rice dumplings with a delicious filling, served with spicy chutney"
   },
   {
