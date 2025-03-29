@@ -2,7 +2,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import ModeToggle from '../ModeToggle';
 
 type NavLinkItem = {
   name: string;
@@ -15,7 +14,7 @@ interface DesktopNavigationProps {
 
 const DesktopNavigation = ({ navLinks }: DesktopNavigationProps) => {
   return (
-    <div className="hidden md:flex items-center justify-between flex-1 ml-6">
+    <div className="hidden md:flex items-center flex-1 ml-6">
       <nav className="flex items-center space-x-1">
         {navLinks.map((link) => (
           <NavLink
@@ -32,11 +31,6 @@ const DesktopNavigation = ({ navLinks }: DesktopNavigationProps) => {
           </NavLink>
         ))}
       </nav>
-      
-      {/* Mode Toggle positioned to the right with spacing */}
-      <div className="flex items-center">
-        <ModeToggle />
-      </div>
     </div>
   );
 };
