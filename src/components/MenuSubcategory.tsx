@@ -5,7 +5,6 @@ import { Flame, Info, Clock, Tag, ChevronRight } from 'lucide-react';
 import { useOrderMode } from '@/contexts/OrderModeContext';
 import { Card, CardContent } from './ui/card';
 import { useNavigate } from 'react-router-dom';
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import {
   Dialog,
   DialogContent,
@@ -53,8 +52,8 @@ const MenuSubcategory = ({ title, items, zomatoLink }: MenuSubcategoryProps) => 
             key={item.id} 
             className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-none"
           >
-            {/* Item Image with AspectRatio */}
-            <AspectRatio ratio={16/9} className="bg-gradient-to-b from-gray-100 to-gray-200 overflow-hidden">
+            {/* Item Image */}
+            <div className="relative h-48 bg-gradient-to-b from-gray-100 to-gray-200 overflow-hidden">
               {item.image ? (
                 <img 
                   src={item.image} 
@@ -88,7 +87,7 @@ const MenuSubcategory = ({ title, items, zomatoLink }: MenuSubcategoryProps) => 
                   10% OFF
                 </div>
               )}
-            </AspectRatio>
+            </div>
             
             <CardContent className="p-4">
               <div className="flex justify-between items-start mb-2">
@@ -135,7 +134,7 @@ const MenuSubcategory = ({ title, items, zomatoLink }: MenuSubcategoryProps) => 
                       rel="noopener noreferrer"
                       className="px-4 py-2 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:brightness-105 flex items-center"
                     >
-                      Order Now
+                      Order
                       <ChevronRight size={16} className="ml-1" />
                     </a>
                   ) : (
