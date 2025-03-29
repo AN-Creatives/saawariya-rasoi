@@ -7,6 +7,7 @@ import { useAuth } from '@/hooks/useAuth';
 import DesktopNavigation from './navigation/DesktopNavigation';
 import MobileNavigation from './navigation/MobileNavigation';
 import AuthButtons from './auth/AuthButtons';
+import ModeToggle from './ModeToggle';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -74,6 +75,11 @@ const Header = () => {
           <DesktopNavigation navLinks={navLinks} />
           
           <div className="flex items-center space-x-4">
+            {/* Mode Toggle - for desktop view */}
+            <div className="hidden md:block">
+              <ModeToggle />
+            </div>
+            
             {/* Auth Buttons (Desktop) */}
             <AuthButtons />
             

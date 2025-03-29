@@ -30,7 +30,7 @@ const AuthButtons = () => {
 
   if (isAuthenticated) {
     return (
-      <div className="hidden md:flex items-center gap-2">
+      <div className="hidden md:flex items-center gap-2 ml-4">
         {isAdmin && (
           <Button
             variant="default"
@@ -70,7 +70,7 @@ const AuthButtons = () => {
   }
 
   return (
-    <div className="hidden md:flex items-center">
+    <div className="hidden md:flex items-center ml-4">
       <Button
         variant="default"
         size="sm"
