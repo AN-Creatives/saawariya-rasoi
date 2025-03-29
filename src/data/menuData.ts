@@ -154,7 +154,7 @@ export const menuItems: MenuItem[] = [
     takeawayPrice: "₹107",
     category: "Saawariya Specialty",
     veg: true,
-    image: "/images/food/namkeen-sevai.jpg",
+    image: "/lovable-uploads/86db043d-2f31-4cfa-9bd7-b146abbbed41.png",
     description: "Savory rice noodles tossed with spices and vegetables"
   },
   
