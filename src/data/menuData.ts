@@ -18,7 +18,8 @@ export const categories = [
   "Saawariya Specialty",
   "Saawariya Vrat Special",
   "Saawariya Combos",
-  "Saawariya's Dessert"
+  "Saawariya's Dessert",
+  "Saawariya's Beverages"
 ];
 
 export const menuItems: MenuItem[] = [
@@ -46,7 +47,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: 3,
-    name: "Sabu dana Vada",
+    name: "Sabudana Vada",
     price: "₹149",
     takeawayPrice: "₹135",
     category: "Saawariya Specialty",
@@ -76,6 +77,28 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: 6,
+    name: "Dahi Vada",
+    price: "₹199",
+    takeawayPrice: "₹179",
+    category: "Saawariya Specialty",
+    veg: true,
+    image: "/images/food/dahi-vada.jpg",
+    description: "Soft lentil dumplings soaked in yogurt with tangy chutneys",
+    quantity: "4 pc"
+  },
+  {
+    id: 7,
+    name: "Dahi Vada",
+    price: "₹299",
+    takeawayPrice: "₹269",
+    category: "Saawariya Specialty",
+    veg: true,
+    image: "/images/food/dahi-vada-large.jpg",
+    description: "Soft lentil dumplings soaked in yogurt with tangy chutneys",
+    quantity: "10 pc"
+  },
+  {
+    id: 8,
     name: "Chana Dal Pakora",
     price: "₹99",
     takeawayPrice: "₹89",
@@ -85,7 +108,7 @@ export const menuItems: MenuItem[] = [
     description: "Crispy fritters made with split chickpeas, perfect snack with tea"
   },
   {
-    id: 7,
+    id: 9,
     name: "2 Sattu Paratha",
     price: "₹129",
     takeawayPrice: "₹116",
@@ -95,7 +118,7 @@ export const menuItems: MenuItem[] = [
     description: "Flatbread stuffed with roasted gram flour mixture, served with pickle"
   },
   {
-    id: 8,
+    id: 10,
     name: "Poha",
     price: "₹129",
     takeawayPrice: "₹116",
@@ -105,7 +128,7 @@ export const menuItems: MenuItem[] = [
     description: "Flattened rice cooked with onions, peanuts, and spices, a light meal"
   },
   {
-    id: 9,
+    id: 11,
     name: "Appe",
     price: "₹99",
     takeawayPrice: "₹89",
@@ -115,7 +138,7 @@ export const menuItems: MenuItem[] = [
     description: "Soft and fluffy rice pancakes, served with coconut chutney"
   },
   {
-    id: 10,
+    id: 12,
     name: "Sev Tamatar Sabji",
     price: "₹139",
     takeawayPrice: "₹125",
@@ -125,17 +148,7 @@ export const menuItems: MenuItem[] = [
     description: "Spicy tomato curry topped with crispy gram flour noodles"
   },
   {
-    id: 11,
-    name: "2 Besan Chilla",
-    price: "₹129",
-    takeawayPrice: "₹116",
-    category: "Saawariya Specialty",
-    veg: true,
-    image: "/images/food/besan-chilla.jpg",
-    description: "Savory gram flour pancakes with herbs and spices"
-  },
-  {
-    id: 12,
+    id: 13,
     name: "Namkeen Sevai",
     price: "₹119",
     takeawayPrice: "₹107",
@@ -143,17 +156,6 @@ export const menuItems: MenuItem[] = [
     veg: true,
     image: "/images/food/namkeen-sevai.jpg",
     description: "Savory rice noodles tossed with spices and vegetables"
-  },
-  {
-    id: 13,
-    name: "Nimona",
-    price: "₹219",
-    takeawayPrice: "₹197",
-    category: "Saawariya Specialty",
-    veg: true,
-    popular: true,
-    image: "/images/food/nimona.jpg",
-    description: "Traditional green pea curry with special spices, a regional delicacy"
   },
   
   // Saawariya Vrat Special - Vrat Snacks
@@ -181,7 +183,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: 16,
-    name: "Sabu dana Vada",
+    name: "Sabudana Vada",
     price: "₹149",
     takeawayPrice: "₹134",
     category: "Saawariya Vrat Special",
@@ -194,7 +196,7 @@ export const menuItems: MenuItem[] = [
   // Saawariya Vrat Special - Vrat Sweet
   {
     id: 17,
-    name: "Sabu dana Kheer",
+    name: "Sabudana Kheer",
     price: "₹149",
     takeawayPrice: "₹134",
     category: "Saawariya Vrat Special",
@@ -241,7 +243,7 @@ export const menuItems: MenuItem[] = [
   {
     id: 21,
     name: "Vrat Special Thali",
-    description: "Sabudana Khichdi + Aloo Jeera + Aloo Vada + Curd",
+    description: "Sabudana Khichdi + Aloo Jeera + Kuttu ke atta ki 2 poori + 2 Aloo Vada + Curd",
     price: "₹249",
     takeawayPrice: "₹224",
     category: "Saawariya Vrat Special",
@@ -254,27 +256,6 @@ export const menuItems: MenuItem[] = [
   // Saawariya Combos
   {
     id: 22,
-    name: "Chili Paneer with Fried Rice/Noodles",
-    description: "Served with a coke",
-    price: "₹269",
-    takeawayPrice: "₹242",
-    category: "Saawariya Combos",
-    veg: true,
-    popular: true,
-    image: "/images/food/chili-paneer-combo.jpg"
-  },
-  {
-    id: 23,
-    name: "Veg Manchurian with Fried Rice/Noodles",
-    description: "Served with a coke",
-    price: "₹249",
-    takeawayPrice: "₹224",
-    category: "Saawariya Combos",
-    veg: true,
-    image: "/images/food/veg-manchurian-combo.jpg"
-  },
-  {
-    id: 24,
     name: "Dal Fry Combo",
     description: "Served with Rice/4 Roti/2 Paratha",
     price: "₹159",
@@ -284,7 +265,7 @@ export const menuItems: MenuItem[] = [
     image: "/images/food/dal-fry-combo.jpg"
   },
   {
-    id: 25,
+    id: 23,
     name: "Poori Sabji Combo",
     description: "Served with 6 Poori/4 Roti/2 Paratha/4 Chawal ke Atte ki poori",
     price: "₹149",
@@ -294,7 +275,7 @@ export const menuItems: MenuItem[] = [
     image: "/images/food/poori-sabji-combo.jpg"
   },
   {
-    id: 26,
+    id: 24,
     name: "Paneer Bhurji Combo",
     description: "Served with 4 Roti/2 Paratha",
     price: "₹179",
@@ -304,18 +285,7 @@ export const menuItems: MenuItem[] = [
     image: "/images/food/paneer-bhurji-combo.jpg"
   },
   {
-    id: 27,
-    name: "Winter Special Combo",
-    description: "Nimona + Rice + 4 Roti/2 Paratha",
-    price: "₹199",
-    takeawayPrice: "₹179",
-    category: "Saawariya Combos",
-    veg: true,
-    popular: true,
-    image: "/images/food/winter-special-combo.jpg"
-  },
-  {
-    id: 28,
+    id: 25,
     name: "Veg Basic Thali",
     description: "Daal + Sookhi Sabji + Rice + 4 Roti/2 Paratha",
     price: "₹169",
@@ -325,7 +295,7 @@ export const menuItems: MenuItem[] = [
     image: "/images/food/veg-basic-thali.jpg"
   },
   {
-    id: 29,
+    id: 26,
     name: "Veg Standard Thali",
     description: "Paneer ki Sabji + Rice + Roti/Paratha",
     price: "₹199",
@@ -335,7 +305,7 @@ export const menuItems: MenuItem[] = [
     image: "/images/food/veg-standard-thali.jpg"
   },
   {
-    id: 30,
+    id: 27,
     name: "Veg Special Thali",
     description: "Paneer ki Sabji + Daal + Rice + Roti/Paratha + Sweet",
     price: "₹249",
@@ -348,7 +318,7 @@ export const menuItems: MenuItem[] = [
   
   // Saawariya's Dessert
   {
-    id: 31,
+    id: 28,
     name: "Kheer",
     price: "₹149",
     takeawayPrice: "₹134",
@@ -357,137 +327,26 @@ export const menuItems: MenuItem[] = [
     image: "/images/food/kheer.jpg",
     description: "Traditional rice pudding with cardamom and nuts"
   },
+  
+  // Saawariya's Beverages
   {
-    id: 32,
-    name: "Pedha",
-    price: "₹179",
-    takeawayPrice: "₹161",
-    category: "Saawariya's Dessert",
+    id: 29,
+    name: "Lassi",
+    price: "₹99",
+    takeawayPrice: "₹89",
+    category: "Saawariya's Beverages",
     veg: true,
-    quantity: "250 grams",
-    image: "/images/food/pedha-small.jpg",
-    description: "Traditional milk-based sweet with cardamom flavor"
+    image: "/images/food/lassi.jpg",
+    description: "Traditional yogurt-based sweet or salted drink"
   },
   {
-    id: 33,
-    name: "Pedha",
-    price: "₹349",
-    takeawayPrice: "₹314",
-    category: "Saawariya's Dessert",
+    id: 30,
+    name: "Masala Chaas",
+    price: "₹99",
+    takeawayPrice: "₹89",
+    category: "Saawariya's Beverages",
     veg: true,
-    quantity: "500 grams",
-    image: "/images/food/pedha-medium.jpg",
-    description: "Traditional milk-based sweet with cardamom flavor"
-  },
-  {
-    id: 34,
-    name: "Pedha",
-    price: "₹699",
-    takeawayPrice: "₹629",
-    category: "Saawariya's Dessert",
-    veg: true,
-    quantity: "1 Kilogram",
-    image: "/images/food/pedha-large.jpg",
-    description: "Traditional milk-based sweet with cardamom flavor"
-  },
-  {
-    id: 35,
-    name: "Dry Fruits Laddu",
-    price: "₹349",
-    takeawayPrice: "₹314",
-    category: "Saawariya's Dessert",
-    veg: true,
-    quantity: "250 grams",
-    popular: true,
-    image: "/images/food/dry-fruit-laddu-small.jpg",
-    description: "Nutritious sweet balls made with assorted dry fruits and nuts"
-  },
-  {
-    id: 36,
-    name: "Dry Fruits Laddu",
-    price: "₹749",
-    takeawayPrice: "₹674",
-    category: "Saawariya's Dessert",
-    veg: true,
-    quantity: "500 grams",
-    image: "/images/food/dry-fruit-laddu-medium.jpg",
-    description: "Nutritious sweet balls made with assorted dry fruits and nuts"
-  },
-  {
-    id: 37,
-    name: "Dry Fruits Laddu",
-    price: "₹1549",
-    takeawayPrice: "₹1394",
-    category: "Saawariya's Dessert",
-    veg: true,
-    quantity: "1 Kilogram",
-    image: "/images/food/dry-fruit-laddu-large.jpg",
-    description: "Nutritious sweet balls made with assorted dry fruits and nuts"
-  },
-  {
-    id: 38,
-    name: "Gondh ke Laddu",
-    price: "₹289",
-    takeawayPrice: "₹260",
-    category: "Saawariya's Dessert",
-    veg: true,
-    quantity: "250 grams",
-    image: "/images/food/gondh-laddu-small.jpg",
-    description: "Traditional winter sweet with edible gum and nuts"
-  },
-  {
-    id: 39,
-    name: "Gondh ke Laddu",
-    price: "₹599",
-    takeawayPrice: "₹539",
-    category: "Saawariya's Dessert",
-    veg: true,
-    quantity: "500 grams",
-    image: "/images/food/gondh-laddu-medium.jpg",
-    description: "Traditional winter sweet with edible gum and nuts"
-  },
-  {
-    id: 40,
-    name: "Gondh ke Laddu",
-    price: "₹1199",
-    takeawayPrice: "₹1079",
-    category: "Saawariya's Dessert",
-    veg: true,
-    quantity: "1 Kilogram",
-    image: "/images/food/gondh-laddu-large.jpg",
-    description: "Traditional winter sweet with edible gum and nuts"
-  },
-  {
-    id: 41,
-    name: "Alsi ke Laddu",
-    price: "₹279",
-    takeawayPrice: "₹251",
-    category: "Saawariya's Dessert",
-    veg: true,
-    quantity: "250 grams",
-    image: "/images/food/alsi-laddu-small.jpg",
-    description: "Nutritious flaxseed-based sweet for winter"
-  },
-  {
-    id: 42,
-    name: "Alsi ke Laddu",
-    price: "₹599",
-    takeawayPrice: "₹539",
-    category: "Saawariya's Dessert",
-    veg: true,
-    quantity: "500 grams",
-    image: "/images/food/alsi-laddu-medium.jpg",
-    description: "Nutritious flaxseed-based sweet for winter"
-  },
-  {
-    id: 43,
-    name: "Alsi ke Laddu",
-    price: "₹1199",
-    takeawayPrice: "₹1079",
-    category: "Saawariya's Dessert",
-    veg: true,
-    quantity: "1 Kilogram",
-    image: "/images/food/alsi-laddu-large.jpg",
-    description: "Nutritious flaxseed-based sweet for winter"
+    image: "/images/food/masala-chaas.jpg",
+    description: "Spiced buttermilk with mint and cumin"
   }
 ];

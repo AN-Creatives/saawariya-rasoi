@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Flame } from 'lucide-react';
@@ -17,19 +18,19 @@ const featuredItems = [
     popular: true
   },
   {
-    id: 13,
-    name: "Nimona",
-    description: "Authentic Purwanchal-style green pea curry with special spices",
-    price: "₹219",
-    takeawayPrice: "₹197",
+    id: 6,
+    name: "Dahi Vada",
+    description: "Soft lentil dumplings soaked in yogurt with tangy chutneys",
+    price: "₹199",
+    takeawayPrice: "₹179",
     category: "Saawariya Specialty",
     veg: true,
-    popular: true
+    quantity: "4 pc"
   },
   {
     id: 21,
     name: "Vrat Special Thali",
-    description: "Sabudana Khichdi + Aloo Jeera + Aloo Vada + Curd - perfect for fasting days",
+    description: "Sabudana Khichdi + Aloo Jeera + Kuttu ke atta ki 2 poori + 2 Aloo Vada + Curd",
     price: "₹249",
     takeawayPrice: "₹224",
     category: "Saawariya Vrat Special",
@@ -38,9 +39,9 @@ const featuredItems = [
     popular: true
   },
   {
-    id: 30,
+    id: 27,
     name: "Veg Special Thali",
-    description: "Paneer ki Sabji + Daal + Rice + Roti/Paratha + Sweet - our complete meal",
+    description: "Paneer ki Sabji + Daal + Rice + Roti/Paratha + Sweet",
     price: "₹249",
     takeawayPrice: "₹224",
     category: "Saawariya Combos",
