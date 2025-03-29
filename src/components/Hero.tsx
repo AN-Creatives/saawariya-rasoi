@@ -39,7 +39,7 @@ const Hero = () => {
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full font-medium hover:brightness-105 hover-lift"
                 >
-                  Order via Zomato
+                  Order Now
                   <ArrowRight size={18} />
                 </a>
               ) : (
@@ -47,7 +47,7 @@ const Hero = () => {
                   href="tel:+911234567890"
                   className="flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full font-medium hover:brightness-105 hover-lift"
                 >
-                  Call to Order
+                  Order Now
                   <ArrowRight size={18} />
                 </a>
               )}
