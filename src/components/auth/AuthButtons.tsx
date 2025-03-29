@@ -74,7 +74,7 @@ const AuthButtons = () => {
       <Button
         variant="default"
         size="sm"
-        className="bg-saawariya-red hover:bg-saawariya-darkred"
+        className="bg-saawariya-yellow hover:bg-saawariya-red transition-colors"
         onClick={handleSignIn}
       >
         <LogIn size={16} className="mr-2" />
