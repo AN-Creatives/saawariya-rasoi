@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ArrowRight, Phone, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -128,7 +127,7 @@ const TakeawayContent = () => {
           <div className="glass-morphism rounded-xl overflow-hidden hover-lift flex flex-col">
             <div className="aspect-[3/2] relative">
               <img 
-                src="https://images.unsplash.com/photo-1529543544282-cdab85927b0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                src="/lovable-uploads/72ac1482-f513-461a-817e-37a758073834.png" 
                 alt="Party catering"
                 className="w-full h-full object-cover"
               />
