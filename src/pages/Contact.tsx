@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import { MapPin, Phone, Mail, Clock, Send, MessageSquare } from 'lucide-react';
@@ -86,7 +85,7 @@ const Contact = () => {
                     <div>
                       <h3 className="font-medium mb-1">Phone</h3>
                       <p className="text-muted-foreground text-sm">
-                        +91 123 456 7890
+                        +91 96515 73635
                       </p>
                     </div>
                   </li>
@@ -98,7 +97,7 @@ const Contact = () => {
                     <div>
                       <h3 className="font-medium mb-1">Email</h3>
                       <p className="text-muted-foreground text-sm">
-                        info@saawariyarasoi.com
+                        admin@saawariyarasoi.com
                       </p>
                     </div>
                   </li>
@@ -112,7 +111,7 @@ const Contact = () => {
                       <p className="text-muted-foreground text-sm">
                         <span className="font-medium text-foreground">Mon - Fri:</span> 11:00 AM - 10:00 PM<br />
                         <span className="font-medium text-foreground">Sat - Sun:</span> 10:00 AM - 11:00 PM<br />
-                        <span className="font-medium text-foreground">Delivery Hours:</span> 11:30 AM - 9:30 PM
+                        <span className="font-medium text-foreground">Delivery Hours:</span> 8:00 AM - 10:00 PM
                       </p>
                     </div>
                   </li>
@@ -120,7 +119,7 @@ const Contact = () => {
                 
                 <div className="mt-8">
                   <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115348.20401743568!2d80.25329138359376!3d26.449108400000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399c4770b127c46f%3A0x1778302a9fbe7b41!2sKanpur%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1653557461259!5m2!1sen!2sin" 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1693.0391079789068!2d80.34033676217005!3d26.461697496647647!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399c38d71b739aef%3A0x8dfabc7fa62e4abe!2sSunrise%20Arcade!5e0!3m2!1sen!2sin!4v1720536747776!5m2!1sen!2sin" 
                     width="100%" 
                     height="200" 
                     style={{ border: 0 }} 

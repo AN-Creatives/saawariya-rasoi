@@ -89,9 +89,9 @@ const FeaturedMenu = () => {
                       <h3 className="text-lg font-medium mb-1">
                         {item.name}
                         {/* Only render quantity if it exists on the item */}
-                        {('quantity' in item) && (
+                        {'quantity' in item && (
                           <span className="text-sm text-muted-foreground ml-2">
-                            ({item.quantity as string})
+                            ({(item as any).quantity})
                           </span>
                         )}
                       </h3>
@@ -133,7 +133,7 @@ const FeaturedMenu = () => {
                     </a>
                   ) : (
                     <a 
-                      href="tel:+911234567890"
+                      href="tel:+919651573635"
                       className="px-4 py-2 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:brightness-105"
                     >
                       Order Now

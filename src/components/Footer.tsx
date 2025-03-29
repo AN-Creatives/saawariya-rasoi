@@ -64,11 +64,11 @@ const Footer = () => {
               </li>
               <li className="flex items-center space-x-3">
                 <Phone size={16} className="text-primary" />
-                <span className="text-sm text-muted-foreground">+91 123 456 7890</span>
+                <span className="text-sm text-muted-foreground">+91 96515 73635</span>
               </li>
               <li className="flex items-center space-x-3">
                 <Mail size={16} className="text-primary" />
-                <span className="text-sm text-muted-foreground">info@saawariyarasoi.com</span>
+                <span className="text-sm text-muted-foreground">admin@saawariyarasoi.com</span>
               </li>
             </ul>
           </div>
@@ -83,7 +83,7 @@ const Footer = () => {
                 <span className="font-medium text-foreground">Sat - Sun:</span> 10:00 AM - 11:00 PM
               </li>
               <li className="text-sm text-muted-foreground mt-3">
-                <span className="font-medium text-foreground">Delivery Hours:</span> 11:30 AM - 9:30 PM
+                <span className="font-medium text-foreground">Delivery Hours:</span> 8:00 AM - 10:00 PM
               </li>
             </ul>
           </div>
