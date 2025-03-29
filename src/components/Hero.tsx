@@ -3,6 +3,10 @@ import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useOrderMode } from '@/contexts/OrderModeContext';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+
+// Get some customer names from the reviews data
+const customerInitials = ["D", "S", "P", "N"];
 
 const Hero = () => {
   const { mode } = useOrderMode();
@@ -62,14 +66,12 @@ const Hero = () => {
             
             <div className="flex items-center gap-4 pt-4">
               <div className="flex -space-x-2">
-                {[...Array(4)].map((_, i) => (
-                  <div key={i} className="w-8 h-8 rounded-full border-2 border-background overflow-hidden">
-                    <img 
-                      src={`https://randomuser.me/api/portraits/men/${20 + i}.jpg`} 
-                      alt="Customer" 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
+                {customerInitials.map((initial, i) => (
+                  <Avatar key={i} className="w-8 h-8 rounded-full border-2 border-background">
+                    <AvatarFallback className="bg-primary/10 text-primary text-sm font-medium">
+                      {initial}
+                    </AvatarFallback>
+                  </Avatar>
                 ))}
               </div>
               <div>
