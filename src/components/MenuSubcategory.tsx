@@ -49,31 +49,38 @@ const MenuSubcategory = ({ title, items, zomatoLink }: MenuSubcategoryProps) => 
             key={item.id} 
             className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-none"
           >
-            {/* Item Image (Placeholder for now) */}
-            <div className="relative h-40 bg-gradient-to-b from-gray-100 to-gray-200 overflow-hidden">
+            {/* Item Image */}
+            <div className="relative h-48 bg-gradient-to-b from-gray-100 to-gray-200 overflow-hidden">
               {item.image ? (
                 <img 
                   src={item.image} 
                   alt={item.name} 
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    // Fallback gradient if image fails to load
+                    (e.target as HTMLImageElement).style.display = 'none';
+                  }}
                 />
               ) : (
-                <div className="absolute inset-0 flex items-start p-4">
-                  {item.popular && (
-                    <div className="absolute top-2 right-2 bg-primary text-white px-2 py-1 rounded text-xs font-medium flex items-center gap-1">
-                      <Flame size={12} />
-                      Popular
-                    </div>
-                  )}
-                  <div>
-                    <div className="text-sm text-gray-500">Top Rated</div>
-                    <h4 className="text-xl font-bold text-gray-800">{item.name}</h4>
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/5 to-primary/20">
+                  <div className="text-center px-4">
+                    <h4 className="text-xl font-bold text-primary/80">{item.name}</h4>
+                    {item.description && (
+                      <p className="text-sm text-primary/60 mt-1 line-clamp-2">{item.description}</p>
+                    )}
                   </div>
                 </div>
               )}
               
+              {item.popular && (
+                <div className="absolute top-2 right-2 bg-primary text-white px-2 py-1 rounded text-xs font-medium flex items-center gap-1 z-10">
+                  <Flame size={12} />
+                  Popular
+                </div>
+              )}
+              
               {mode === 'takeaway' && item.takeawayPrice && (
-                <div className="absolute right-0 top-0 bg-red-500 text-white p-2 rounded-bl-lg font-bold">
+                <div className="absolute right-0 top-0 bg-red-500 text-white p-2 rounded-bl-lg font-bold z-10">
                   10% OFF
                 </div>
               )}
@@ -100,7 +107,7 @@ const MenuSubcategory = ({ title, items, zomatoLink }: MenuSubcategoryProps) => 
               </div>
               
               {item.description && (
-                <p className="text-sm text-muted-foreground mb-4">{item.description}</p>
+                <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{item.description}</p>
               )}
               
               <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">

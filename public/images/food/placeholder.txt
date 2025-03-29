@@ -1,0 +1,53 @@
+
+Please add food images here with the following filenames:
+
+Saawariya Specialty:
+- thekua.jpg
+- dal-pithi.jpg
+- saboodana-vada.jpg
+- farra.jpg
+- bhauri.jpg
+- chana-dal-pakora.jpg
+- sattu-paratha.jpg
+- poha.jpg
+- appe.jpg
+- sev-tamatar.jpg
+- besan-chilla.jpg
+- namkeen-sevai.jpg
+- nimona.jpg
+
+Saawariya Vrat Special:
+- paneer-pakora.jpg
+- aloo-vada.jpg
+- saboodana-vada-vrat.jpg
+- saboodana-kheer.jpg
+- aloo-jeera-curd.jpg
+- saboodana-khichdi.jpg
+- vrat-basic-thali.jpg
+- vrat-special-thali.jpg
+
+Saawariya Combos:
+- chili-paneer-combo.jpg
+- veg-manchurian-combo.jpg
+- dal-fry-combo.jpg
+- poori-sabji-combo.jpg
+- paneer-bhurji-combo.jpg
+- winter-special-combo.jpg
+- veg-basic-thali.jpg
+- veg-standard-thali.jpg
+- veg-special-thali.jpg
+
+Saawariya's Dessert:
+- kheer.jpg
+- pedha-small.jpg
+- pedha-medium.jpg
+- pedha-large.jpg
+- dry-fruit-laddu-small.jpg
+- dry-fruit-laddu-medium.jpg
+- dry-fruit-laddu-large.jpg
+- gondh-laddu-small.jpg
+- gondh-laddu-medium.jpg
+- gondh-laddu-large.jpg
+- alsi-laddu-small.jpg
+- alsi-laddu-medium.jpg
+- alsi-laddu-large.jpg

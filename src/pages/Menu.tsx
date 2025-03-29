@@ -1,7 +1,8 @@
+
 import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import { useOrderMode } from '@/contexts/OrderModeContext';
-import { Flame, Filter, X, Map } from 'lucide-react';
+import { Flame, Filter, X, Map, Camera } from 'lucide-react';
 import MenuSubcategory from '@/components/MenuSubcategory';
 import SocialLinks from '@/components/SocialLinks';
 import { categories, menuItems } from '@/data/menuData';
@@ -98,7 +99,10 @@ const Menu = () => {
                     onChange={() => setShowPopularOnly(!showPopularOnly)}
                     className="rounded border-muted-foreground h-4 w-4 text-primary focus:ring-primary"
                   />
-                  <label htmlFor="popular-only" className="text-sm">Popular Items</label>
+                  <label htmlFor="popular-only" className="text-sm flex items-center gap-1">
+                    <Flame size={14} className="text-primary" />
+                    Popular Items
+                  </label>
                 </div>
                 
                 {(selectedCategory !== "All" || showPopularOnly) && (
