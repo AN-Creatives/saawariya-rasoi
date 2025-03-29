@@ -6,9 +6,49 @@ import { useOrderMode } from '@/contexts/OrderModeContext';
 import { menuItems } from '@/data/menuData';
 
 // Filter popular items for the featured menu
-const featuredItems = menuItems
-  .filter(item => item.popular)
-  .slice(0, 4); // Show only the first 4 popular items
+const featuredItems = [
+  {
+    id: 1,
+    name: "Thekua",
+    description: "Traditional Purwanchal sweet delicacy, perfect with evening tea",
+    price: "₹149",
+    takeawayPrice: "₹135",
+    category: "Saawariya Specialty",
+    veg: true,
+    popular: true
+  },
+  {
+    id: 13,
+    name: "Nimona",
+    description: "Authentic Purwanchal-style green pea curry with special spices",
+    price: "₹219",
+    takeawayPrice: "₹197",
+    category: "Saawariya Specialty",
+    veg: true,
+    popular: true
+  },
+  {
+    id: 21,
+    name: "Vrat Special Thali",
+    description: "Sabudana Khichdi + Aloo Jeera + Aloo Vada + Curd - perfect for fasting days",
+    price: "₹249",
+    takeawayPrice: "₹224",
+    category: "Saawariya Vrat Special",
+    subcategory: "Vrat Meal Combo",
+    veg: true,
+    popular: true
+  },
+  {
+    id: 30,
+    name: "Veg Special Thali",
+    description: "Paneer ki Sabji + Daal + Rice + Roti/Paratha + Sweet - our complete meal",
+    price: "₹249",
+    takeawayPrice: "₹224",
+    category: "Saawariya Combos",
+    veg: true,
+    popular: true
+  }
+];
 
 const FeaturedMenu = () => {
   const { mode } = useOrderMode();
@@ -22,9 +62,9 @@ const FeaturedMenu = () => {
             <span className="inline-block px-3 py-1 bg-accent text-accent-foreground rounded-full text-xs font-medium">
               Our Specialties
             </span>
-            <h2 className="text-3xl font-semibold">Featured Menu</h2>
+            <h2 className="text-3xl font-semibold">Purwanchal Favorites</h2>
             <p className="text-muted-foreground max-w-lg">
-              A selection of our most loved dishes, prepared with authentic recipes and premium ingredients.
+              Explore our most loved dishes, prepared with authentic Purwanchal recipes and the goodness of homemade cooking.
             </p>
           </div>
           <Link 
@@ -52,7 +92,7 @@ const FeaturedMenu = () => {
                       </h3>
                       <div className="flex items-center gap-1 text-primary text-xs mb-2">
                         <Flame size={12} />
-                        <span>Popular</span>
+                        <span>Customer Favorite</span>
                       </div>
                     </div>
                     <div className="text-right">
@@ -84,14 +124,14 @@ const FeaturedMenu = () => {
                       rel="noopener noreferrer"
                       className="px-4 py-2 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:brightness-105"
                     >
-                      Order
+                      Order Now
                     </a>
                   ) : (
                     <a 
                       href="tel:+911234567890"
                       className="px-4 py-2 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:brightness-105"
                     >
-                      Order
+                      Order Now
                     </a>
                   )}
                 </div>

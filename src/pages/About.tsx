@@ -16,8 +16,8 @@ const About = () => {
               About <span className="brand-text-gradient">Saawariya Rasoi</span>
             </h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              A culinary journey through the authentic flavors of Northern India, 
-              crafted with love and served with pride.
+              A culinary journey through the authentic flavors of Purwanchal, 
+              crafted with love and served with the essence of homemade goodness.
             </p>
           </div>
           
@@ -32,7 +32,7 @@ const About = () => {
                 <div className="p-8 text-white">
                   <h2 className="text-3xl font-bold font-brand">A Taste of Heritage</h2>
                   <p className="text-white/80 max-w-2xl">
-                    Founded in 2015, Saawariya Rasoi has been serving the authentic flavors of Purwanchal to food lovers across the city.
+                    Founded in August 2024 by Shail Kumari, Saawariya Rasoi brings the authentic flavors of Purwanchal to food lovers in Kanpur, Uttar Pradesh.
                   </p>
                 </div>
               </div>
@@ -43,22 +43,22 @@ const About = () => {
             <div className="space-y-6 smooth-appear" style={{ animationDelay: '0.3s' }}>
               <h2 className="text-2xl font-semibold font-brand">Our Culinary Philosophy</h2>
               <p className="text-muted-foreground">
-                At Saawariya Rasoi, we believe that great food comes from great ingredients, authentic recipes, and passionate cooking. Our menu is a tribute to the rich culinary heritage of Northern India, with a special focus on the unique flavors of Purwanchal region.
+                At Saawariya Rasoi, we believe that great food comes from traditional recipes, fresh ingredients, and passionate cooking. Our menu celebrates the rich culinary heritage of Purwanchal region, brought to Kanpur with an authentic touch.
               </p>
               <p className="text-muted-foreground">
-                Each dish is prepared using traditional cooking methods, hand-ground spices, and recipes passed down through generations. We take pride in maintaining the authenticity of our cuisine while ensuring that every meal is a delightful experience for our customers.
+                Our founder, Shail Kumari, has a natural talent for cooking and envisioned bringing the unique flavors of Purwanchal to Kanpur. Each dish is prepared using traditional cooking methods and recipes that capture the essence of homemade goodness in every bite.
               </p>
               
               <div className="grid grid-cols-2 gap-4 pt-4">
                 <div className="glass-morphism p-4 rounded-xl">
                   <ChefHat className="text-primary mb-2" size={24} />
-                  <h3 className="font-medium">Expert Chefs</h3>
-                  <p className="text-sm text-muted-foreground">Trained in authentic Northern Indian cuisine</p>
+                  <h3 className="font-medium">Traditional Recipes</h3>
+                  <p className="text-sm text-muted-foreground">Authentic Purwanchal flavors and techniques</p>
                 </div>
                 <div className="glass-morphism p-4 rounded-xl">
                   <Utensils className="text-primary mb-2" size={24} />
-                  <h3 className="font-medium">Fresh Ingredients</h3>
-                  <p className="text-sm text-muted-foreground">Locally sourced produce and spices</p>
+                  <h3 className="font-medium">Pure Vegetarian</h3>
+                  <p className="text-sm text-muted-foreground">100% vegetarian with Satvik food options</p>
                 </div>
               </div>
             </div>
@@ -66,15 +66,15 @@ const About = () => {
             <div className="relative smooth-appear" style={{ animationDelay: '0.4s' }}>
               <div className="aspect-square rounded-2xl overflow-hidden neo-shadow">
                 <img 
-                  src="https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                  alt="Chef preparing food" 
+                  src="https://images.unsplash.com/photo-1556911220-bff31c812dba?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                  alt="Traditional cooking" 
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="absolute -bottom-6 -right-6 w-32 h-32 rounded-full overflow-hidden border-4 border-background neo-shadow">
                 <img 
-                  src="https://images.unsplash.com/photo-1589647363585-f4a7d3877b10?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" 
-                  alt="Spices" 
+                  src="https://images.unsplash.com/photo-1551489810-9e3a5fe40347?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" 
+                  alt="Traditional spices" 
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -89,9 +89,9 @@ const About = () => {
                 <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Award className="text-primary" size={24} />
                 </div>
-                <h3 className="font-medium mb-2">Award-Winning Recipes</h3>
+                <h3 className="font-medium mb-2">Purwanchal Cuisine</h3>
                 <p className="text-sm text-muted-foreground">
-                  Our signature dishes have received recognition for their authentic flavors and presentation.
+                  Authentic flavors from Purwanchal region, rarely found elsewhere in Kanpur.
                 </p>
               </div>
               
@@ -99,9 +99,9 @@ const About = () => {
                 <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Clock className="text-primary" size={24} />
                 </div>
-                <h3 className="font-medium mb-2">Timely Service</h3>
+                <h3 className="font-medium mb-2">Homemade Goodness</h3>
                 <p className="text-sm text-muted-foreground">
-                  Whether you choose delivery or takeaway, we ensure your food reaches you hot and fresh, exactly when promised.
+                  Every dish captures the essence of home cooking with traditional techniques and flavors.
                 </p>
               </div>
               
@@ -109,9 +109,9 @@ const About = () => {
                 <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Utensils className="text-primary" size={24} />
                 </div>
-                <h3 className="font-medium mb-2">Special Diet Options</h3>
+                <h3 className="font-medium mb-2">Vrat Special Menu</h3>
                 <p className="text-sm text-muted-foreground">
-                  We offer a range of vegetarian, vegan, and gluten-free options without compromising on taste.
+                  Special Satvik food menu for those observing religious fasts, prepared with pure ingredients.
                 </p>
               </div>
             </div>

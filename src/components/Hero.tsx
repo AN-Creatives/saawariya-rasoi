@@ -20,15 +20,15 @@ const Hero = () => {
             </span>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-              Authentic Indian Cuisine at{' '}
+              Authentic Purwanchal Cuisine at{' '}
               <span className="text-primary">Saawariya Rasoi</span>
             </h1>
             
             <p className="text-lg text-muted-foreground">
-              Experience the rich flavors and aromatic spices of traditional Indian cuisine from Kanpur, 
+              Experience the rich flavors of Purwanchal with our 100% vegetarian menu, featuring traditional recipes and homemade goodness 
               {mode === 'delivery' 
                 ? ' delivered fresh to your doorstep through Zomato.' 
-                : ' available for convenient takeaway.'}
+                : ' available for convenient takeaway in Kanpur.'}
             </p>
             
             <div className="flex flex-wrap gap-4 pt-2">
@@ -81,7 +81,7 @@ const Hero = () => {
                   ))}
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  <span className="font-medium text-foreground">4.8</span> from over 1,200 reviews
+                  <span className="font-medium text-foreground">4.8</span> from our happy customers
                 </p>
               </div>
             </div>
@@ -91,8 +91,8 @@ const Hero = () => {
             <div className="aspect-square md:aspect-[4/5] relative z-10">
               <div className="absolute inset-0 rounded-2xl overflow-hidden neo-shadow">
                 <img 
-                  src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                  alt="Saawariya Rasoi signature dish" 
+                  src="https://images.unsplash.com/photo-1631452180519-c014fe946bc7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                  alt="Saawariya Rasoi signature dish - Purwanchal thali" 
                   className="w-full h-full object-cover"
                 />
               </div>

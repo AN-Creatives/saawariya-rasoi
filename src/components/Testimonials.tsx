@@ -5,35 +5,43 @@ import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 const testimonials = [
   {
     id: 1,
-    name: "Arjun Sharma",
-    location: "Mumbai",
+    name: "Rahul Sharma",
+    location: "Kanpur",
     rating: 5,
-    comment: "The butter chicken is simply divine - rich, creamy, and packed with flavor. Their delivery through Zomato is always on time and the food arrives hot!",
+    comment: "Best Purwanchal food in Kanpur! The Dal Pithi reminded me of my grandmother's cooking. Homemade taste and excellent service.",
     image: "https://randomuser.me/api/portraits/men/32.jpg"
   },
   {
     id: 2,
     name: "Priya Patel",
-    location: "Delhi",
-    rating: 4,
-    comment: "I love their vegetarian options. The paneer tikka masala has the perfect balance of spices. Will definitely order again!",
+    location: "Kanpur",
+    rating: 5,
+    comment: "I tried their Vrat Special Thali during Navratri and was impressed by the quality. Pure Satvik food that doesn't compromise on taste!",
     image: "https://randomuser.me/api/portraits/women/44.jpg"
   },
   {
     id: 3,
-    name: "Rahul Verma",
-    location: "Bangalore",
+    name: "Ankit Verma",
+    location: "Kanpur",
     rating: 5,
-    comment: "Best biryani in town! The aroma alone is worth ordering for. The takeaway packaging keeps the food fresh for hours.",
+    comment: "The Thekua is absolutely authentic! Takes me back to my childhood in Bihar. Will definitely be ordering again.",
     image: "https://randomuser.me/api/portraits/men/67.jpg"
   },
   {
     id: 4,
-    name: "Meera Iyer",
-    location: "Chennai",
+    name: "Meera Singh",
+    location: "Kanpur",
     rating: 5,
-    comment: "Their naan bread is soft and perfectly cooked. I've been ordering from Saawariya Rasoi for family gatherings for years now!",
+    comment: "Their Veg Special Thali is perfect for family dinners. Fresh, homemade taste and generous portions. Worth every rupee!",
     image: "https://randomuser.me/api/portraits/women/13.jpg"
+  },
+  {
+    id: 5,
+    name: "Deepak Kumar",
+    location: "Kanpur",
+    rating: 4,
+    comment: "Ordered the Sabudana Khichdi and Aloo Jeera during my fast. Perfectly prepared and delivered hot. Will order again!",
+    image: "https://randomuser.me/api/portraits/men/22.jpg"
   }
 ];
 
@@ -57,7 +65,7 @@ const Testimonials = () => {
           </span>
           <h2 className="text-3xl font-semibold">What Our Customers Say</h2>
           <p className="text-muted-foreground">
-            Don't just take our word for it - hear from our satisfied customers who keep coming back for more.
+            Don't just take our word for it - hear from our satisfied customers who love our authentic Purwanchal cuisine.
           </p>
         </div>
         

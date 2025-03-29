@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import { MapPin, Phone, Mail, Clock, Send, MessageSquare } from 'lucide-react';
@@ -71,8 +72,8 @@ const Contact = () => {
                     <div>
                       <h3 className="font-medium mb-1">Location</h3>
                       <p className="text-muted-foreground text-sm">
-                        123 Culinary Street<br />
-                        Flavor Town, FT 12345<br />
+                        Saawariya Rasoi<br />
+                        Kanpur, Uttar Pradesh<br />
                         India
                       </p>
                     </div>
@@ -119,7 +120,7 @@ const Contact = () => {
                 
                 <div className="mt-8">
                   <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3506.2233913121413!2d77.1909761!3d28.5269922!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce1f7cce74b95%3A0x75c6f7263fe6a148!2sConnaught%20Place%2C%20New%20Delhi%2C%20Delhi%20110001!5e0!3m2!1sen!2sin!4v1651825207736!5m2!1sen!2sin" 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115348.20401743568!2d80.25329138359376!3d26.449108400000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399c4770b127c46f%3A0x1778302a9fbe7b41!2sKanpur%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1653557461259!5m2!1sen!2sin" 
                     width="100%" 
                     height="200" 
                     style={{ border: 0 }} 
@@ -270,30 +271,30 @@ const Contact = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="glass-morphism rounded-xl p-6">
-                <h3 className="font-medium mb-2">What are your delivery areas?</h3>
+                <h3 className="font-medium mb-2">Do you serve non-vegetarian food?</h3>
                 <p className="text-muted-foreground text-sm">
-                  We deliver to all major areas within a 10 km radius of our restaurant. You can check if your location is serviceable through Zomato or by calling us directly.
+                  No, we are a 100% vegetarian restaurant specializing in authentic Purwanchal and traditional Indian cuisine.
                 </p>
               </div>
               
               <div className="glass-morphism rounded-xl p-6">
                 <h3 className="font-medium mb-2">How can I place a bulk order?</h3>
                 <p className="text-muted-foreground text-sm">
-                  For bulk orders, please contact us at least 24 hours in advance. You can call us or fill out the contact form with your requirements, and our team will get back to you with details.
+                  For bulk orders, please contact us at least 24 hours in advance. You can call us or fill out the contact form with your requirements.
                 </p>
               </div>
               
               <div className="glass-morphism rounded-xl p-6">
-                <h3 className="font-medium mb-2">Do you offer catering services?</h3>
+                <h3 className="font-medium mb-2">Do you offer special menu for religious fasts?</h3>
                 <p className="text-muted-foreground text-sm">
-                  Yes, we offer catering services for events of all sizes. Please contact us with your event details, and we'll provide you with customized menu options and pricing.
+                  Yes, we have a special "Vrat Special" menu that features Satvik food prepared according to fasting requirements.
                 </p>
               </div>
               
               <div className="glass-morphism rounded-xl p-6">
                 <h3 className="font-medium mb-2">What payment methods do you accept?</h3>
                 <p className="text-muted-foreground text-sm">
-                  We accept all major credit/debit cards, UPI payments, and cash on delivery. For online orders through Zomato, you can use their supported payment methods.
+                  We accept all major payment methods including cash, credit/debit cards, and UPI payments. For online orders through Zomato, you can use their supported payment methods.
                 </p>
               </div>
             </div>
