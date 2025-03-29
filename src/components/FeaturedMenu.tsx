@@ -17,16 +17,7 @@ const featuredItems = [
     veg: true,
     popular: true
   },
-  {
-    id: 6,
-    name: "Dahi Vada",
-    description: "Soft lentil dumplings soaked in yogurt with tangy chutneys",
-    price: "₹199",
-    takeawayPrice: "₹179",
-    category: "Saawariya Specialty",
-    veg: true,
-    quantity: "4 pc"
-  },
+  // Add the Vrat Special Thali next
   {
     id: 21,
     name: "Vrat Special Thali",
@@ -37,6 +28,16 @@ const featuredItems = [
     subcategory: "Vrat Meal Combo",
     veg: true,
     popular: true
+  },
+  {
+    id: 6,
+    name: "Dahi Vada",
+    description: "Soft lentil dumplings soaked in yogurt with tangy chutneys",
+    price: "₹199",
+    takeawayPrice: "₹179",
+    category: "Saawariya Specialty",
+    veg: true,
+    quantity: "4 pc"
   },
   {
     id: 27,

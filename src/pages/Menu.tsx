@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import { useOrderMode } from '@/contexts/OrderModeContext';
@@ -45,6 +44,32 @@ const Menu = () => {
     acc[key].push(item);
     return acc;
   }, {} as Record<string, typeof menuItems>);
+  
+  // Define the custom order for subcategories
+  const subcategoryOrder = [
+    'default', // Specialty items (no subcategory)
+    'Vrat Meal Combo',
+    'Vrat Snacks',
+    'Vrat Sweet'
+  ];
+  
+  // Sort the keys based on the custom order
+  const sortedSubcategories = Object.keys(groupedItems).sort((a, b) => {
+    const indexA = subcategoryOrder.indexOf(a);
+    const indexB = subcategoryOrder.indexOf(b);
+    
+    // If both are in the custom order, use that order
+    if (indexA !== -1 && indexB !== -1) {
+      return indexA - indexB;
+    }
+    
+    // If only one is in the custom order, prioritize it
+    if (indexA !== -1) return -1;
+    if (indexB !== -1) return 1;
+    
+    // Otherwise, use alphabetical order
+    return a.localeCompare(b);
+  });
   
   const resetFilters = () => {
     setSelectedCategory("All");
@@ -117,9 +142,9 @@ const Menu = () => {
               </div>
             </div>
             
-            {/* Render subcategories if present */}
-            {Object.keys(groupedItems).length > 0 ? (
-              Object.keys(groupedItems).sort().map((subcategory) => (
+            {/* Render subcategories in custom order */}
+            {sortedSubcategories.length > 0 ? (
+              sortedSubcategories.map((subcategory) => (
                 <MenuSubcategory 
                   key={subcategory} 
                   title={subcategory !== 'default' ? subcategory : ''} 
