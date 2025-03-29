@@ -51,7 +51,10 @@ const Menu = () => {
     'default', // Specialty items (no subcategory)
     'Vrat Meal Combo',
     'Vrat Snacks',
-    'Vrat Sweet'
+    'Vrat Sweet',
+    'Meal Combos',
+    'Paratha Combos',
+    'Thali'
   ];
   
   // Sort the keys based on the custom order

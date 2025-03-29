@@ -1,3 +1,4 @@
+
 export interface MenuItem {
   id: number;
   name: string;
@@ -252,7 +253,7 @@ export const menuItems: MenuItem[] = [
     image: "/images/food/vrat-special-thali.jpg"
   },
   
-  // Saawariya Combos
+  // Saawariya Combos - Meal Combos
   {
     id: 22,
     name: "Dal Fry Combo",
@@ -260,6 +261,7 @@ export const menuItems: MenuItem[] = [
     price: "₹159",
     takeawayPrice: "₹143",
     category: "Saawariya Combos",
+    subcategory: "Meal Combos",
     veg: true,
     image: "/images/food/dal-fry-combo.jpg"
   },
@@ -270,6 +272,7 @@ export const menuItems: MenuItem[] = [
     price: "₹149",
     takeawayPrice: "₹134",
     category: "Saawariya Combos",
+    subcategory: "Meal Combos",
     veg: true,
     image: "/images/food/poori-sabji-combo.jpg"
   },
@@ -280,9 +283,47 @@ export const menuItems: MenuItem[] = [
     price: "₹179",
     takeawayPrice: "₹161",
     category: "Saawariya Combos",
+    subcategory: "Meal Combos",
     veg: true,
     image: "/images/food/paneer-bhurji-combo.jpg"
   },
+  {
+    id: 31,
+    name: "Tahri Combo",
+    description: "Tahari + Raita + Achaar + Salad",
+    price: "₹189",
+    takeawayPrice: "₹170",
+    category: "Saawariya Combos",
+    subcategory: "Meal Combos",
+    veg: true,
+    image: "/images/food/tahri-combo.jpg"
+  },
+  
+  // Saawariya Combos - Paratha Combos
+  {
+    id: 32,
+    name: "Aloo Paratha with Dahi",
+    price: "₹99",
+    takeawayPrice: "₹89",
+    category: "Saawariya Combos",
+    subcategory: "Paratha Combos",
+    veg: true,
+    image: "/images/food/aloo-paratha.jpg",
+    description: "Potato stuffed flatbread served with yogurt"
+  },
+  {
+    id: 33,
+    name: "Paneer Paratha with Curd",
+    price: "₹149",
+    takeawayPrice: "₹134",
+    category: "Saawariya Combos",
+    subcategory: "Paratha Combos",
+    veg: true,
+    image: "/images/food/paneer-paratha.jpg",
+    description: "Cottage cheese stuffed flatbread served with yogurt"
+  },
+  
+  // Saawariya Combos - Thali
   {
     id: 25,
     name: "Veg Basic Thali",
@@ -290,6 +331,7 @@ export const menuItems: MenuItem[] = [
     price: "₹169",
     takeawayPrice: "₹152",
     category: "Saawariya Combos",
+    subcategory: "Thali",
     veg: true,
     image: "/images/food/veg-basic-thali.jpg"
   },
@@ -300,6 +342,7 @@ export const menuItems: MenuItem[] = [
     price: "₹199",
     takeawayPrice: "₹179",
     category: "Saawariya Combos",
+    subcategory: "Thali",
     veg: true,
     image: "/images/food/veg-standard-thali.jpg"
   },
@@ -310,6 +353,7 @@ export const menuItems: MenuItem[] = [
     price: "₹249",
     takeawayPrice: "₹224",
     category: "Saawariya Combos",
+    subcategory: "Thali",
     veg: true,
     popular: true,
     image: "/images/food/veg-special-thali.jpg"
