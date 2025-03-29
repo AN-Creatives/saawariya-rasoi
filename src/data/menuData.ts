@@ -1,3 +1,4 @@
+
 export interface MenuItem {
   id: number;
   name: string;
@@ -31,7 +32,7 @@ export const menuItems: MenuItem[] = [
     category: "Saawariya Specialty",
     veg: true,
     popular: true,
-    image: "/images/food/thekua.jpg",
+    image: "/lovable-uploads/d87c301a-c018-427d-8769-cbce42c3ed90.png",
     description: "Traditional sweet delicacy from Purwanchal, perfect with evening tea"
   },
   {
