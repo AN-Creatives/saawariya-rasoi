@@ -215,7 +215,7 @@ export const menuItems: MenuItem[] = [
     category: "Saawariya Vrat Special",
     subcategory: "Vrat Meal Combo",
     veg: true,
-    image: "/images/food/aloo-jeera-curd.jpg",
+    image: "/lovable-uploads/63ac2e7f-50f8-4f1a-967f-70bc79c7b488.png",
     description: "Cumin-flavored potatoes served with fresh curd"
   },
   {
