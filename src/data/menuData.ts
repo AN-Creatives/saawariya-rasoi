@@ -124,7 +124,7 @@ export const menuItems: MenuItem[] = [
     takeawayPrice: "₹116",
     category: "Saawariya Specialty",
     veg: true,
-    image: "/images/food/poha.jpg",
+    image: "/lovable-uploads/a39b39ea-e0eb-448d-a369-856b228b31be.png",
     description: "Flattened rice cooked with onions, peanuts, and spices, a light meal"
   },
   {
