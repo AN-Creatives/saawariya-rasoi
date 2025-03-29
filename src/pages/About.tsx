@@ -24,8 +24,8 @@ const About = () => {
           <div className="glass-morphism rounded-2xl overflow-hidden mb-16 smooth-appear" style={{ animationDelay: '0.2s' }}>
             <div className="h-96 relative">
               <img 
-                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
-                alt="Saawariya Rasoi Restaurant" 
+                src="/lovable-uploads/52b9e43b-31d9-45c6-9b9f-f41733735fdb.png" 
+                alt="Saawariya Rasoi Banner" 
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
@@ -66,15 +66,15 @@ const About = () => {
             <div className="relative smooth-appear" style={{ animationDelay: '0.4s' }}>
               <div className="aspect-square rounded-2xl overflow-hidden neo-shadow">
                 <img 
-                  src="https://images.unsplash.com/photo-1556911220-bff31c812dba?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                  alt="Traditional cooking" 
+                  src="/lovable-uploads/7cd9e3eb-d505-47b0-9fbc-6d572daa9cc0.png" 
+                  alt="Saawariya Rasoi Branding" 
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="absolute -bottom-6 -right-6 w-32 h-32 rounded-full overflow-hidden border-4 border-background neo-shadow">
                 <img 
-                  src="https://images.unsplash.com/photo-1551489810-9e3a5fe40347?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" 
-                  alt="Traditional spices" 
+                  src="/lovable-uploads/52b9e43b-31d9-45c6-9b9f-f41733735fdb.png" 
+                  alt="Saawariya Rasoi Logo" 
                   className="w-full h-full object-cover"
                 />
               </div>
