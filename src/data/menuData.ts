@@ -32,7 +32,7 @@ export const menuItems: MenuItem[] = [
     category: "Saawariya Specialty",
     veg: true,
     popular: true,
-    image: "/images/food/thekua.jpg",
+    image: "/lovable-uploads/973fdb5a-0221-49d8-8823-fbcca9bf7245.png",
     description: "Traditional sweet delicacy from Purwanchal, perfect with evening tea"
   },
   {
@@ -42,7 +42,7 @@ export const menuItems: MenuItem[] = [
     takeawayPrice: "₹135",
     category: "Saawariya Specialty",
     veg: true,
-    image: "/images/food/dal-pithi.jpg",
+    image: "/lovable-uploads/67e36bc0-fe04-415a-8ce6-f5c487041dda.png",
     description: "Handmade pasta in a spiced lentil soup, a comforting regional staple"
   },
   {
@@ -52,7 +52,7 @@ export const menuItems: MenuItem[] = [
     takeawayPrice: "₹135",
     category: "Saawariya Specialty",
     veg: true,
-    image: "/images/food/saboodana-vada.jpg",
+    image: "/lovable-uploads/c4424c8a-1182-4f08-aff2-ed091d98ce6c.png",
     description: "Crispy tapioca pearls patties flavored with herbs and spices"
   },
   {
@@ -62,7 +62,7 @@ export const menuItems: MenuItem[] = [
     takeawayPrice: "₹135",
     category: "Saawariya Specialty",
     veg: true,
-    image: "/images/food/farra.jpg",
+    image: "/lovable-uploads/bf83d7b8-f88d-4be1-8646-a41fc9756cb3.png",
     description: "Steamed rice dumplings with a delicious filling, served with spicy chutney"
   },
   {
@@ -72,7 +72,7 @@ export const menuItems: MenuItem[] = [
     takeawayPrice: "₹125",
     category: "Saawariya Specialty",
     veg: true,
-    image: "/images/food/bhauri.jpg",
+    image: "/lovable-uploads/d990a13c-e0cf-4bfa-b9db-f788f16911db.png",
     description: "Traditional breakfast item made with rice flour, steamed to perfection"
   },
   {
@@ -104,7 +104,7 @@ export const menuItems: MenuItem[] = [
     takeawayPrice: "₹89",
     category: "Saawariya Specialty",
     veg: true,
-    image: "/images/food/chana-dal-pakora.jpg",
+    image: "/lovable-uploads/39bf2920-7056-4f96-a2c1-b75e84899c6d.png",
     description: "Crispy fritters made with split chickpeas, perfect snack with tea"
   },
   {
@@ -114,7 +114,7 @@ export const menuItems: MenuItem[] = [
     takeawayPrice: "₹116",
     category: "Saawariya Specialty",
     veg: true,
-    image: "/images/food/sattu-paratha.jpg",
+    image: "/lovable-uploads/020ffa09-714c-48e4-b9a6-ea0f0f183fc7.png",
     description: "Flatbread stuffed with roasted gram flour mixture, served with pickle"
   },
   {
@@ -124,7 +124,7 @@ export const menuItems: MenuItem[] = [
     takeawayPrice: "₹116",
     category: "Saawariya Specialty",
     veg: true,
-    image: "/images/food/poha.jpg",
+    image: "/poha.jpg",
     description: "Flattened rice cooked with onions, peanuts, and spices, a light meal"
   },
   {
@@ -154,7 +154,7 @@ export const menuItems: MenuItem[] = [
     takeawayPrice: "₹107",
     category: "Saawariya Specialty",
     veg: true,
-    image: "/images/food/namkeen-sevai.jpg",
+    image: "/lovable-uploads/7250ebc9-1bf3-453e-aa9a-4a15f693d0a2.png",
     description: "Savory rice noodles tossed with spices and vegetables"
   },
   
@@ -189,7 +189,7 @@ export const menuItems: MenuItem[] = [
     category: "Saawariya Vrat Special",
     subcategory: "Vrat Snacks",
     veg: true,
-    image: "/images/food/saboodana-vada-vrat.jpg",
+    image: "/lovable-uploads/c4424c8a-1182-4f08-aff2-ed091d98ce6c.png",
     description: "Fasting-friendly tapioca pearls patties with peanuts"
   },
   
@@ -350,3 +350,4 @@ export const menuItems: MenuItem[] = [
     description: "Spiced buttermilk with mint and cumin"
   }
 ];
+
