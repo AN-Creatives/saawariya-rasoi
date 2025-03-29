@@ -73,7 +73,7 @@ const Header = () => {
           {/* Desktop Navigation */}
           <DesktopNavigation navLinks={navLinks} />
           
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-6">
             {/* Auth Buttons (Desktop) */}
             <AuthButtons />
             
