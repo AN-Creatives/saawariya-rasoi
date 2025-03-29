@@ -77,10 +77,7 @@ const Footer = () => {
             <h3 className="text-sm font-medium mb-4">Hours</h3>
             <ul className="space-y-2">
               <li className="text-sm text-muted-foreground">
-                <span className="font-medium text-foreground">Operating Hours:</span> 08:00 AM - 10:00 PM
-              </li>
-              <li className="text-sm text-muted-foreground mt-3">
-                <span className="font-medium text-foreground">Delivery Hours:</span> 08:00 AM - 10:00 PM
+                <span className="font-medium text-foreground">Hours:</span> 08:00 AM - 10:00 PM
               </li>
             </ul>
           </div>

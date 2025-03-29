@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import { MapPin, Phone, Mail, Clock, Send, MessageSquare } from 'lucide-react';
@@ -110,8 +109,7 @@ const Contact = () => {
                     <div>
                       <h3 className="font-medium mb-1">Hours</h3>
                       <p className="text-muted-foreground text-sm">
-                        <span className="font-medium text-foreground">Operating Hours:</span> 08:00 AM - 10:00 PM<br />
-                        <span className="font-medium text-foreground">Delivery Hours:</span> 08:00 AM - 10:00 PM
+                        <span className="font-medium text-foreground">Hours:</span> 08:00 AM - 10:00 PM
                       </p>
                     </div>
                   </li>
