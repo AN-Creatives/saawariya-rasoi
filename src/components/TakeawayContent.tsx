@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight, Phone, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { AspectRatio } from "./ui/aspect-ratio";
 
 const TakeawayContent = () => {
   return (
@@ -80,12 +81,14 @@ const TakeawayContent = () => {
         <h3 className="text-xl font-medium">Bulk Order Options</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="glass-morphism rounded-xl overflow-hidden hover-lift flex flex-col">
-            <div className="aspect-[3/2] relative">
-              <img 
-                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
-                alt="Corporate catering"
-                className="w-full h-full object-cover"
-              />
+            <div className="relative">
+              <AspectRatio ratio={16/9}>
+                <img 
+                  src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                  alt="Corporate catering"
+                  className="w-full h-full object-cover"
+                />
+              </AspectRatio>
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
               <div className="absolute bottom-4 left-4">
                 <span className="px-3 py-1 bg-white/80 backdrop-blur-xs text-foreground rounded-full text-xs font-medium">
@@ -125,12 +128,14 @@ const TakeawayContent = () => {
           </div>
           
           <div className="glass-morphism rounded-xl overflow-hidden hover-lift flex flex-col">
-            <div className="aspect-[3/2] relative">
-              <img 
-                src="/lovable-uploads/72ac1482-f513-461a-817e-37a758073834.png" 
-                alt="Party catering"
-                className="w-full h-full object-cover"
-              />
+            <div className="relative">
+              <AspectRatio ratio={16/9}>
+                <img 
+                  src="/lovable-uploads/72ac1482-f513-461a-817e-37a758073834.png" 
+                  alt="Party catering"
+                  className="w-full h-full object-cover"
+                />
+              </AspectRatio>
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
               <div className="absolute bottom-4 left-4">
                 <span className="px-3 py-1 bg-white/80 backdrop-blur-xs text-foreground rounded-full text-xs font-medium">
