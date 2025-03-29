@@ -29,12 +29,15 @@ const MenuSubcategory = ({ title, items, zomatoLink }: MenuSubcategoryProps) => 
   const { mode } = useOrderMode();
   const navigate = useNavigate();
   
-  const handleTakeawayOrder = (item: MenuItem) => {
-    // When ordering via takeaway, we'll show a dialog to choose between normal or bulk order
-    toast({
-      title: "Order Placed",
-      description: `Your order for ${item.name} has been received. We'll contact you shortly to confirm.`,
-    });
+  const handleTakeawayWhatsapp = (item: MenuItem) => {
+    // Format the message for WhatsApp with the item details
+    const message = `Hello Saawariya Rasoi, I would like to place a takeaway order for ${item.name}`;
+    
+    // Create the WhatsApp URL with the phone number and pre-filled message
+    const whatsappUrl = `https://wa.me/919651573635?text=${encodeURIComponent(message)}`;
+    
+    // Open WhatsApp in a new tab
+    window.open(whatsappUrl, '_blank');
   };
   
   return (
@@ -135,48 +138,13 @@ const MenuSubcategory = ({ title, items, zomatoLink }: MenuSubcategoryProps) => 
                       <ChevronRight size={16} className="ml-1" />
                     </a>
                   ) : (
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <button className="px-4 py-2 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:brightness-105 flex items-center">
-                          Order Now
-                          <ChevronRight size={16} className="ml-1" />
-                        </button>
-                      </DialogTrigger>
-                      <DialogContent className="sm:max-w-[425px]">
-                        <DialogHeader>
-                          <DialogTitle>Takeaway Order</DialogTitle>
-                          <DialogDescription>
-                            Choose your order type for {item.name}
-                          </DialogDescription>
-                        </DialogHeader>
-                        <div className="grid gap-4 py-4">
-                          <RadioGroup defaultValue="normal" className="gap-4">
-                            <div className="flex items-center space-x-2 border p-3 rounded-md">
-                              <RadioGroupItem value="normal" id="normal" />
-                              <Label htmlFor="normal" className="flex flex-col">
-                                <span className="font-medium">Normal Takeaway</span>
-                                <span className="text-xs text-muted-foreground">Ready in 15-20 mins</span>
-                              </Label>
-                            </div>
-                            <div className="flex items-center space-x-2 border p-3 rounded-md">
-                              <RadioGroupItem value="bulk" id="bulk" />
-                              <Label htmlFor="bulk" className="flex flex-col">
-                                <span className="font-medium">Bulk Order</span>
-                                <span className="text-xs text-muted-foreground">For events, parties or office</span>
-                              </Label>
-                            </div>
-                          </RadioGroup>
-                        </div>
-                        <DialogFooter>
-                          <Button 
-                            type="submit" 
-                            onClick={() => handleTakeawayOrder(item)}
-                          >
-                            Proceed to Checkout
-                          </Button>
-                        </DialogFooter>
-                      </DialogContent>
-                    </Dialog>
+                    <button 
+                      onClick={() => handleTakeawayWhatsapp(item)}
+                      className="px-4 py-2 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:brightness-105 flex items-center"
+                    >
+                      Order Now
+                      <ChevronRight size={16} className="ml-1" />
+                    </button>
                   )}
                 </div>
               </div>

@@ -55,6 +55,17 @@ const FeaturedMenu = () => {
   const { mode } = useOrderMode();
   const zomatoLink = "https://link.zomato.com/xqzv/rshare?id=75078797305635b1";
   
+  const handleTakeawayWhatsapp = (item: any) => {
+    // Format the message for WhatsApp with the item details
+    const message = `Hello Saawariya Rasoi, I would like to place a takeaway order for ${item.name}`;
+    
+    // Create the WhatsApp URL with the phone number and pre-filled message
+    const whatsappUrl = `https://wa.me/919651573635?text=${encodeURIComponent(message)}`;
+    
+    // Open WhatsApp in a new tab
+    window.open(whatsappUrl, '_blank');
+  };
+  
   return (
     <section className="py-16 bg-secondary/30 px-6 smooth-appear" style={{ animationDelay: '0.4s' }}>
       <div className="container mx-auto">
@@ -132,12 +143,12 @@ const FeaturedMenu = () => {
                       Order Now
                     </a>
                   ) : (
-                    <a 
-                      href="tel:+919651573635"
+                    <button 
+                      onClick={() => handleTakeawayWhatsapp(item)}
                       className="px-4 py-2 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:brightness-105"
                     >
                       Order Now
-                    </a>
+                    </button>
                   )}
                 </div>
               </div>
