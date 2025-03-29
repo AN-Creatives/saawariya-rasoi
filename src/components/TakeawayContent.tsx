@@ -1,8 +1,8 @@
-
 import React from 'react';
 import { ArrowRight, Phone, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { AspectRatio } from "./ui/aspect-ratio";
+import { Button } from "./ui/button";
 
 const TakeawayContent = () => {
   return (
@@ -102,20 +102,6 @@ const TakeawayContent = () => {
               <p className="text-sm text-muted-foreground mb-4">
                 Perfect for meetings, conferences, and office celebrations. We offer customized menu options for groups of 10 or more.
               </p>
-              <ul className="text-sm space-y-2 mb-4">
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-restaurant-500"></span>
-                  24-hour advance booking required
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-restaurant-500"></span>
-                  Customizable menu options
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-restaurant-500"></span>
-                  Serving equipment available on request
-                </li>
-              </ul>
             </div>
             <div className="p-5 pt-0 mt-auto">
               <a 
@@ -123,7 +109,7 @@ const TakeawayContent = () => {
                 className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-secondary text-foreground rounded-full font-medium hover:bg-secondary/80 text-sm"
               >
                 <Phone size={14} />
-                Call for Corporate Orders
+                Order Now
               </a>
             </div>
           </div>
@@ -149,20 +135,6 @@ const TakeawayContent = () => {
               <p className="text-sm text-muted-foreground mb-4">
                 Make your special occasions memorable with our party platters and family-style servings, perfect for gatherings of all sizes.
               </p>
-              <ul className="text-sm space-y-2 mb-4">
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-restaurant-500"></span>
-                  48-hour advance booking preferred
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-restaurant-500"></span>
-                  Special dietary accommodations available
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-restaurant-500"></span>
-                  Party platters and combo meals
-                </li>
-              </ul>
             </div>
             <div className="p-5 pt-0 mt-auto">
               <a 
@@ -170,7 +142,7 @@ const TakeawayContent = () => {
                 className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-secondary text-foreground rounded-full font-medium hover:bg-secondary/80 text-sm"
               >
                 <Phone size={14} />
-                Call for Party Orders
+                Order Now
               </a>
             </div>
           </div>
