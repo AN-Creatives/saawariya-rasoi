@@ -1,20 +1,17 @@
 
 import React, { useState, useEffect } from 'react';
-import { NavLink, Link, useNavigate } from 'react-router-dom';
-import { useOrderMode } from '@/contexts/OrderModeContext';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { Menu, X, LogIn, LogOut, User } from 'lucide-react';
 import Logo from './Logo';
-import ModeToggle from './ModeToggle';
 import { useAuth } from '@/hooks/useAuth';
-import { Button } from './ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import DesktopNavigation from './navigation/DesktopNavigation';
+import MobileNavigation from './navigation/MobileNavigation';
+import AuthButtons from './auth/AuthButtons';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { loading, isAuthenticated, isAdmin, signOut } = useAuth();
+  const { signOut } = useAuth();
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -38,8 +35,6 @@ const Header = () => {
     };
   }, [isMobileMenuOpen]);
 
-  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
-  
   const handleSignOut = async () => {
     await signOut();
     navigate('/');
@@ -52,8 +47,6 @@ const Header = () => {
   const handleSignUp = () => {
     navigate('/auth?tab=signup');
   };
-
-  console.log('[Header] Auth state:', { loading, isAuthenticated, isAdmin });
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -78,183 +71,22 @@ const Header = () => {
           <Logo />
           
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-1">
-            {navLinks.map((link) => (
-              <NavLink
-                key={link.path}
-                to={link.path}
-                className={({ isActive }) => cn(
-                  'px-4 py-2 rounded-full text-sm font-medium transition-all duration-200',
-                  isActive 
-                    ? 'text-white bg-saawariya-red' 
-                    : 'text-foreground/80 hover:text-foreground hover:bg-secondary/50'
-                )}
-              >
-                {link.name}
-              </NavLink>
-            ))}
-          </nav>
+          <DesktopNavigation navLinks={navLinks} />
           
           <div className="flex items-center space-x-4">
-            <div className="hidden md:block">
-              <ModeToggle />
-            </div>
+            {/* Auth Buttons (Desktop) */}
+            <AuthButtons />
             
-            {loading ? (
-              // Show a loading state for auth buttons
-              <div className="h-9 w-24 bg-gray-200 animate-pulse rounded-full"></div>
-            ) : isAuthenticated ? (
-              // User is authenticated - show dashboard link for admins and logout button
-              <div className="hidden md:flex items-center gap-2">
-                {isAdmin && (
-                  <Button
-                    variant="default"
-                    size="sm"
-                    className="gap-2"
-                    onClick={() => navigate('/dashboard')}
-                  >
-                    <User size={16} />
-                    Dashboard
-                  </Button>
-                )}
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                    >
-                      <LogOut size={16} className="mr-2" />
-                      Log out
-                    </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Are you sure you want to log out?</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        You will need to log in again to access your account.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction onClick={handleSignOut}>Log out</AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              </div>
-            ) : (
-              // User is not authenticated - show login/signup dialog trigger
-              <div className="hidden md:flex items-center">
-                <Button
-                  variant="default"
-                  size="sm"
-                  className="bg-saawariya-red hover:bg-saawariya-darkred"
-                  onClick={handleSignIn}
-                >
-                  <LogIn size={16} className="mr-2" />
-                  Login / Sign up
-                </Button>
-              </div>
-            )}
-            
-            <button 
-              className="block md:hidden text-foreground"
-              onClick={toggleMobileMenu}
-              aria-label="Toggle menu"
-            >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+            {/* Mobile Menu Toggle and Navigation */}
+            <MobileNavigation 
+              navLinks={navLinks}
+              isMobileMenuOpen={isMobileMenuOpen}
+              setIsMobileMenuOpen={setIsMobileMenuOpen}
+              handleSignIn={handleSignIn}
+              handleSignUp={handleSignUp}
+              handleSignOut={handleSignOut}
+            />
           </div>
-        </div>
-      </div>
-      
-      {/* Mobile Navigation */}
-      <div
-        className={cn(
-          'fixed inset-0 glass-morphism backdrop-blur-md z-40 transition-opacity duration-300 md:hidden',
-          isMobileMenuOpen 
-            ? 'opacity-100 pointer-events-auto' 
-            : 'opacity-0 pointer-events-none'
-        )}
-      >
-        <div className="flex flex-col items-center justify-center h-full gap-6 px-6">
-          {navLinks.map((link) => (
-            <NavLink
-              key={link.path}
-              to={link.path}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={({ isActive }) => cn(
-                'px-8 py-3 rounded-full text-lg font-medium transition-all w-full text-center',
-                isActive 
-                  ? 'text-white bg-saawariya-red' 
-                  : 'text-foreground/80 hover:text-foreground hover:bg-secondary/30'
-              )}
-            >
-              {link.name}
-            </NavLink>
-          ))}
-          
-          <div className="md:hidden mt-4 mb-6">
-            <ModeToggle />
-          </div>
-          
-          {loading ? (
-            // Show a loading state for auth buttons in mobile menu
-            <div className="h-12 w-full bg-gray-200 animate-pulse rounded-full"></div>
-          ) : isAuthenticated ? (
-            // User is authenticated - show dashboard link for admins and logout button
-            <>
-              {isAdmin && (
-                <Button
-                  variant="default"
-                  className="w-full flex items-center justify-center gap-2"
-                  onClick={() => {
-                    navigate('/dashboard');
-                    setIsMobileMenuOpen(false);
-                  }}
-                >
-                  <User size={18} />
-                  Dashboard
-                </Button>
-              )}
-              <Button
-                variant="outline"
-                className="w-full flex items-center justify-center"
-                onClick={() => {
-                  handleSignOut();
-                  setIsMobileMenuOpen(false);
-                }}
-              >
-                <LogOut size={18} className="mr-2" />
-                Log out
-              </Button>
-            </>
-          ) : (
-            // User is not authenticated - show login/signup buttons
-            <>
-              <Button
-                variant="outline"
-                className="w-full flex items-center justify-center"
-                onClick={() => {
-                  navigate('/auth');
-                  setIsMobileMenuOpen(false);
-                }}
-              >
-                <LogIn size={18} className="mr-2" />
-                Log in
-              </Button>
-              <Button
-                variant="default"
-                className="w-full flex items-center justify-center gap-2 bg-saawariya-red hover:bg-saawariya-darkred"
-                onClick={() => {
-                  navigate('/auth?tab=signup');
-                  setIsMobileMenuOpen(false);
-                }}
-              >
-                <User size={18} />
-                Sign up
-              </Button>
-            </>
-          )}
         </div>
       </div>
     </header>
