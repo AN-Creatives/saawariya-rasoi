@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ArrowRight, Phone, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -84,7 +85,7 @@ const TakeawayContent = () => {
             <div className="relative">
               <AspectRatio ratio={16/9}>
                 <img 
-                  src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                  src="/lovable-uploads/a1f91156-644e-4ba2-b686-c0b3a2e4ca29.png" 
                   alt="Corporate catering"
                   className="w-full h-full object-cover"
                 />
