@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import { useOrderMode } from '@/contexts/OrderModeContext';
@@ -75,6 +76,18 @@ const Menu = () => {
     setSelectedCategory("All");
     setShowVegOnly(false);
     setShowPopularOnly(false);
+  };
+  
+  const handleOrderButtonClick = () => {
+    if (mode === 'delivery') {
+      // Open Zomato link for delivery
+      window.open(zomatoLink, '_blank');
+    } else {
+      // For takeaway mode, open WhatsApp
+      const message = `Hello Saawariya Rasoi, I would like to place a takeaway order`;
+      const whatsappUrl = `https://wa.me/919651573635?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+    }
   };
   
   return (
@@ -182,14 +195,12 @@ const Menu = () => {
                     <Map size={16} />
                     View on Google Maps
                   </a>
-                  <a 
-                    href={zomatoLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button 
+                    onClick={handleOrderButtonClick}
                     className="flex items-center gap-2 px-4 py-2 bg-secondary text-secondary-foreground rounded-full text-sm font-medium hover:brightness-105"
                   >
-                    Order on Zomato
-                  </a>
+                    Order Now
+                  </button>
                 </div>
               </div>
               
