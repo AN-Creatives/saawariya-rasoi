@@ -1,4 +1,3 @@
-
 export interface MenuItem {
   id: number;
   name: string;
@@ -134,7 +133,7 @@ export const menuItems: MenuItem[] = [
     takeawayPrice: "₹89",
     category: "Saawariya Specialty",
     veg: true,
-    image: "/images/food/appe.jpg",
+    image: "/lovable-uploads/3a42cbeb-7dc9-49db-8012-7d3bb797111d.png",
     description: "Soft and fluffy rice pancakes, served with coconut chutney"
   },
   {
