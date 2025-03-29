@@ -1,4 +1,3 @@
-
 export interface MenuItem {
   id: number;
   name: string;
@@ -42,7 +41,7 @@ export const menuItems: MenuItem[] = [
     takeawayPrice: "₹135",
     category: "Saawariya Specialty",
     veg: true,
-    image: "/images/food/dal-pithi.jpg",
+    image: "/lovable-uploads/f3297764-5a42-4d41-9da9-8db3e7c0e496.png",
     description: "Handmade pasta in a spiced lentil soup, a comforting regional staple"
   },
   {
@@ -167,7 +166,7 @@ export const menuItems: MenuItem[] = [
     category: "Saawariya Vrat Special",
     subcategory: "Vrat Snacks",
     veg: true,
-    image: "/images/food/paneer-pakora.jpg",
+    image: "/lovable-uploads/41106599-16ab-424e-823b-059e97ee0be0.png",
     description: "Cottage cheese fritters suitable for fasting days"
   },
   {
@@ -178,7 +177,7 @@ export const menuItems: MenuItem[] = [
     category: "Saawariya Vrat Special",
     subcategory: "Vrat Snacks",
     veg: true,
-    image: "/images/food/aloo-vada.jpg",
+    image: "/lovable-uploads/4ae29181-655a-42cb-ada7-c6103515d3a7.png",
     description: "Spiced potato fritters made with rock salt, perfect for fasting"
   },
   {
