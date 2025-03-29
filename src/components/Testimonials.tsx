@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 
 const testimonials = [
   {
@@ -10,7 +10,6 @@ const testimonials = [
     location: "Kanpur",
     rating: 5,
     comment: "better test",
-    image: null
   },
   {
     id: 2,
@@ -18,7 +17,6 @@ const testimonials = [
     location: "Kanpur",
     rating: 5,
     comment: "best place to order food from ,it's fresh ,healthy and delicious.",
-    image: null
   },
   {
     id: 3,
@@ -26,7 +24,6 @@ const testimonials = [
     location: "Kanpur",
     rating: 5,
     comment: "Sabudana vada was so good and tasty",
-    image: null
   },
   {
     id: 4,
@@ -34,7 +31,6 @@ const testimonials = [
     location: "Kanpur",
     rating: 4,
     comment: "Nice I ordered vrat thali and it was too good like homemade food and simple. Only potatoes were too oily but it also tasted good.",
-    image: null
   },
   {
     id: 5,
@@ -42,7 +38,6 @@ const testimonials = [
     location: "Kanpur",
     rating: 5,
     comment: "The tase was yum.loved it thanks",
-    image: "/lovable-uploads/faaa40fa-4b4a-4930-85dc-0dd4596bf372.png"
   }
 ];
 
@@ -83,13 +78,9 @@ const Testimonials = () => {
                 >
                   <div className="md:w-1/4 flex flex-col items-center md:items-start">
                     <Avatar className="w-24 h-24 rounded-full overflow-hidden mb-4 neo-shadow">
-                      {testimonial.image ? (
-                        <AvatarImage src={testimonial.image} alt={testimonial.name} className="w-full h-full object-cover" />
-                      ) : (
-                        <AvatarFallback className="w-full h-full bg-primary/10 text-primary text-4xl">
-                          {testimonial.name.charAt(0)}
-                        </AvatarFallback>
-                      )}
+                      <AvatarFallback className="w-full h-full bg-primary/10 text-primary text-4xl">
+                        {testimonial.name.charAt(0)}
+                      </AvatarFallback>
                     </Avatar>
                     <h3 className="font-medium text-center md:text-left">{testimonial.name}</h3>
                     <p className="text-sm text-muted-foreground text-center md:text-left">{testimonial.location}</p>

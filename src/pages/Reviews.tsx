@@ -1,8 +1,7 @@
-
 import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import { Star, MessageSquare, ThumbsUp, Filter, Search } from 'lucide-react';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 
 // New reviews data from the provided screenshots
 const reviews = [
@@ -13,7 +12,6 @@ const reviews = [
     date: "yesterday",
     rating: 5,
     comment: "better test",
-    image: null,
     helpful: 1,
     source: "Zomato"
   },
@@ -24,7 +22,6 @@ const reviews = [
     date: "yesterday",
     rating: 5,
     comment: "best place to order food from ,it's fresh ,healthy and delicious.",
-    image: null,
     helpful: 1,
     source: "Zomato"
   },
@@ -35,7 +32,6 @@ const reviews = [
     date: "14 days ago",
     rating: 5,
     comment: "Sabudana vada was so good and tasty",
-    image: null,
     helpful: 0,
     source: "Zomato"
   },
@@ -46,7 +42,6 @@ const reviews = [
     date: "15 days ago",
     rating: 4,
     comment: "Nice I ordered vrat thali and it was too good like homemade food and simple.Only potatoes were too oily but it also tasted good.Packaging was...",
-    image: null,
     helpful: 1,
     source: "Zomato"
   },
@@ -57,7 +52,6 @@ const reviews = [
     date: "05 Mar 2025",
     rating: 5,
     comment: "The tase was yum.loved it thanks",
-    image: "/lovable-uploads/faaa40fa-4b4a-4930-85dc-0dd4596bf372.png",
     helpful: 1,
     source: "Zomato"
   },
@@ -68,7 +62,6 @@ const reviews = [
     date: "04 Mar 2025",
     rating: 5,
     comment: "Thekuwa is very tasty but price is little bit more",
-    image: null,
     helpful: 1,
     source: "Zomato"
   },
@@ -79,7 +72,6 @@ const reviews = [
     date: "26 Feb 2025",
     rating: 5,
     comment: "very very cooperative and nice owner ...she very helpfully customized the order accordingly...tasty homemade food.. recommend it always",
-    image: "/lovable-uploads/186c6c00-6309-433c-88b7-168c57a34a05.png",
     helpful: 1,
     source: "Google"
   },
@@ -90,7 +82,6 @@ const reviews = [
     date: "21 Feb 2025",
     rating: 5,
     comment: "Taste was just awesome filling was very tasty",
-    image: null,
     helpful: 1,
     source: "Google"
   },
@@ -101,7 +92,6 @@ const reviews = [
     date: "15 Dec 2024",
     rating: 5,
     comment: "fare bilkul waise hi the jaise hum ghar me banate hain. 👍",
-    image: "/lovable-uploads/ee4a5edc-1cfb-44fc-8395-fa110f3c14b3.png",
     helpful: 1,
     source: "Swiggy"
   },
@@ -112,7 +102,6 @@ const reviews = [
     date: "09 Nov 2024",
     rating: 4,
     comment: "ekdum ghar jaisa no word to describe. 👍 👌",
-    image: null,
     helpful: 1,
     source: "Swiggy"
   },
@@ -123,7 +112,6 @@ const reviews = [
     date: "04 Nov 2024",
     rating: 5,
     comment: "Amazing food..homemade taste...and healthy..",
-    image: "/lovable-uploads/186c6c00-6309-433c-88b7-168c57a34a05.png",
     helpful: 1,
     source: "Zomato"
   },
@@ -134,7 +122,6 @@ const reviews = [
     date: "03 Nov 2024",
     rating: 4,
     comment: "Fara and paneer pakoda wEre so tasty. But one pakoda was not cooked enough. Paneer paratha was good too. Fara were tasted so yumm",
-    image: "/lovable-uploads/f7bb667c-8710-4fd3-865b-035090543892.png",
     helpful: 1,
     source: "Swiggy"
   },
@@ -145,7 +132,6 @@ const reviews = [
     date: "12 Oct 2024",
     rating: 5,
     comment: "veryyyy tastyyyy Ghar ki yad dila di",
-    image: null,
     helpful: 1,
     source: "Zomato"
   },
@@ -156,7 +142,6 @@ const reviews = [
     date: "10 Oct 2024",
     rating: 5,
     comment: "It was really good",
-    image: "/lovable-uploads/51decb4f-b779-4f42-bfa2-1bbfeccfd7b2.png",
     helpful: 1,
     source: "Zomato"
   },
@@ -167,7 +152,6 @@ const reviews = [
     date: "26 Aug 2024",
     rating: 5,
     comment: "The food is good and at par with the expectations . the complimentary sweet tastes good",
-    image: null,
     helpful: 1,
     source: "Zomato"
   },
@@ -178,7 +162,6 @@ const reviews = [
     date: "02 Aug 2024",
     rating: 5,
     comment: "Farre is a must order thing , sabudana vada has a complete homemade taste . Worth ordering ...",
-    image: "/lovable-uploads/f57c57f4-2409-4351-b8fb-7ff9044800a9.png",
     helpful: 1,
     source: "Zomato"
   }
@@ -351,13 +334,9 @@ const Reviews = () => {
                       <div className="flex justify-between mb-4">
                         <div className="flex items-center gap-3">
                           <Avatar className="w-10 h-10">
-                            {review.image ? (
-                              <AvatarImage src={review.image} alt={review.name} />
-                            ) : (
-                              <AvatarFallback className="bg-primary/10 text-primary">
-                                {review.name.charAt(0)}
-                              </AvatarFallback>
-                            )}
+                            <AvatarFallback className="bg-primary/10 text-primary">
+                              {review.name.charAt(0)}
+                            </AvatarFallback>
                           </Avatar>
                           <div>
                             <h3 className="font-medium">{review.name}</h3>
