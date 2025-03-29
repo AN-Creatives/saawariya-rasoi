@@ -2,87 +2,185 @@
 import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import { Star, MessageSquare, ThumbsUp, Filter, Search } from 'lucide-react';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
+// New reviews data from the provided screenshots
 const reviews = [
   {
     id: 1,
-    name: "Arjun Sharma",
-    date: "October 10, 2023",
+    name: "Deepak",
+    orders: "1 order with you",
+    date: "yesterday",
     rating: 5,
-    comment: "The butter chicken is simply divine - rich, creamy, and packed with flavor. Their delivery through Zomato is always on time and the food arrives hot!",
-    image: "https://randomuser.me/api/portraits/men/32.jpg",
-    helpful: 24,
+    comment: "better test",
+    image: null,
+    helpful: 1,
     source: "Zomato"
   },
   {
     id: 2,
-    name: "Priya Patel",
-    date: "September 28, 2023",
-    rating: 4,
-    comment: "I love their vegetarian options. The paneer tikka masala has the perfect balance of spices. Will definitely order again!",
-    image: "https://randomuser.me/api/portraits/women/44.jpg",
-    helpful: 18,
-    source: "Google"
+    name: "Shivangi Tiwari",
+    orders: "3 orders with you",
+    date: "yesterday",
+    rating: 5,
+    comment: "best place to order food from ,it's fresh ,healthy and delicious.",
+    image: null,
+    helpful: 1,
+    source: "Zomato"
   },
   {
     id: 3,
-    name: "Rahul Verma",
-    date: "September 15, 2023",
+    name: "Sidhant Gupta",
+    orders: "1 order with you",
+    date: "14 days ago",
     rating: 5,
-    comment: "Best biryani in town! The aroma alone is worth ordering for. The takeaway packaging keeps the food fresh for hours.",
-    image: "https://randomuser.me/api/portraits/men/67.jpg",
-    helpful: 31,
-    source: "Website"
+    comment: "Sabudana vada was so good and tasty",
+    image: null,
+    helpful: 0,
+    source: "Zomato"
   },
   {
     id: 4,
-    name: "Meera Iyer",
-    date: "September 8, 2023",
-    rating: 5,
-    comment: "Their naan bread is soft and perfectly cooked. I've been ordering from Saawariya Rasoi for family gatherings for years now!",
-    image: "https://randomuser.me/api/portraits/women/13.jpg",
-    helpful: 15,
+    name: "S kumar",
+    orders: "4 orders with you",
+    date: "15 days ago",
+    rating: 4,
+    comment: "Nice I ordered vrat thali and it was too good like homemade food and simple.Only potatoes were too oily but it also tasted good.Packaging was...",
+    image: null,
+    helpful: 1,
     source: "Zomato"
   },
   {
     id: 5,
-    name: "Vikram Singh",
-    date: "August 30, 2023",
-    rating: 4,
-    comment: "The chicken tikka is exceptional. Perfectly grilled and flavorful. The only reason I'm not giving 5 stars is because the delivery took a bit longer than expected.",
-    image: "https://randomuser.me/api/portraits/men/22.jpg",
-    helpful: 9,
-    source: "Google"
-  },
-  {
-    id: 6,
-    name: "Ananya Das",
-    date: "August 22, 2023",
+    name: "Anamika Abhishek Srivastava",
+    orders: "4 orders with you",
+    date: "05 Mar 2025",
     rating: 5,
-    comment: "Outstanding service and food quality! The dal makhani is creamy and rich, just the way it should be. Highly recommend for anyone craving authentic North Indian food.",
-    image: "https://randomuser.me/api/portraits/women/28.jpg",
-    helpful: 27,
-    source: "Website"
-  },
-  {
-    id: 7,
-    name: "Karthik Reddy",
-    date: "August 15, 2023",
-    rating: 3,
-    comment: "The food is good but portion sizes could be better for the price. Flavors are authentic though.",
-    image: "https://randomuser.me/api/portraits/men/35.jpg",
-    helpful: 5,
+    comment: "The tase was yum.loved it thanks",
+    image: "/lovable-uploads/faaa40fa-4b4a-4930-85dc-0dd4596bf372.png",
+    helpful: 1,
     source: "Zomato"
   },
   {
-    id: 8,
-    name: "Shreya Gupta",
-    date: "August 7, 2023",
+    id: 6,
+    name: "SK Jha",
+    orders: "3 orders with you",
+    date: "04 Mar 2025",
     rating: 5,
-    comment: "Their gulab jamun is to die for! Perfectly sweet and soft. I always order extra to enjoy the next day.",
-    image: "https://randomuser.me/api/portraits/women/57.jpg",
-    helpful: 12,
+    comment: "Thekuwa is very tasty but price is little bit more",
+    image: null,
+    helpful: 1,
+    source: "Zomato"
+  },
+  {
+    id: 7,
+    name: "Swati Katiyar",
+    orders: "3 orders with you",
+    date: "26 Feb 2025",
+    rating: 5,
+    comment: "very very cooperative and nice owner ...she very helpfully customized the order accordingly...tasty homemade food.. recommend it always",
+    image: "/lovable-uploads/186c6c00-6309-433c-88b7-168c57a34a05.png",
+    helpful: 1,
     source: "Google"
+  },
+  {
+    id: 8,
+    name: "Komal",
+    orders: "4 orders with you",
+    date: "21 Feb 2025",
+    rating: 5,
+    comment: "Taste was just awesome filling was very tasty",
+    image: null,
+    helpful: 1,
+    source: "Google"
+  },
+  {
+    id: 9,
+    name: "Tulika Jaiswal",
+    orders: "2 orders with you",
+    date: "15 Dec 2024",
+    rating: 5,
+    comment: "fare bilkul waise hi the jaise hum ghar me banate hain. 👍",
+    image: "/lovable-uploads/ee4a5edc-1cfb-44fc-8395-fa110f3c14b3.png",
+    helpful: 1,
+    source: "Swiggy"
+  },
+  {
+    id: 10,
+    name: "N.Fatima",
+    orders: "2 orders with you",
+    date: "09 Nov 2024",
+    rating: 4,
+    comment: "ekdum ghar jaisa no word to describe. 👍 👌",
+    image: null,
+    helpful: 1,
+    source: "Swiggy"
+  },
+  {
+    id: 11,
+    name: "Swati Katiyar",
+    orders: "3 orders with you",
+    date: "04 Nov 2024",
+    rating: 5,
+    comment: "Amazing food..homemade taste...and healthy..",
+    image: "/lovable-uploads/186c6c00-6309-433c-88b7-168c57a34a05.png",
+    helpful: 1,
+    source: "Zomato"
+  },
+  {
+    id: 12,
+    name: "ruchika",
+    orders: "1 order with you",
+    date: "03 Nov 2024",
+    rating: 4,
+    comment: "Fara and paneer pakoda wEre so tasty. But one pakoda was not cooked enough. Paneer paratha was good too. Fara were tasted so yumm",
+    image: "/lovable-uploads/f7bb667c-8710-4fd3-865b-035090543892.png",
+    helpful: 1,
+    source: "Swiggy"
+  },
+  {
+    id: 13,
+    name: "Pranjal",
+    orders: "1 order with you",
+    date: "12 Oct 2024",
+    rating: 5,
+    comment: "veryyyy tastyyyy Ghar ki yad dila di",
+    image: null,
+    helpful: 1,
+    source: "Zomato"
+  },
+  {
+    id: 14,
+    name: "ALOK TRIPATHI",
+    orders: "1 order with you",
+    date: "10 Oct 2024",
+    rating: 5,
+    comment: "It was really good",
+    image: "/lovable-uploads/51decb4f-b779-4f42-bfa2-1bbfeccfd7b2.png",
+    helpful: 1,
+    source: "Zomato"
+  },
+  {
+    id: 15,
+    name: "Nishant Bajpai",
+    orders: "1 order with you",
+    date: "26 Aug 2024",
+    rating: 5,
+    comment: "The food is good and at par with the expectations . the complimentary sweet tastes good",
+    image: null,
+    helpful: 1,
+    source: "Zomato"
+  },
+  {
+    id: 16,
+    name: "Tanushree Chatterjee",
+    orders: "1 order with you",
+    date: "02 Aug 2024",
+    rating: 5,
+    comment: "Farre is a must order thing , sabudana vada has a complete homemade taste . Worth ordering ...",
+    image: "/lovable-uploads/f57c57f4-2409-4351-b8fb-7ff9044800a9.png",
+    helpful: 1,
+    source: "Zomato"
   }
 ];
 
@@ -252,16 +350,18 @@ const Reviews = () => {
                     <div key={review.id} className="glass-morphism rounded-xl p-6">
                       <div className="flex justify-between mb-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full overflow-hidden">
-                            <img 
-                              src={review.image} 
-                              alt={review.name}
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
+                          <Avatar className="w-10 h-10">
+                            {review.image ? (
+                              <AvatarImage src={review.image} alt={review.name} />
+                            ) : (
+                              <AvatarFallback className="bg-primary/10 text-primary">
+                                {review.name.charAt(0)}
+                              </AvatarFallback>
+                            )}
+                          </Avatar>
                           <div>
                             <h3 className="font-medium">{review.name}</h3>
-                            <p className="text-xs text-muted-foreground">{review.date}</p>
+                            <p className="text-xs text-muted-foreground">{review.orders}</p>
                           </div>
                         </div>
                         <div className="flex flex-col items-end">
@@ -274,7 +374,7 @@ const Reviews = () => {
                               />
                             ))}
                           </div>
-                          <span className="text-xs text-muted-foreground">via {review.source}</span>
+                          <span className="text-xs text-muted-foreground">{review.date}</span>
                         </div>
                       </div>
                       
