@@ -72,7 +72,7 @@ export const menuItems: MenuItem[] = [
     takeawayPrice: "₹125",
     category: "Saawariya Specialty",
     veg: true,
-    image: "/images/food/bhauri.jpg",
+    image: "/lovable-uploads/1f2f4253-b47e-49bc-9613-9b10ca562c19.png",
     description: "Traditional breakfast item made with rice flour, steamed to perfection"
   },
   {
