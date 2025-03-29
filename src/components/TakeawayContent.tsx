@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ArrowRight, Phone, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -35,7 +36,7 @@ const TakeawayContent = () => {
                 className="flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full font-medium hover:brightness-105 hover-lift"
               >
                 <Phone size={16} />
-                Call to Order
+                Order Now
               </a>
               <Link 
                 to="/menu" 
