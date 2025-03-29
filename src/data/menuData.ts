@@ -52,7 +52,7 @@ export const menuItems: MenuItem[] = [
     takeawayPrice: "₹135",
     category: "Saawariya Specialty",
     veg: true,
-    image: "/images/food/saboodana-vada.jpg",
+    image: "/lovable-uploads/37227f53-735b-4ced-923b-448c62b773af.png",
     description: "Crispy tapioca pearls patties flavored with herbs and spices"
   },
   {
@@ -189,7 +189,7 @@ export const menuItems: MenuItem[] = [
     category: "Saawariya Vrat Special",
     subcategory: "Vrat Snacks",
     veg: true,
-    image: "/images/food/saboodana-vada-vrat.jpg",
+    image: "/lovable-uploads/37227f53-735b-4ced-923b-448c62b773af.png",
     description: "Fasting-friendly tapioca pearls patties with peanuts"
   },
   
