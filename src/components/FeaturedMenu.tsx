@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Flame } from 'lucide-react';
@@ -88,7 +87,6 @@ const FeaturedMenu = () => {
                     <div>
                       <h3 className="text-lg font-medium mb-1">
                         {item.name}
-                        {/* Only render quantity if it exists on the item */}
                         {'quantity' in item && (
                           <span className="text-sm text-muted-foreground ml-2">
                             ({(item as any).quantity})
