@@ -103,7 +103,7 @@ export const menuItems: MenuItem[] = [
     takeawayPrice: "₹89",
     category: "Saawariya Specialty",
     veg: true,
-    image: "/images/food/chana-dal-pakora.jpg",
+    image: "/lovable-uploads/c9bb4575-9871-4cf1-a947-7726885fa905.png",
     description: "Crispy fritters made with split chickpeas, perfect snack with tea"
   },
   {
