@@ -88,7 +88,8 @@ const FeaturedMenu = () => {
                     <div>
                       <h3 className="text-lg font-medium mb-1">
                         {item.name}
-                        {item.quantity && <span className="text-sm text-muted-foreground ml-2">({item.quantity})</span>}
+                        {/* Only render quantity if it exists on the item */}
+                        {'quantity' in item && <span className="text-sm text-muted-foreground ml-2">({item.quantity})</span>}
                       </h3>
                       <div className="flex items-center gap-1 text-primary text-xs mb-2">
                         <Flame size={12} />
