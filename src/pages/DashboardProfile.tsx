@@ -8,11 +8,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2 } from 'lucide-react';
+import { Loader2, ArrowLeft } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
+import { Link } from 'react-router-dom';
 
 const DashboardProfile = () => {
-  const { user, profile } = useAuth();
+  const { user, profile, isAdmin } = useAuth();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
@@ -119,11 +120,22 @@ const DashboardProfile = () => {
 
   return (
     <DashboardLayout>
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight">Profile Settings</h1>
-        <p className="text-muted-foreground mt-2">
-          Manage your account information.
-        </p>
+      <div className="mb-8 flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Profile Settings</h1>
+          <p className="text-muted-foreground mt-2">
+            Manage your account information.
+          </p>
+        </div>
+        
+        {isAdmin && (
+          <Link to="/dashboard">
+            <Button variant="outline" className="flex items-center gap-2">
+              <ArrowLeft size={16} />
+              Back to Admin Dashboard
+            </Button>
+          </Link>
+        )}
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">

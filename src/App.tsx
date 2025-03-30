@@ -52,9 +52,11 @@ const App = () => (
             <Route path="/dashboard/content" element={<AuthGuard adminOnly={true}><DashboardContent /></AuthGuard>} />
             <Route path="/dashboard/posts" element={<AuthGuard adminOnly={true}><DashboardPosts /></AuthGuard>} />
             <Route path="/dashboard/media" element={<AuthGuard adminOnly={true}><DashboardMedia /></AuthGuard>} />
-            <Route path="/dashboard/profile" element={<AuthGuard adminOnly={false}><DashboardProfile /></AuthGuard>} />
-            <Route path="/dashboard/settings" element={<AuthGuard adminOnly={true}><DashboardSettings /></AuthGuard>} />
             <Route path="/dashboard/orders" element={<AuthGuard adminOnly={true}><DashboardOrders /></AuthGuard>} />
+            <Route path="/dashboard/settings" element={<AuthGuard adminOnly={true}><DashboardSettings /></AuthGuard>} />
+            
+            {/* Customer Routes - Authentication Required */}
+            <Route path="/customer/profile" element={<AuthGuard><DashboardProfile /></AuthGuard>} />
             
             {/* Catch-all route for 404 */}
             <Route path="*" element={<NotFound />} />

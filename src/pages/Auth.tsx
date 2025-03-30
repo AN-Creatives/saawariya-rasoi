@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -33,6 +32,28 @@ const Auth = () => {
     }
   }, [location.search]);
 
+  const redirectUserBasedOnRole = async (userId: string) => {
+    try {
+      const { data: profileData, error } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', userId)
+        .single();
+        
+      if (error) throw error;
+      
+      if (profileData?.role === 'admin') {
+        navigate('/dashboard');
+      } else {
+        navigate('/customer/profile');
+      }
+    } catch (error) {
+      console.error('Error fetching role:', error);
+      // Default redirect to customer profile if role check fails
+      navigate('/customer/profile');
+    }
+  };
+
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -58,7 +79,8 @@ const Auth = () => {
       
       // Automatically sign in after signup for better UX in development
       if (data.user) {
-        navigate('/dashboard/profile');
+        // New users are by default viewers/customers
+        navigate('/customer/profile');
       }
     } catch (error: any) {
       setError(error.message || 'An error occurred during sign up');
@@ -90,7 +112,9 @@ const Auth = () => {
         description: "You've successfully signed in.",
       });
       
-      navigate('/dashboard/profile');
+      if (data.user) {
+        redirectUserBasedOnRole(data.user.id);
+      }
     } catch (error: any) {
       setError(error.message || 'An error occurred during sign in');
       toast({
