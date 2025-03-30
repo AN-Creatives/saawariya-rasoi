@@ -98,9 +98,11 @@ export function useAuth() {
           });
         } else {
           console.log('[useAuth] No profile found for existing user');
+          setProfile(null);
         }
       } else {
         console.log('[useAuth] No existing session found');
+        setProfile(null);
       }
       
       setLoading(false);
@@ -120,9 +122,10 @@ export function useAuth() {
   const isAuthenticated = !!session && !!user;
   console.log('[useAuth] Authentication state:', { isAuthenticated, loading, hasUser: !!user, hasSession: !!session });
   
+  // Fix the bug: Add null checks before accessing profile.role
   const isAdmin = !!profile && profile.role === 'admin';
   const isEditor = !!profile && (profile.role === 'editor' || profile.role === 'admin');
-  const isCustomer = !!profile && profile.role === 'customer' || profile.role === 'viewer';
+  const isCustomer = !!profile && (profile.role === 'customer' || profile.role === 'viewer');
 
   return {
     session,

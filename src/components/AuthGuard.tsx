@@ -18,7 +18,7 @@ const AuthGuard: React.FC<AuthGuardProps> = ({
   const { loading, isAuthenticated, isAdmin, isCustomer, profile } = useAuth();
   const location = useLocation();
   
-  console.log('[AuthGuard] Current state:', { loading, isAuthenticated, isAdmin, isCustomer, path: location.pathname, adminOnly, customerOnly });
+  console.log('[AuthGuard] Current state:', { loading, isAuthenticated, isAdmin, isCustomer, path: location.pathname, adminOnly, customerOnly, profile });
 
   // Always show loading state when authentication is being checked
   if (loading) {
@@ -35,6 +35,17 @@ const AuthGuard: React.FC<AuthGuardProps> = ({
   if (!isAuthenticated) {
     console.log('[AuthGuard] Not authenticated, redirecting to /auth');
     return <Navigate to="/auth" state={{ from: location }} replace />;
+  }
+
+  // Handle missing profile case - create one if needed
+  if (!profile) {
+    console.log('[AuthGuard] No profile exists for authenticated user, showing loading');
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <span className="ml-2">Setting up user profile...</span>
+      </div>
+    );
   }
 
   // Check for admin access if adminOnly is true
