@@ -58,7 +58,7 @@ const Auth = () => {
       
       // Automatically sign in after signup for better UX in development
       if (data.user) {
-        navigate('/');
+        navigate('/dashboard/profile');
       }
     } catch (error: any) {
       setError(error.message || 'An error occurred during sign up');
@@ -90,7 +90,7 @@ const Auth = () => {
         description: "You've successfully signed in.",
       });
       
-      navigate('/');
+      navigate('/dashboard/profile');
     } catch (error: any) {
       setError(error.message || 'An error occurred during sign in');
       toast({

@@ -9,11 +9,14 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2 } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
 
 const DashboardProfile = () => {
   const { user, profile } = useAuth();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
+  const [address, setAddress] = useState('');
+  const [phone, setPhone] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isUpdating, setIsUpdating] = useState(false);
@@ -26,6 +29,8 @@ const DashboardProfile = () => {
     }
     if (profile) {
       setFullName(profile.full_name || '');
+      setAddress(profile.address || '');
+      setPhone(profile.phone || '');
     }
   }, [user, profile]);
 
@@ -41,6 +46,8 @@ const DashboardProfile = () => {
         .from('profiles')
         .update({
           full_name: fullName,
+          address: address,
+          phone: phone,
           updated_at: new Date().toISOString()
         })
         .eq('id', user.id);
@@ -149,6 +156,25 @@ const DashboardProfile = () => {
                 <p className="text-xs text-muted-foreground">
                   Email cannot be changed.
                 </p>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="phone">Contact Number</Label>
+                <Input
+                  id="phone"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="Your contact number"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="address">Address</Label>
+                <Textarea
+                  id="address"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder="Your delivery address"
+                  rows={3}
+                />
               </div>
             </CardContent>
             <CardFooter>

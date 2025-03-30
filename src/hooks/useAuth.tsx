@@ -7,6 +7,8 @@ interface Profile {
   id: string;
   full_name: string | null;
   role: 'admin' | 'editor' | 'viewer';
+  address?: string | null;
+  phone?: string | null;
 }
 
 // Helper function to ensure role is one of the allowed values
@@ -50,7 +52,9 @@ export function useAuth() {
             setProfile({
               id: profileData.id,
               full_name: profileData.full_name,
-              role: validateRole(profileData.role)
+              role: validateRole(profileData.role),
+              address: profileData.address,
+              phone: profileData.phone
             });
           } else {
             console.log('[useAuth] No profile found for user');
@@ -88,7 +92,9 @@ export function useAuth() {
           setProfile({
             id: profileData.id,
             full_name: profileData.full_name,
-            role: validateRole(profileData.role)
+            role: validateRole(profileData.role),
+            address: profileData.address,
+            phone: profileData.phone
           });
         } else {
           console.log('[useAuth] No profile found for existing user');
