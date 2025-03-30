@@ -6,17 +6,17 @@ import { Session, User } from '@supabase/supabase-js';
 interface Profile {
   id: string;
   full_name: string | null;
-  role: 'admin' | 'editor' | 'viewer';
+  role: 'admin' | 'editor' | 'viewer' | 'customer';
   address?: string | null;
   phone?: string | null;
 }
 
 // Helper function to ensure role is one of the allowed values
-const validateRole = (role: string): 'admin' | 'editor' | 'viewer' => {
-  if (role === 'admin' || role === 'editor' || role === 'viewer') {
+const validateRole = (role: string): 'admin' | 'editor' | 'viewer' | 'customer' => {
+  if (role === 'admin' || role === 'editor' || role === 'viewer' || role === 'customer') {
     return role;
   }
-  return 'viewer'; // Default fallback
+  return 'customer'; // Default fallback
 };
 
 export function useAuth() {
@@ -122,6 +122,7 @@ export function useAuth() {
   
   const isAdmin = !!profile && profile.role === 'admin';
   const isEditor = !!profile && (profile.role === 'editor' || profile.role === 'admin');
+  const isCustomer = !!profile && profile.role === 'customer' || profile.role === 'viewer';
 
   return {
     session,
@@ -131,6 +132,7 @@ export function useAuth() {
     signOut,
     isAuthenticated,
     isAdmin,
-    isEditor
+    isEditor,
+    isCustomer
   };
 }

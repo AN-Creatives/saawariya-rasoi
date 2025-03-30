@@ -12,7 +12,11 @@ import { Loader2, ArrowLeft } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { Link } from 'react-router-dom';
 
-const DashboardProfile = () => {
+interface DashboardProfileProps {
+  isAdminView?: boolean;
+}
+
+const DashboardProfile: React.FC<DashboardProfileProps> = ({ isAdminView = false }) => {
   const { user, profile, isAdmin } = useAuth();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
@@ -119,7 +123,7 @@ const DashboardProfile = () => {
   };
 
   return (
-    <DashboardLayout>
+    <DashboardLayout isCustomerView={!isAdminView}>
       <div className="mb-8 flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Profile Settings</h1>
@@ -128,11 +132,20 @@ const DashboardProfile = () => {
           </p>
         </div>
         
-        {isAdmin && (
+        {isAdmin && isAdminView && (
           <Link to="/dashboard">
             <Button variant="outline" className="flex items-center gap-2">
               <ArrowLeft size={16} />
               Back to Admin Dashboard
+            </Button>
+          </Link>
+        )}
+        
+        {!isAdminView && (
+          <Link to="/customer">
+            <Button variant="outline" className="flex items-center gap-2">
+              <ArrowLeft size={16} />
+              Back to Customer Dashboard
             </Button>
           </Link>
         )}

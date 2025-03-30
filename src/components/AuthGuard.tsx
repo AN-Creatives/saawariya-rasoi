@@ -15,10 +15,10 @@ const AuthGuard: React.FC<AuthGuardProps> = ({
   adminOnly = false, 
   customerOnly = false 
 }) => {
-  const { loading, isAuthenticated, isAdmin, profile } = useAuth();
+  const { loading, isAuthenticated, isAdmin, isCustomer, profile } = useAuth();
   const location = useLocation();
   
-  console.log('[AuthGuard] Current state:', { loading, isAuthenticated, isAdmin, path: location.pathname, adminOnly, customerOnly });
+  console.log('[AuthGuard] Current state:', { loading, isAuthenticated, isAdmin, isCustomer, path: location.pathname, adminOnly, customerOnly });
 
   // Always show loading state when authentication is being checked
   if (loading) {

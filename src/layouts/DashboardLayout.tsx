@@ -13,6 +13,9 @@ import {
   Menu,
   X,
   ShoppingBag,
+  User,
+  Clock,
+  Home,
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -27,9 +30,13 @@ import { Separator } from '@/components/ui/separator';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
+  isCustomerView?: boolean;
 }
 
-const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
+const DashboardLayout: React.FC<DashboardLayoutProps> = ({ 
+  children,
+  isCustomerView = false
+}) => {
   const { user, profile, signOut, isAdmin } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -61,7 +68,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
     return user?.email?.substring(0, 2).toUpperCase() || 'U';
   };
 
-  const menuItems = [
+  const adminMenuItems = [
     {
       name: 'Dashboard',
       icon: <LayoutDashboard size={20} />,
@@ -95,6 +102,31 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
       },
     ] : []),
   ];
+
+  const customerMenuItems = [
+    {
+      name: 'Dashboard',
+      icon: <Home size={20} />,
+      path: '/customer',
+    },
+    {
+      name: 'My Profile',
+      icon: <User size={20} />,
+      path: '/customer/profile',
+    },
+    {
+      name: 'My Orders',
+      icon: <ShoppingBag size={20} />,
+      path: '/customer/orders',
+    },
+    {
+      name: 'Activity',
+      icon: <Clock size={20} />,
+      path: '/customer/activity',
+    }
+  ];
+
+  const menuItems = isCustomerView ? customerMenuItems : adminMenuItems;
 
   return (
     <div className="flex min-h-screen bg-secondary/20">
@@ -162,7 +194,10 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                  <Link to="/dashboard/profile">Profile Settings</Link>
+                  <Link to={isCustomerView ? "/customer/profile" : "/dashboard/profile"}>Profile Settings</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/">Go to Website</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={handleSignOut}>
                   <LogOut className="mr-2 h-4 w-4" />

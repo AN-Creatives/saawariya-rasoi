@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -45,12 +46,13 @@ const Auth = () => {
       if (profileData?.role === 'admin') {
         navigate('/dashboard');
       } else {
-        navigate('/customer/profile');
+        // Redirect to customer dashboard instead of profile
+        navigate('/customer');
       }
     } catch (error) {
       console.error('Error fetching role:', error);
-      // Default redirect to customer profile if role check fails
-      navigate('/customer/profile');
+      // Default redirect to customer dashboard if role check fails
+      navigate('/customer');
     }
   };
 
@@ -79,8 +81,8 @@ const Auth = () => {
       
       // Automatically sign in after signup for better UX in development
       if (data.user) {
-        // New users are by default viewers/customers
-        navigate('/customer/profile');
+        // New users are by default customers
+        navigate('/customer');
       }
     } catch (error: any) {
       setError(error.message || 'An error occurred during sign up');
