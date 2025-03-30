@@ -1,9 +1,15 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import { ChefHat, Award, Utensils, Clock } from 'lucide-react';
 
 const About = () => {
+  const [imagesLoaded, setImagesLoaded] = useState<Record<string, boolean>>({});
+  
+  const handleImageLoad = (imageId: string) => {
+    setImagesLoaded(prev => ({ ...prev, [imageId]: true }));
+  };
+  
   return (
     <Layout>
       <section className="pt-32 pb-16 px-6">
@@ -23,10 +29,17 @@ const About = () => {
           
           <div className="glass-morphism rounded-2xl overflow-hidden mb-16 smooth-appear" style={{ animationDelay: '0.2s' }}>
             <div className="h-96 relative">
+              {!imagesLoaded['banner'] && (
+                <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
+              )}
               <img 
                 src="/lovable-uploads/52b9e43b-31d9-45c6-9b9f-f41733735fdb.png" 
                 alt="Saawariya Rasoi Banner" 
-                className="w-full h-full object-cover"
+                className={`w-full h-full object-cover transition-opacity duration-300 ${imagesLoaded['banner'] ? 'opacity-100' : 'opacity-0'}`}
+                loading="eager"
+                onLoad={() => handleImageLoad('banner')}
+                width="1200"
+                height="400"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
                 <div className="p-8 text-white">
@@ -64,18 +77,32 @@ const About = () => {
             </div>
             
             <div className="relative smooth-appear" style={{ animationDelay: '0.4s' }}>
-              <div className="aspect-square rounded-2xl overflow-hidden neo-shadow">
+              <div className="aspect-square rounded-2xl overflow-hidden neo-shadow relative">
+                {!imagesLoaded['branding'] && (
+                  <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
+                )}
                 <img 
                   src="/lovable-uploads/7cd9e3eb-d505-47b0-9fbc-6d572daa9cc0.png" 
                   alt="Saawariya Rasoi Branding" 
-                  className="w-full h-full object-cover"
+                  className={`w-full h-full object-cover transition-opacity duration-300 ${imagesLoaded['branding'] ? 'opacity-100' : 'opacity-0'}`}
+                  loading="lazy"
+                  onLoad={() => handleImageLoad('branding')}
+                  width="600"
+                  height="600"
                 />
               </div>
-              <div className="absolute -bottom-6 -right-6 w-32 h-32 rounded-full overflow-hidden border-4 border-background neo-shadow">
+              <div className="absolute -bottom-6 -right-6 w-32 h-32 rounded-full overflow-hidden border-4 border-background neo-shadow relative">
+                {!imagesLoaded['logo'] && (
+                  <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
+                )}
                 <img 
                   src="/lovable-uploads/52b9e43b-31d9-45c6-9b9f-f41733735fdb.png" 
                   alt="Saawariya Rasoi Logo" 
-                  className="w-full h-full object-cover"
+                  className={`w-full h-full object-cover transition-opacity duration-300 ${imagesLoaded['logo'] ? 'opacity-100' : 'opacity-0'}`}
+                  loading="lazy"
+                  onLoad={() => handleImageLoad('logo')}
+                  width="128"
+                  height="128"
                 />
               </div>
             </div>

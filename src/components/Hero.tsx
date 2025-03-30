@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useOrderMode } from '@/contexts/OrderModeContext';
@@ -10,6 +10,7 @@ const customerInitials = ["D", "S", "P", "N"];
 
 const Hero = () => {
   const { mode } = useOrderMode();
+  const [imageLoaded, setImageLoaded] = useState(false);
   
   return (
     <section className="pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden">
@@ -92,10 +93,17 @@ const Hero = () => {
           <div className="md:w-1/2 relative smooth-appear" style={{ animationDelay: '0.2s' }}>
             <div className="aspect-square md:aspect-[4/5] relative z-10">
               <div className="absolute inset-0 rounded-2xl overflow-hidden neo-shadow">
+                {!imageLoaded && (
+                  <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
+                )}
                 <img 
                   src="https://images.unsplash.com/photo-1631452180519-c014fe946bc7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
                   alt="Saawariya Rasoi signature dish - Purwanchal thali" 
-                  className="w-full h-full object-cover"
+                  className={`w-full h-full object-cover transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                  loading="eager"
+                  onLoad={() => setImageLoaded(true)}
+                  width="800"
+                  height="1000"
                 />
               </div>
             </div>

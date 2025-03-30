@@ -1,10 +1,17 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import { ArrowRight, Phone, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { AspectRatio } from "./ui/aspect-ratio";
 import { Button } from "./ui/button";
 
 const TakeawayContent = () => {
+  const [imagesLoaded, setImagesLoaded] = useState<Record<string, boolean>>({});
+  
+  const handleImageLoad = (imageId: string) => {
+    setImagesLoaded(prev => ({ ...prev, [imageId]: true }));
+  };
+  
   return (
     <div className="space-y-12 animate-fade-in">
       <section className="text-center space-y-4 max-w-3xl mx-auto">
@@ -50,10 +57,17 @@ const TakeawayContent = () => {
           </div>
           <div className="md:w-1/2 relative">
             <div className="aspect-[4/3] rounded-2xl overflow-hidden neo-shadow">
+              {!imagesLoaded['takeaway'] && (
+                <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
+              )}
               <img 
-                src="https://images.unsplash.com/photo-1625398407796-82650a8c9dd4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                src="https://images.unsplash.com/photo-1625398407796-82650a8c9dd4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=70" 
                 alt="Saawariya Rasoi takeaway" 
-                className="w-full h-full object-cover"
+                className={`w-full h-full object-cover transition-opacity duration-300 ${imagesLoaded['takeaway'] ? 'opacity-100' : 'opacity-0'}`}
+                loading="lazy"
+                onLoad={() => handleImageLoad('takeaway')}
+                width="600"
+                height="450"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
             </div>
@@ -84,10 +98,15 @@ const TakeawayContent = () => {
           <div className="glass-morphism rounded-xl overflow-hidden hover-lift flex flex-col">
             <div className="relative">
               <AspectRatio ratio={16/9}>
+                {!imagesLoaded['corporate'] && (
+                  <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
+                )}
                 <img 
                   src="/lovable-uploads/a1f91156-644e-4ba2-b686-c0b3a2e4ca29.png" 
                   alt="Corporate catering"
-                  className="w-full h-full object-cover"
+                  className={`w-full h-full object-cover transition-opacity duration-300 ${imagesLoaded['corporate'] ? 'opacity-100' : 'opacity-0'}`}
+                  loading="lazy"
+                  onLoad={() => handleImageLoad('corporate')}
                 />
               </AspectRatio>
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -117,10 +136,15 @@ const TakeawayContent = () => {
           <div className="glass-morphism rounded-xl overflow-hidden hover-lift flex flex-col">
             <div className="relative">
               <AspectRatio ratio={16/9}>
+                {!imagesLoaded['party'] && (
+                  <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
+                )}
                 <img 
                   src="/lovable-uploads/72ac1482-f513-461a-817e-37a758073834.png" 
                   alt="Party catering"
-                  className="w-full h-full object-cover"
+                  className={`w-full h-full object-cover transition-opacity duration-300 ${imagesLoaded['party'] ? 'opacity-100' : 'opacity-0'}`}
+                  loading="lazy"
+                  onLoad={() => handleImageLoad('party')}
                 />
               </AspectRatio>
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -155,30 +179,40 @@ const TakeawayContent = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
             {
+              id: 'special1',
               title: "10% OFF on all takeaway orders",
               description: "Save when you pick up your order directly from us",
-              image: "https://images.unsplash.com/photo-1541533848871-02096c258e4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+              image: "https://images.unsplash.com/photo-1541533848871-02096c258e4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60"
             },
             {
+              id: 'special2',
               title: "Loyalty Program",
               description: "Earn points on every takeaway order for future discounts",
-              image: "https://images.unsplash.com/photo-1521017432531-fbd92d768814?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+              image: "https://images.unsplash.com/photo-1521017432531-fbd92d768814?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60"
             },
             {
+              id: 'special3',
               title: "Family Combo Meals",
               description: "Special pricing on family-sized portions",
-              image: "https://images.unsplash.com/photo-1550547660-d9450f859349?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+              image: "https://images.unsplash.com/photo-1550547660-d9450f859349?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60"
             }
-          ].map((offer, index) => (
+          ].map((offer) => (
             <div 
-              key={index} 
+              key={offer.id} 
               className="rounded-xl overflow-hidden hover-lift neo-shadow"
             >
               <div className="aspect-video relative">
+                {!imagesLoaded[offer.id] && (
+                  <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
+                )}
                 <img 
                   src={offer.image} 
                   alt={offer.title}
-                  className="w-full h-full object-cover"
+                  className={`w-full h-full object-cover transition-opacity duration-300 ${imagesLoaded[offer.id] ? 'opacity-100' : 'opacity-0'}`}
+                  loading="lazy"
+                  onLoad={() => handleImageLoad(offer.id)}
+                  width="400"
+                  height="225"
                 />
               </div>
               <div className="p-5 bg-white">

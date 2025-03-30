@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
 import { useOrderMode } from '@/contexts/OrderModeContext';
 import { Flame, Filter, X, Map, Camera } from 'lucide-react';
@@ -12,9 +12,19 @@ const Menu = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [showVegOnly, setShowVegOnly] = useState(false);
   const [showPopularOnly, setShowPopularOnly] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   
   const zomatoLink = "https://link.zomato.com/xqzv/rshare?id=75078797305635b1";
   const googleMapsLink = "https://maps.app.goo.gl/8LbpcKic2gpU9s1p9";
+  
+  // Set loading state to simulate data fetching
+  useEffect(() => {
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, []);
   
   // Filter menu items based on selected filters
   const filteredItems = menuItems.filter(item => {
@@ -158,26 +168,44 @@ const Menu = () => {
               </div>
             </div>
             
-            {/* Render subcategories in custom order */}
-            {sortedSubcategories.length > 0 ? (
-              sortedSubcategories.map((subcategory) => (
-                <MenuSubcategory 
-                  key={subcategory} 
-                  title={subcategory !== 'default' ? subcategory : ''} 
-                  items={groupedItems[subcategory]}
-                  zomatoLink={zomatoLink}
-                />
-              ))
-            ) : (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground">No items match your filters. Please try different criteria.</p>
-                <button
-                  onClick={resetFilters}
-                  className="mt-4 px-4 py-2 bg-secondary text-secondary-foreground rounded-full text-sm font-medium"
-                >
-                  Reset Filters
-                </button>
+            {/* Loading state */}
+            {isLoading ? (
+              <div className="space-y-8">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="animate-pulse">
+                    <div className="h-6 w-32 bg-gray-200 rounded mb-6"></div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {[1, 2, 3].map((j) => (
+                        <div key={j} className="h-64 bg-gray-200 rounded-xl"></div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </div>
+            ) : (
+              <>
+                {/* Render subcategories in custom order */}
+                {sortedSubcategories.length > 0 ? (
+                  sortedSubcategories.map((subcategory) => (
+                    <MenuSubcategory 
+                      key={subcategory} 
+                      title={subcategory !== 'default' ? subcategory : ''} 
+                      items={groupedItems[subcategory]}
+                      zomatoLink={zomatoLink}
+                    />
+                  ))
+                ) : (
+                  <div className="text-center py-12">
+                    <p className="text-muted-foreground">No items match your filters. Please try different criteria.</p>
+                    <button
+                      onClick={resetFilters}
+                      className="mt-4 px-4 py-2 bg-secondary text-secondary-foreground rounded-full text-sm font-medium"
+                    >
+                      Reset Filters
+                    </button>
+                  </div>
+                )}
+              </>
             )}
           </div>
           

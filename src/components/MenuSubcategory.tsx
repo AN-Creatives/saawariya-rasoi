@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { MenuItem } from '@/data/menuData';
 import { Flame, Info, Clock, Tag, ChevronRight } from 'lucide-react';
 import { useOrderMode } from '@/contexts/OrderModeContext';
@@ -28,6 +28,7 @@ interface MenuSubcategoryProps {
 const MenuSubcategory = ({ title, items, zomatoLink }: MenuSubcategoryProps) => {
   const { mode } = useOrderMode();
   const navigate = useNavigate();
+  const [loadedImages, setLoadedImages] = useState<Record<string, boolean>>({});
   
   const handleTakeawayWhatsapp = (item: MenuItem) => {
     // Format the message for WhatsApp with the item details
@@ -38,6 +39,10 @@ const MenuSubcategory = ({ title, items, zomatoLink }: MenuSubcategoryProps) => 
     
     // Open WhatsApp in a new tab
     window.open(whatsappUrl, '_blank');
+  };
+
+  const handleImageLoad = (itemId: number) => {
+    setLoadedImages(prev => ({ ...prev, [itemId]: true }));
   };
   
   return (
@@ -58,7 +63,9 @@ const MenuSubcategory = ({ title, items, zomatoLink }: MenuSubcategoryProps) => 
                 <img 
                   src={item.image} 
                   alt={item.name} 
-                  className="w-full h-full object-cover"
+                  className={`w-full h-full object-cover transition-opacity duration-300 ${loadedImages[item.id] ? 'opacity-100' : 'opacity-0'}`}
+                  loading="lazy"
+                  onLoad={() => handleImageLoad(item.id)}
                   onError={(e) => {
                     // Fallback gradient if image fails to load
                     (e.target as HTMLImageElement).style.display = 'none';
@@ -72,6 +79,13 @@ const MenuSubcategory = ({ title, items, zomatoLink }: MenuSubcategoryProps) => 
                       <p className="text-sm text-primary/60 mt-1 line-clamp-2">{item.description}</p>
                     )}
                   </div>
+                </div>
+              )}
+              
+              {/* Show placeholder until image loads */}
+              {item.image && !loadedImages[item.id] && (
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/5 to-primary/20">
+                  <div className="w-10 h-10 border-t-2 border-primary rounded-full animate-spin"></div>
                 </div>
               )}
               

@@ -1,9 +1,15 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowRight, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const DeliveryContent = () => {
+  const [imagesLoaded, setImagesLoaded] = useState<Record<string, boolean>>({});
+  
+  const handleImageLoad = (imageId: string) => {
+    setImagesLoaded(prev => ({ ...prev, [imageId]: true }));
+  };
+  
   return (
     <div className="space-y-12 animate-fade-in">
       <section className="text-center space-y-4 max-w-3xl mx-auto">
@@ -23,7 +29,7 @@ const DeliveryContent = () => {
         <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16">
           <div className="md:w-1/2 space-y-6">
             <span className="inline-flex items-center gap-2 px-3 py-1 bg-restaurant-50 text-restaurant-700 rounded-full text-xs font-medium">
-              <img src="https://b.zmtcdn.com/images/logo/zomato_logo_2017.png" alt="Zomato" className="h-4" />
+              <img src="https://b.zmtcdn.com/images/logo/zomato_logo_2017.png" alt="Zomato" className="h-4" loading="eager" />
               Exclusive Partner
             </span>
             <h3 className="text-2xl md:text-3xl font-medium">Order via Zomato for exclusive deals</h3>
@@ -51,10 +57,17 @@ const DeliveryContent = () => {
           </div>
           <div className="md:w-1/2 relative">
             <div className="aspect-[4/3] rounded-2xl overflow-hidden neo-shadow">
+              {!imagesLoaded['delivery'] && (
+                <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
+              )}
               <img 
-                src="https://images.unsplash.com/photo-1633945274405-b8c428768051?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                src="https://images.unsplash.com/photo-1633945274405-b8c428768051?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=70" 
                 alt="Saawariya Rasoi food delivery" 
-                className="w-full h-full object-cover"
+                className={`w-full h-full object-cover transition-opacity duration-300 ${imagesLoaded['delivery'] ? 'opacity-100' : 'opacity-0'}`}
+                loading="lazy"
+                onLoad={() => handleImageLoad('delivery')}
+                width="600" 
+                height="450"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
             </div>
@@ -84,30 +97,40 @@ const DeliveryContent = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
             {
+              id: 'offer1',
               title: "20% OFF on first order",
               description: "Use code FIRST20 when ordering through Zomato",
-              image: "https://images.unsplash.com/photo-1631515242808-497c3fbd3972?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+              image: "https://images.unsplash.com/photo-1631515242808-497c3fbd3972?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60"
             },
             {
+              id: 'offer2',
               title: "Free delivery on orders above ₹499",
               description: "No code needed, just order through Zomato",
-              image: "https://images.unsplash.com/photo-1613545325278-f24b0cae1224?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+              image: "https://images.unsplash.com/photo-1613545325278-f24b0cae1224?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60"
             },
             {
+              id: 'offer3',
               title: "Buy 1 Get 1 on weekday lunches",
               description: "Valid Monday to Friday, 12PM to 3PM",
-              image: "https://images.unsplash.com/photo-1600335895229-6e75511892c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+              image: "https://images.unsplash.com/photo-1600335895229-6e75511892c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=60"
             }
-          ].map((offer, index) => (
+          ].map((offer) => (
             <div 
-              key={index} 
+              key={offer.id} 
               className="rounded-xl overflow-hidden hover-lift neo-shadow"
             >
               <div className="aspect-video relative">
+                {!imagesLoaded[offer.id] && (
+                  <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
+                )}
                 <img 
                   src={offer.image} 
                   alt={offer.title}
-                  className="w-full h-full object-cover"
+                  className={`w-full h-full object-cover transition-opacity duration-300 ${imagesLoaded[offer.id] ? 'opacity-100' : 'opacity-0'}`}
+                  loading="lazy"
+                  onLoad={() => handleImageLoad(offer.id)}
+                  width="400"
+                  height="225"
                 />
               </div>
               <div className="p-5 bg-white">
