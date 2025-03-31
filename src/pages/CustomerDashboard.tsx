@@ -19,15 +19,16 @@ import { Loader2, ShoppingBag, User } from 'lucide-react';
 import { format } from 'date-fns';
 import Layout from '@/components/Layout';
 
+// Update the Order interface to match the actual database structure
 interface Order {
   id: string;
-  order_type: 'delivery' | 'takeaway';
-  total_price: number;
-  payment_status: string;
-  order_date: string;
+  order_type: string; // Changed from 'delivery' | 'takeaway' to string for flexibility
+  total_amount: number; // Changed from total_price to match database field
+  status: string; // Changed from payment_status to match database field
+  created_at: string; // Changed from order_date to match database field
   order_status?: string;
   delivery_status?: string;
-  order_details?: any;
+  order_items?: any; // Changed from order_details to match database field
 }
 
 const CustomerDashboard = () => {
@@ -43,7 +44,7 @@ const CustomerDashboard = () => {
           .from('orders')
           .select('*')
           .eq('user_id', profile?.id || '')
-          .order('order_date', { ascending: false });
+          .order('created_at', { ascending: false }); // Updated to created_at
         
         if (activeTab !== 'all') {
           query = query.eq('order_type', activeTab);
@@ -53,19 +54,8 @@ const CustomerDashboard = () => {
         
         if (error) throw error;
         
-        // Transform the data to match our Order interface
-        const transformedOrders: Order[] = data?.map(item => ({
-          id: item.id,
-          order_type: item.order_type,
-          total_price: item.total_price,
-          payment_status: item.payment_status,
-          order_date: item.order_date,
-          order_status: item.order_status,
-          delivery_status: item.delivery_status,
-          order_details: item.order_details
-        })) || [];
-        
-        setOrders(transformedOrders);
+        // No need for transformation as we've updated the Order interface to match the database
+        setOrders(data || []);
       } catch (error) {
         console.error('Error fetching orders:', error);
       } finally {
@@ -186,7 +176,7 @@ const CustomerDashboard = () => {
                         <TableBody>
                           {orders.map((order) => (
                             <TableRow key={order.id}>
-                              <TableCell>{formatDate(order.order_date)}</TableCell>
+                              <TableCell>{formatDate(order.created_at)}</TableCell>
                               <TableCell className="capitalize">{order.order_type}</TableCell>
                               <TableCell>
                                 <span className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${
@@ -199,7 +189,7 @@ const CustomerDashboard = () => {
                                     : (order.order_status || 'Pending').replace(/_/g, ' ')}
                                 </span>
                               </TableCell>
-                              <TableCell className="text-right">₹{Number(order.total_price).toFixed(2)}</TableCell>
+                              <TableCell className="text-right">₹{Number(order.total_amount).toFixed(2)}</TableCell>
                             </TableRow>
                           ))}
                         </TableBody>
