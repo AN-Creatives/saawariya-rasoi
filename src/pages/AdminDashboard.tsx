@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -88,7 +87,7 @@ const AdminDashboard = () => {
               <>
                 <div className="text-3xl font-bold">{customersCount || 0}</div>
                 <p className="text-sm text-muted-foreground">Registered customers</p>
-                <Button className="mt-4 w-full" asChild variant="outline">
+                <Button className="mt-4 w-full" asChild>
                   <Link to="/dashboard/customers">
                     <Users className="mr-2 h-4 w-4" /> View Customers
                   </Link>

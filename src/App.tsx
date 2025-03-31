@@ -24,6 +24,7 @@ import DashboardMedia from "./pages/DashboardMedia";
 import DashboardProfile from "./pages/DashboardProfile";
 import DashboardSettings from "./pages/DashboardSettings";
 import DashboardOrders from "./pages/DashboardOrders";
+import DashboardCustomers from "./pages/DashboardCustomers";
 import CustomerDashboard from "./pages/CustomerDashboard";
 import CustomerProfile from "./pages/CustomerProfile";
 import NotFound from "./pages/NotFound";
@@ -63,6 +64,7 @@ const App = () => (
             <Route path="/dashboard/profile" element={<AuthGuard><DashboardProfile /></AuthGuard>} />
             <Route path="/dashboard/settings" element={<AuthGuard adminOnly={true}><DashboardSettings /></AuthGuard>} />
             <Route path="/dashboard/orders" element={<AuthGuard adminOnly={true}><DashboardOrders /></AuthGuard>} />
+            <Route path="/dashboard/customers" element={<AuthGuard adminOnly={true}><DashboardCustomers /></AuthGuard>} />
             
             {/* Catch-all route for 404 */}
             <Route path="*" element={<NotFound />} />
