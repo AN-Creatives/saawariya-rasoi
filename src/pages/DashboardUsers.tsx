@@ -1,8 +1,10 @@
+
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/hooks/useAuth';
 import { 
   Table, 
   TableBody, 
@@ -69,6 +71,7 @@ const DashboardUsers = () => {
   const pageSize = 10;
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { session } = useAuth();
 
   const fetchUsers = async () => {
     const startIndex = (page - 1) * pageSize;
@@ -133,29 +136,40 @@ const DashboardUsers = () => {
 
   const deleteUserMutation = useMutation({
     mutationFn: async (userId: string) => {
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .delete()
-        .eq('id', userId);
+      // Call the Edge Function to delete the user (which handles both profile and auth user)
+      const accessToken = session?.access_token || '';
       
-      if (profileError) throw profileError;
+      if (!accessToken) {
+        throw new Error('Authentication token not available');
+      }
       
-      return { userId };
+      const response = await supabase.functions.invoke('delete-user', {
+        body: { userId },
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      
+      if (response.error) {
+        throw new Error(response.error.message || 'Failed to delete user');
+      }
+      
+      return { userId, response };
     },
     onSuccess: (data) => {
       toast({
-        title: 'User deleted',
+        title: 'User removed',
         description: 'The user has been successfully removed from the system.',
       });
       queryClient.invalidateQueries({ queryKey: ['users'] });
       setDeleteDialogOpen(false);
     },
-    onError: (error) => {
+    onError: (error: Error) => {
       console.error('Error deleting user:', error);
       toast({
         variant: 'destructive',
         title: 'Error',
-        description: 'Failed to delete user. You may not have sufficient permissions.',
+        description: error.message || 'Failed to delete user',
       });
     },
   });

@@ -1,1 +1,6 @@
+
 project_id = "malkshsszajmrpjvzsrx"
+
+[delete-user]
+port = 54321
+verify_jwt = true
