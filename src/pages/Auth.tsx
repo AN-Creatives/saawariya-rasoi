@@ -131,9 +131,36 @@ const Auth = () => {
       const userRole = profileData?.role || 'customer';
       console.log('User role detected:', userRole);
       
+      if (userType === 'admin' && userRole !== 'admin') {
+        toast({
+          variant: "destructive",
+          title: "Access denied",
+          description: "This account doesn't have admin privileges.",
+        });
+        setLoading(false);
+        return;
+      }
+      
+      if (userType === 'customer' && userRole === 'admin') {
+        toast({
+          variant: "destructive",
+          title: "Admin account detected",
+          description: "Please use admin login for admin accounts.",
+        });
+        setLoading(false);
+        return;
+      }
+      
       toast({
         title: "Welcome back!",
         description: "You've successfully signed in.",
+      });
+
+      console.log('Login successful, redirecting based on role:', {
+        userRole,
+        profileData,
+        userType,
+        destination: userRole === 'admin' ? '/dashboard' : '/customer'
       });
 
       if (userRole === 'admin') {

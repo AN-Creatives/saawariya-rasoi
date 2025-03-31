@@ -42,16 +42,15 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children, adminOnly = false, cust
     return <Navigate to="/auth" state={{ from: location }} replace />;
   }
 
-  // Check for admin access if adminOnly is true
-  if (adminOnly && !isAdmin) {
-    console.log('[AuthGuard] Not an admin, redirecting to customer dashboard');
-    return <Navigate to="/customer" state={{ from: location }} replace />;
-  }
-
-  // Check for customer access if customerOnly is true
-  if (customerOnly && !isCustomer && isAdmin) {
+  // Force check profile again to ensure we have the latest role data
+  if (profile?.role === 'admin' && customerOnly) {
     console.log('[AuthGuard] Admin accessing customer page, redirecting to admin dashboard');
     return <Navigate to="/dashboard" state={{ from: location }} replace />;
+  }
+  
+  if (profile?.role !== 'admin' && adminOnly) {
+    console.log('[AuthGuard] Non-admin accessing admin page, redirecting to customer dashboard');
+    return <Navigate to="/customer" state={{ from: location }} replace />;
   }
 
   // Allow access to children if authenticated and has proper permissions
