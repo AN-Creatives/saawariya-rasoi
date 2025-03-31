@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -13,22 +14,25 @@ const AdminDashboard = () => {
   const [postsCount, setPostsCount] = useState<number | null>(null);
   const [ordersCount, setOrdersCount] = useState<number | null>(null);
   const [customersCount, setCustomersCount] = useState<number | null>(null);
+  const [usersCount, setUsersCount] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const [contentResult, postsResult, ordersResult, customersResult] = await Promise.all([
+        const [contentResult, postsResult, ordersResult, customersResult, usersResult] = await Promise.all([
           supabase.from('content').select('id', { count: 'exact', head: true }),
           supabase.from('posts').select('id', { count: 'exact', head: true }),
           supabase.from('orders').select('id', { count: 'exact', head: true }),
-          supabase.from('profiles').select('id', { count: 'exact', head: true }).eq('role', 'customer')
+          supabase.from('profiles').select('id', { count: 'exact', head: true }).eq('role', 'customer'),
+          supabase.from('profiles').select('id', { count: 'exact', head: true })
         ]);
         
         setContentCount(contentResult.count);
         setPostsCount(postsResult.count);
         setOrdersCount(ordersResult.count);
         setCustomersCount(customersResult.count);
+        setUsersCount(usersResult.count);
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
       } finally {
@@ -66,6 +70,30 @@ const AdminDashboard = () => {
                 <Button className="mt-4 w-full" asChild>
                   <Link to="/dashboard/orders">
                     <ShoppingBag className="mr-2 h-4 w-4" /> Manage Orders
+                  </Link>
+                </Button>
+              </>
+            )}
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-lg">Users</CardTitle>
+            <CardDescription>View all system users</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {loading ? (
+              <div className="flex justify-center py-4">
+                <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+              </div>
+            ) : (
+              <>
+                <div className="text-3xl font-bold">{usersCount || 0}</div>
+                <p className="text-sm text-muted-foreground">Total registered users</p>
+                <Button className="mt-4 w-full" asChild>
+                  <Link to="/dashboard/users">
+                    <Users className="mr-2 h-4 w-4" /> View All Users
                   </Link>
                 </Button>
               </>
@@ -118,22 +146,6 @@ const AdminDashboard = () => {
                 </Button>
               </>
             )}
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg">Analytics</CardTitle>
-            <CardDescription>Business performance</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold">-</div>
-            <p className="text-sm text-muted-foreground">View sales and metrics</p>
-            <Button className="mt-4 w-full" asChild variant="outline">
-              <Link to="/dashboard/analytics">
-                <BarChart className="mr-2 h-4 w-4" /> View Analytics
-              </Link>
-            </Button>
           </CardContent>
         </Card>
       </div>
