@@ -1,9 +1,8 @@
-
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import DashboardLayout from '@/layouts/DashboardLayout';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 import { 
   Table, 
   TableBody, 
@@ -48,7 +47,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
-import { Eye, Loader2, User, ShieldAlert } from 'lucide-react';
+import { Eye, Loader2, User, ShieldAlert, Trash, UserX } from 'lucide-react';
 
 interface UserProfile {
   id: string;
@@ -65,17 +64,16 @@ const DashboardUsers = () => {
   const [selectedUser, setSelectedUser] = useState<UserProfile | null>(null);
   const [userDetailsOpen, setUserDetailsOpen] = useState(false);
   const [roleDialogOpen, setRoleDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [newRole, setNewRole] = useState<string>('');
   const pageSize = 10;
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  // Fetch all user profiles
   const fetchUsers = async () => {
     const startIndex = (page - 1) * pageSize;
     
     try {
-      // Get all profiles
       const { data: profiles, count, error } = await supabase
         .from('profiles')
         .select('*', { count: 'exact' })
@@ -133,6 +131,35 @@ const DashboardUsers = () => {
     },
   });
 
+  const deleteUserMutation = useMutation({
+    mutationFn: async (userId: string) => {
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .delete()
+        .eq('id', userId);
+      
+      if (profileError) throw profileError;
+      
+      return { userId };
+    },
+    onSuccess: (data) => {
+      toast({
+        title: 'User deleted',
+        description: 'The user has been successfully removed from the system.',
+      });
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+      setDeleteDialogOpen(false);
+    },
+    onError: (error) => {
+      console.error('Error deleting user:', error);
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'Failed to delete user. You may not have sufficient permissions.',
+      });
+    },
+  });
+
   const handleUpdateRole = () => {
     if (selectedUser && newRole) {
       updateRoleMutation.mutate({
@@ -146,6 +173,17 @@ const DashboardUsers = () => {
     setSelectedUser(user);
     setNewRole(user.role);
     setRoleDialogOpen(true);
+  };
+
+  const openDeleteDialog = (user: UserProfile) => {
+    setSelectedUser(user);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleDeleteUser = () => {
+    if (selectedUser) {
+      deleteUserMutation.mutate(selectedUser.id);
+    }
   };
 
   const totalPages = data ? Math.ceil(data.totalCount / pageSize) : 0;
@@ -227,13 +265,23 @@ const DashboardUsers = () => {
                           <TableCell>
                             {formatDate(user.created_at)}
                           </TableCell>
-                          <TableCell className="text-right space-x-2">
-                            <Button variant="ghost" size="sm" onClick={() => viewUserDetails(user)}>
-                              <Eye className="h-4 w-4 mr-1" /> View
-                            </Button>
-                            <Button variant="outline" size="sm" onClick={() => openRoleDialog(user)}>
-                              <ShieldAlert className="h-4 w-4 mr-1" /> Role
-                            </Button>
+                          <TableCell className="text-right">
+                            <div className="flex justify-end gap-2">
+                              <Button variant="ghost" size="sm" onClick={() => viewUserDetails(user)}>
+                                <Eye className="h-4 w-4 mr-1" /> View
+                              </Button>
+                              <Button variant="outline" size="sm" onClick={() => openRoleDialog(user)}>
+                                <ShieldAlert className="h-4 w-4 mr-1" /> Role
+                              </Button>
+                              <Button 
+                                variant="destructive" 
+                                size="sm" 
+                                onClick={() => openDeleteDialog(user)}
+                                className="bg-red-500 hover:bg-red-600"
+                              >
+                                <UserX className="h-4 w-4 mr-1" /> Remove
+                              </Button>
+                            </div>
                           </TableCell>
                         </TableRow>
                       ))}
@@ -279,7 +327,6 @@ const DashboardUsers = () => {
         </Card>
       </div>
 
-      {/* User Details Modal */}
       {selectedUser && (
         <AlertDialog open={userDetailsOpen} onOpenChange={setUserDetailsOpen}>
           <AlertDialogContent>
@@ -322,7 +369,6 @@ const DashboardUsers = () => {
         </AlertDialog>
       )}
 
-      {/* Role Management Dialog */}
       {selectedUser && (
         <AlertDialog open={roleDialogOpen} onOpenChange={setRoleDialogOpen}>
           <AlertDialogContent>
@@ -360,6 +406,37 @@ const DashboardUsers = () => {
                   </>
                 ) : (
                   "Update Role"
+                )}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
+
+      {selectedUser && (
+        <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Remove User</AlertDialogTitle>
+              <AlertDialogDescription>
+                Are you sure you want to remove {selectedUser.full_name || "this user"}? This action cannot be undone and will permanently delete the user account and all associated data.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction 
+                onClick={handleDeleteUser}
+                disabled={deleteUserMutation.isPending}
+                className="bg-red-500 hover:bg-red-600"
+              >
+                {deleteUserMutation.isPending ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> 
+                    Removing...
+                  </>
+                ) : (
+                  "Remove User"
                 )}
               </AlertDialogAction>
             </AlertDialogFooter>

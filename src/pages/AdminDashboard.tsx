@@ -5,7 +5,7 @@ import { useAuth } from '@/hooks/useAuth';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Loader2, FileText, ImageIcon, ShoppingBag, BarChart, Users, User, Shield } from 'lucide-react';
+import { Loader2, FileText, ImageIcon, ShoppingBag, BarChart, Users, User, Shield, UserX } from 'lucide-react';
 
 const AdminDashboard = () => {
   const { profile } = useAuth();
@@ -164,6 +164,11 @@ const AdminDashboard = () => {
             <Button className="w-full" variant="outline" asChild>
               <Link to="/dashboard/customers">
                 <User className="mr-2 h-4 w-4" /> Customers
+              </Link>
+            </Button>
+            <Button className="w-full" variant="outline" asChild>
+              <Link to="/dashboard/users">
+                <UserX className="mr-2 h-4 w-4" /> Remove Users
               </Link>
             </Button>
           </CardContent>
