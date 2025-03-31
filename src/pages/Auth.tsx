@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { AlertCircle } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
@@ -15,6 +16,9 @@ const Auth = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
+  const [role, setRole] = useState<'customer' | 'admin'>('customer');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState('signin');
@@ -51,6 +55,23 @@ const Auth = () => {
 
       if (error) throw error;
 
+      // If user was created successfully, update the profile with additional details
+      if (data.user) {
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .update({
+            full_name: fullName,
+            phone,
+            address,
+            role,
+          })
+          .eq('id', data.user.id);
+
+        if (profileError) {
+          console.error('Error updating profile:', profileError);
+        }
+      }
+
       toast({
         title: "Success!",
         description: "Registration successful. Please check your email for confirmation.",
@@ -58,7 +79,12 @@ const Auth = () => {
       
       // Automatically sign in after signup for better UX in development
       if (data.user) {
-        navigate('/');
+        // Redirect based on user role
+        if (role === 'admin') {
+          navigate('/dashboard');
+        } else {
+          navigate('/customer');
+        }
       }
     } catch (error: any) {
       setError(error.message || 'An error occurred during sign up');
@@ -90,7 +116,18 @@ const Auth = () => {
         description: "You've successfully signed in.",
       });
       
-      navigate('/');
+      // Fetch user role to determine where to redirect
+      const { data: profileData } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', data.user.id)
+        .single();
+
+      if (profileData && profileData.role === 'admin') {
+        navigate('/dashboard');
+      } else {
+        navigate('/customer');
+      }
     } catch (error: any) {
       setError(error.message || 'An error occurred during sign in');
       toast({
@@ -107,8 +144,8 @@ const Auth = () => {
     <div className="flex min-h-screen items-center justify-center bg-secondary/30 p-4">
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold">Saawariya Rasoi Dashboard</CardTitle>
-          <CardDescription>Manage your restaurant website content</CardDescription>
+          <CardTitle className="text-2xl font-bold">Saawariya Rasoi</CardTitle>
+          <CardDescription>Sign in to order delicious food or manage your account</CardDescription>
         </CardHeader>
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-2">
@@ -188,6 +225,26 @@ const Auth = () => {
                   />
                 </div>
                 <div className="space-y-2">
+                  <Label htmlFor="signup-phone">Phone Number</Label>
+                  <Input
+                    id="signup-phone"
+                    type="tel"
+                    placeholder="Enter your phone number"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="signup-address">Delivery Address</Label>
+                  <Input
+                    id="signup-address"
+                    type="text"
+                    placeholder="Enter your delivery address"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
                   <Label htmlFor="signup-password">Password</Label>
                   <Input
                     id="signup-password"
@@ -198,6 +255,19 @@ const Auth = () => {
                     minLength={6}
                     required
                   />
+                </div>
+                <div className="space-y-2">
+                  <Label>Account Type</Label>
+                  <RadioGroup defaultValue="customer" value={role} onValueChange={(value) => setRole(value as 'customer' | 'admin')}>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="customer" id="customer" />
+                      <Label htmlFor="customer">Customer</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="admin" id="admin" />
+                      <Label htmlFor="admin">Restaurant Admin</Label>
+                    </div>
+                  </RadioGroup>
                 </div>
               </CardContent>
               <CardFooter>

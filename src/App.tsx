@@ -23,6 +23,8 @@ import DashboardMedia from "./pages/DashboardMedia";
 import DashboardProfile from "./pages/DashboardProfile";
 import DashboardSettings from "./pages/DashboardSettings";
 import DashboardOrders from "./pages/DashboardOrders";
+import CustomerDashboard from "./pages/CustomerDashboard";
+import CustomerProfile from "./pages/CustomerProfile";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -47,12 +49,16 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/admin-setup" element={<AdminSetup />} />
             
+            {/* Customer Dashboard Routes */}
+            <Route path="/customer" element={<AuthGuard customerOnly={true}><CustomerDashboard /></AuthGuard>} />
+            <Route path="/customer/profile" element={<AuthGuard customerOnly={true}><CustomerProfile /></AuthGuard>} />
+            
             {/* Protected Dashboard Routes - Admin Only */}
             <Route path="/dashboard" element={<AuthGuard adminOnly={true}><Dashboard /></AuthGuard>} />
             <Route path="/dashboard/content" element={<AuthGuard adminOnly={true}><DashboardContent /></AuthGuard>} />
             <Route path="/dashboard/posts" element={<AuthGuard adminOnly={true}><DashboardPosts /></AuthGuard>} />
             <Route path="/dashboard/media" element={<AuthGuard adminOnly={true}><DashboardMedia /></AuthGuard>} />
-            <Route path="/dashboard/profile" element={<AuthGuard adminOnly={false}><DashboardProfile /></AuthGuard>} />
+            <Route path="/dashboard/profile" element={<AuthGuard><DashboardProfile /></AuthGuard>} />
             <Route path="/dashboard/settings" element={<AuthGuard adminOnly={true}><DashboardSettings /></AuthGuard>} />
             <Route path="/dashboard/orders" element={<AuthGuard adminOnly={true}><DashboardOrders /></AuthGuard>} />
             
