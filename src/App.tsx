@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { OrderModeProvider } from "@/contexts/OrderModeContext";
 import AuthGuard from "@/components/AuthGuard";
 import Index from "./pages/Index";
@@ -24,7 +24,6 @@ import DashboardProfile from "./pages/DashboardProfile";
 import DashboardSettings from "./pages/DashboardSettings";
 import DashboardOrders from "./pages/DashboardOrders";
 import NotFound from "./pages/NotFound";
-import CustomerDashboard from "./pages/CustomerDashboard";
 
 const queryClient = new QueryClient();
 
@@ -53,13 +52,9 @@ const App = () => (
             <Route path="/dashboard/content" element={<AuthGuard adminOnly={true}><DashboardContent /></AuthGuard>} />
             <Route path="/dashboard/posts" element={<AuthGuard adminOnly={true}><DashboardPosts /></AuthGuard>} />
             <Route path="/dashboard/media" element={<AuthGuard adminOnly={true}><DashboardMedia /></AuthGuard>} />
-            <Route path="/dashboard/orders" element={<AuthGuard adminOnly={true}><DashboardOrders /></AuthGuard>} />
+            <Route path="/dashboard/profile" element={<AuthGuard adminOnly={false}><DashboardProfile /></AuthGuard>} />
             <Route path="/dashboard/settings" element={<AuthGuard adminOnly={true}><DashboardSettings /></AuthGuard>} />
-            <Route path="/dashboard/profile" element={<AuthGuard adminOnly={true}><DashboardProfile isAdminView={true} /></AuthGuard>} />
-            
-            {/* Customer Routes - Customer Only */}
-            <Route path="/customer" element={<AuthGuard customerOnly={true}><CustomerDashboard /></AuthGuard>} />
-            <Route path="/customer/profile" element={<AuthGuard><DashboardProfile isAdminView={false} /></AuthGuard>} />
+            <Route path="/dashboard/orders" element={<AuthGuard adminOnly={true}><DashboardOrders /></AuthGuard>} />
             
             {/* Catch-all route for 404 */}
             <Route path="*" element={<NotFound />} />

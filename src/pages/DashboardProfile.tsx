@@ -8,20 +8,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, ArrowLeft } from 'lucide-react';
-import { Textarea } from '@/components/ui/textarea';
-import { Link } from 'react-router-dom';
+import { Loader2 } from 'lucide-react';
 
-interface DashboardProfileProps {
-  isAdminView?: boolean;
-}
-
-const DashboardProfile: React.FC<DashboardProfileProps> = ({ isAdminView = false }) => {
-  const { user, profile, isAdmin } = useAuth();
+const DashboardProfile = () => {
+  const { user, profile } = useAuth();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
-  const [address, setAddress] = useState('');
-  const [phone, setPhone] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isUpdating, setIsUpdating] = useState(false);
@@ -34,8 +26,6 @@ const DashboardProfile: React.FC<DashboardProfileProps> = ({ isAdminView = false
     }
     if (profile) {
       setFullName(profile.full_name || '');
-      setAddress(profile.address || '');
-      setPhone(profile.phone || '');
     }
   }, [user, profile]);
 
@@ -51,8 +41,6 @@ const DashboardProfile: React.FC<DashboardProfileProps> = ({ isAdminView = false
         .from('profiles')
         .update({
           full_name: fullName,
-          address: address,
-          phone: phone,
           updated_at: new Date().toISOString()
         })
         .eq('id', user.id);
@@ -123,32 +111,12 @@ const DashboardProfile: React.FC<DashboardProfileProps> = ({ isAdminView = false
   };
 
   return (
-    <DashboardLayout isCustomerView={!isAdminView}>
-      <div className="mb-8 flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Profile Settings</h1>
-          <p className="text-muted-foreground mt-2">
-            Manage your account information.
-          </p>
-        </div>
-        
-        {isAdmin && isAdminView && (
-          <Link to="/dashboard">
-            <Button variant="outline" className="flex items-center gap-2">
-              <ArrowLeft size={16} />
-              Back to Admin Dashboard
-            </Button>
-          </Link>
-        )}
-        
-        {!isAdminView && (
-          <Link to="/customer">
-            <Button variant="outline" className="flex items-center gap-2">
-              <ArrowLeft size={16} />
-              Back to Customer Dashboard
-            </Button>
-          </Link>
-        )}
+    <DashboardLayout>
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold tracking-tight">Profile Settings</h1>
+        <p className="text-muted-foreground mt-2">
+          Manage your account information.
+        </p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
@@ -181,25 +149,6 @@ const DashboardProfile: React.FC<DashboardProfileProps> = ({ isAdminView = false
                 <p className="text-xs text-muted-foreground">
                   Email cannot be changed.
                 </p>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="phone">Contact Number</Label>
-                <Input
-                  id="phone"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="Your contact number"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="address">Address</Label>
-                <Textarea
-                  id="address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  placeholder="Your delivery address"
-                  rows={3}
-                />
               </div>
             </CardContent>
             <CardFooter>

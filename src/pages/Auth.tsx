@@ -33,29 +33,6 @@ const Auth = () => {
     }
   }, [location.search]);
 
-  const redirectUserBasedOnRole = async (userId: string) => {
-    try {
-      const { data: profileData, error } = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', userId)
-        .single();
-        
-      if (error) throw error;
-      
-      if (profileData?.role === 'admin') {
-        navigate('/dashboard');
-      } else {
-        // Redirect to customer dashboard instead of profile
-        navigate('/customer');
-      }
-    } catch (error) {
-      console.error('Error fetching role:', error);
-      // Default redirect to customer dashboard if role check fails
-      navigate('/customer');
-    }
-  };
-
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -81,8 +58,7 @@ const Auth = () => {
       
       // Automatically sign in after signup for better UX in development
       if (data.user) {
-        // New users are by default customers
-        navigate('/customer');
+        navigate('/');
       }
     } catch (error: any) {
       setError(error.message || 'An error occurred during sign up');
@@ -114,9 +90,7 @@ const Auth = () => {
         description: "You've successfully signed in.",
       });
       
-      if (data.user) {
-        redirectUserBasedOnRole(data.user.id);
-      }
+      navigate('/');
     } catch (error: any) {
       setError(error.message || 'An error occurred during sign in');
       toast({

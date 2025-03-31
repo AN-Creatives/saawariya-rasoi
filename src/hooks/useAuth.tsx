@@ -6,17 +6,15 @@ import { Session, User } from '@supabase/supabase-js';
 interface Profile {
   id: string;
   full_name: string | null;
-  role: 'admin' | 'editor' | 'viewer' | 'customer';
-  address?: string | null;
-  phone?: string | null;
+  role: 'admin' | 'editor' | 'viewer';
 }
 
 // Helper function to ensure role is one of the allowed values
-const validateRole = (role: string): 'admin' | 'editor' | 'viewer' | 'customer' => {
-  if (role === 'admin' || role === 'editor' || role === 'viewer' || role === 'customer') {
+const validateRole = (role: string): 'admin' | 'editor' | 'viewer' => {
+  if (role === 'admin' || role === 'editor' || role === 'viewer') {
     return role;
   }
-  return 'customer'; // Default fallback
+  return 'viewer'; // Default fallback
 };
 
 export function useAuth() {
@@ -52,9 +50,7 @@ export function useAuth() {
             setProfile({
               id: profileData.id,
               full_name: profileData.full_name,
-              role: validateRole(profileData.role),
-              address: profileData.address,
-              phone: profileData.phone
+              role: validateRole(profileData.role)
             });
           } else {
             console.log('[useAuth] No profile found for user');
@@ -92,17 +88,13 @@ export function useAuth() {
           setProfile({
             id: profileData.id,
             full_name: profileData.full_name,
-            role: validateRole(profileData.role),
-            address: profileData.address,
-            phone: profileData.phone
+            role: validateRole(profileData.role)
           });
         } else {
           console.log('[useAuth] No profile found for existing user');
-          setProfile(null);
         }
       } else {
         console.log('[useAuth] No existing session found');
-        setProfile(null);
       }
       
       setLoading(false);
@@ -122,10 +114,8 @@ export function useAuth() {
   const isAuthenticated = !!session && !!user;
   console.log('[useAuth] Authentication state:', { isAuthenticated, loading, hasUser: !!user, hasSession: !!session });
   
-  // Fix the bug: Add null checks before accessing profile.role
   const isAdmin = !!profile && profile.role === 'admin';
   const isEditor = !!profile && (profile.role === 'editor' || profile.role === 'admin');
-  const isCustomer = !!profile && (profile.role === 'customer' || profile.role === 'viewer');
 
   return {
     session,
@@ -135,7 +125,6 @@ export function useAuth() {
     signOut,
     isAuthenticated,
     isAdmin,
-    isEditor,
-    isCustomer
+    isEditor
   };
 }
