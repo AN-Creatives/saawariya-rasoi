@@ -20,57 +20,39 @@ const AdminRoleFix = () => {
     setError(null);
     
     try {
-      // 1. First, get the user by email
-      const { data: userData, error: userError } = await supabase
-        .from('auth.users')
-        .select('id')
-        .eq('email', email)
-        .single();
+      // First, get the current authenticated user
+      const { data: { user }, error: authError } = await supabase.auth.getUser();
       
-      if (userError) {
-        // If we can't directly access auth.users (due to RLS), try a different approach
-        const { data: { user }, error: authError } = await supabase.auth.getUser();
-        
-        if (authError) {
-          throw new Error('Could not determine user ID: ' + authError.message);
-        }
-        
-        if (!user) {
-          throw new Error('User not found. Please sign in first with the admin account.');
-        }
-        
-        // Update the profile with admin role
-        const { error: updateError } = await supabase
-          .from('profiles')
-          .update({ role: 'admin' })
-          .eq('id', user.id);
-        
-        if (updateError) {
-          throw updateError;
-        }
-        
-        setSuccess(true);
-        toast({
-          title: "Success!",
-          description: "Your account has been updated to admin role. Please sign out and sign in again.",
-        });
-      } else if (userData) {
-        // If we could access auth.users, use the retrieved ID
-        const { error: updateError } = await supabase
-          .from('profiles')
-          .update({ role: 'admin' })
-          .eq('id', userData.id);
-        
-        if (updateError) {
-          throw updateError;
-        }
-        
-        setSuccess(true);
-        toast({
-          title: "Success!",
-          description: "Admin role has been assigned. Please sign out and sign in again.",
-        });
+      if (authError) {
+        throw new Error('Could not get current user: ' + authError.message);
       }
+      
+      if (!user) {
+        throw new Error('No authenticated user found. Please sign in first.');
+      }
+      
+      console.log('Current user:', user);
+      
+      // Check if the email matches the target admin email
+      if (user.email !== email) {
+        throw new Error(`You must be signed in as ${email} to perform this operation.`);
+      }
+      
+      // Update the profile with admin role
+      const { error: updateError } = await supabase
+        .from('profiles')
+        .update({ role: 'admin' })
+        .eq('id', user.id);
+      
+      if (updateError) {
+        throw updateError;
+      }
+      
+      setSuccess(true);
+      toast({
+        title: "Success!",
+        description: "Your account has been updated to admin role. Please sign out and sign in again.",
+      });
     } catch (error: any) {
       console.error('Error fixing admin role:', error);
       setError(error.message || 'An unexpected error occurred');
