@@ -10,7 +10,7 @@ import TakeawayContent from '@/components/TakeawayContent';
 import { useOrderMode } from '@/contexts/OrderModeContext';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
-import { LayoutDashboard, User } from 'lucide-react';
+import { LayoutDashboard, User, Users } from 'lucide-react';
 
 const Index = () => {
   const { mode } = useOrderMode();
@@ -36,7 +36,7 @@ const Index = () => {
       <div className="container mx-auto px-6 py-8">
         {mode === 'delivery' ? <DeliveryContent /> : <TakeawayContent />}
         
-        <div className="mt-8 flex justify-center space-x-4">
+        <div className="mt-8 flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
           {isAuthenticated && isAdmin && (
             <Button asChild variant="default" className="gap-2">
               <Link to="/dashboard">
@@ -56,11 +56,21 @@ const Index = () => {
           )}
           
           {!isAuthenticated && (
-            <Button asChild variant="default" className="gap-2">
-              <Link to="/auth">
-                Sign In / Sign Up
-              </Link>
-            </Button>
+            <>
+              <Button asChild variant="default" className="gap-2">
+                <Link to="/auth">
+                  <User size={18} />
+                  Customer Login
+                </Link>
+              </Button>
+              
+              <Button asChild variant="outline" className="gap-2">
+                <Link to="/auth?type=admin">
+                  <Users size={18} />
+                  Admin Login
+                </Link>
+              </Button>
+            </>
           )}
         </div>
       </div>

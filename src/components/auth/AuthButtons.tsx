@@ -1,11 +1,17 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
-import { LogIn, LogOut, User } from 'lucide-react';
+import { LogIn, LogOut, User, Users } from 'lucide-react';
 import { Button } from '../ui/button';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '../ui/alert-dialog';
 import { Skeleton } from '../ui/skeleton';
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuTrigger 
+} from '../ui/dropdown-menu';
 
 const AuthButtons = () => {
   const { loading, isAuthenticated, isAdmin, signOut } = useAuth();
@@ -16,8 +22,12 @@ const AuthButtons = () => {
     navigate('/');
   };
 
-  const handleSignIn = () => {
+  const handleCustomerSignIn = () => {
     navigate('/auth');
+  };
+
+  const handleAdminSignIn = () => {
+    navigate('/auth?type=admin');
   };
 
   const handleSignUp = () => {
@@ -71,15 +81,28 @@ const AuthButtons = () => {
 
   return (
     <div className="hidden md:flex items-center">
-      <Button
-        variant="default"
-        size="sm"
-        className="bg-saawariya-yellow hover:bg-saawariya-red transition-colors"
-        onClick={handleSignIn}
-      >
-        <LogIn size={16} className="mr-2" />
-        Login / Sign up
-      </Button>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="default"
+            size="sm"
+            className="bg-saawariya-yellow hover:bg-saawariya-red transition-colors"
+          >
+            <LogIn size={16} className="mr-2" />
+            Login
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuItem onClick={handleCustomerSignIn}>
+            <User className="mr-2 h-4 w-4" />
+            <span>Customer Login</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={handleAdminSignIn}>
+            <Users className="mr-2 h-4 w-4" />
+            <span>Admin Login</span>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 };

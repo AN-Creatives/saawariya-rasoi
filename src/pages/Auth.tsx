@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, ArrowLeft } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
 const Auth = () => {
@@ -22,6 +22,7 @@ const Auth = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState('signin');
+  const [userType, setUserType] = useState<'customer' | 'admin'>('customer'); // New state for user type
   const { toast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
@@ -30,10 +31,20 @@ const Auth = () => {
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const tabParam = searchParams.get('tab');
+    const typeParam = searchParams.get('type');
+    
     if (tabParam === 'signup') {
       setActiveTab('signup');
     } else {
       setActiveTab('signin');
+    }
+    
+    if (typeParam === 'admin') {
+      setUserType('admin');
+      setRole('admin');
+    } else {
+      setUserType('customer');
+      setRole('customer');
     }
   }, [location.search]);
 
@@ -123,7 +134,31 @@ const Auth = () => {
         .eq('id', data.user.id)
         .single();
 
-      if (profileData && profileData.role === 'admin') {
+      const userRole = profileData?.role || 'customer';
+      
+      // Check if user is signing into correct portal
+      if (userRole === 'admin' && userType === 'customer') {
+        toast({
+          variant: "default",
+          title: "Admin account detected",
+          description: "Redirecting you to the admin dashboard.",
+        });
+        navigate('/dashboard');
+        return;
+      }
+      
+      if (userRole === 'customer' && userType === 'admin') {
+        toast({
+          variant: "destructive",
+          title: "Access denied",
+          description: "You don't have admin privileges. Please use the customer login.",
+        });
+        setLoading(false);
+        return;
+      }
+
+      // Redirect based on role
+      if (userRole === 'admin') {
         navigate('/dashboard');
       } else {
         navigate('/customer');
@@ -140,13 +175,48 @@ const Auth = () => {
     }
   };
 
+  const goBack = () => {
+    navigate('/');
+  };
+
+  const switchUserType = () => {
+    const newType = userType === 'customer' ? 'admin' : 'customer';
+    setUserType(newType);
+    if (newType === 'admin') {
+      setRole('admin');
+    } else {
+      setRole('customer');
+    }
+  };
+
+  const getFormTitle = () => {
+    if (userType === 'admin') {
+      return "Restaurant Admin Login";
+    }
+    return "Customer Login";
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-secondary/30 p-4">
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold">Saawariya Rasoi</CardTitle>
-          <CardDescription>Sign in to order delicious food or manage your account</CardDescription>
+          <div className="flex items-center">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="mr-auto"
+              onClick={goBack}
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <CardTitle className="text-2xl font-bold mx-auto">Saawariya Rasoi</CardTitle>
+            <div className="ml-auto w-5"></div>
+          </div>
+          <CardDescription>
+            {getFormTitle()}
+          </CardDescription>
         </CardHeader>
+
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="signin">Sign In</TabsTrigger>
@@ -183,6 +253,16 @@ const Auth = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
+                </div>
+                <div className="text-center pt-2">
+                  <Button
+                    type="button"
+                    variant="link"
+                    className="text-sm"
+                    onClick={switchUserType}
+                  >
+                    {userType === 'customer' ? 'Go to Admin Login' : 'Go to Customer Login'}
+                  </Button>
                 </div>
               </CardContent>
               <CardFooter>
@@ -258,7 +338,7 @@ const Auth = () => {
                 </div>
                 <div className="space-y-2">
                   <Label>Account Type</Label>
-                  <RadioGroup defaultValue="customer" value={role} onValueChange={(value) => setRole(value as 'customer' | 'admin')}>
+                  <RadioGroup value={role} onValueChange={(value) => setRole(value as 'customer' | 'admin')}>
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="customer" id="customer" />
                       <Label htmlFor="customer">Customer</Label>
