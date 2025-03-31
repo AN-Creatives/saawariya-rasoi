@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -22,12 +21,11 @@ const Auth = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState('signin');
-  const [userType, setUserType] = useState<'customer' | 'admin'>('customer'); // New state for user type
+  const [userType, setUserType] = useState<'customer' | 'admin'>('customer');
   const { toast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Check for tab parameter in URL
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const tabParam = searchParams.get('tab');
@@ -66,7 +64,6 @@ const Auth = () => {
 
       if (error) throw error;
 
-      // If user was created successfully, update the profile with additional details
       if (data.user) {
         const { error: profileError } = await supabase
           .from('profiles')
@@ -88,9 +85,7 @@ const Auth = () => {
         description: "Registration successful. Please check your email for confirmation.",
       });
       
-      // Automatically sign in after signup for better UX in development
       if (data.user) {
-        // Redirect based on user role
         if (role === 'admin') {
           navigate('/dashboard');
         } else {
@@ -122,42 +117,25 @@ const Auth = () => {
 
       if (error) throw error;
 
-      toast({
-        title: "Welcome back!",
-        description: "You've successfully signed in.",
-      });
-      
-      // Fetch user role to determine where to redirect
-      const { data: profileData } = await supabase
+      const { data: profileData, error: profileError } = await supabase
         .from('profiles')
         .select('role')
         .eq('id', data.user.id)
         .single();
+      
+      if (profileError) {
+        console.error('Error fetching profile:', profileError);
+        throw new Error('Error fetching user profile');
+      }
 
       const userRole = profileData?.role || 'customer';
+      console.log('User role detected:', userRole);
       
-      // Check if user is signing into correct portal
-      if (userRole === 'admin' && userType === 'customer') {
-        toast({
-          variant: "default",
-          title: "Admin account detected",
-          description: "Redirecting you to the admin dashboard.",
-        });
-        navigate('/dashboard');
-        return;
-      }
-      
-      if (userRole === 'customer' && userType === 'admin') {
-        toast({
-          variant: "destructive",
-          title: "Access denied",
-          description: "You don't have admin privileges. Please use the customer login.",
-        });
-        setLoading(false);
-        return;
-      }
+      toast({
+        title: "Welcome back!",
+        description: "You've successfully signed in.",
+      });
 
-      // Redirect based on role
       if (userRole === 'admin') {
         navigate('/dashboard');
       } else {
