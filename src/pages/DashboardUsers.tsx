@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import { useToast } from '@/components/ui/use-toast';
@@ -30,15 +30,25 @@ import {
 } from '@/components/ui/pagination';
 import {
   AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
+  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
-import { Eye, Loader2 } from 'lucide-react';
+import { Eye, Loader2, User, ShieldAlert } from 'lucide-react';
 
 interface UserProfile {
   id: string;
@@ -54,8 +64,11 @@ const DashboardUsers = () => {
   const [page, setPage] = useState(1);
   const [selectedUser, setSelectedUser] = useState<UserProfile | null>(null);
   const [userDetailsOpen, setUserDetailsOpen] = useState(false);
+  const [roleDialogOpen, setRoleDialogOpen] = useState(false);
+  const [newRole, setNewRole] = useState<string>('');
   const pageSize = 10;
   const { toast } = useToast();
+  const queryClient = useQueryClient();
 
   // Fetch all user profiles
   const fetchUsers = async () => {
@@ -92,6 +105,49 @@ const DashboardUsers = () => {
     queryFn: fetchUsers,
   });
 
+  const updateRoleMutation = useMutation({
+    mutationFn: async ({ userId, role }: { userId: string; role: string }) => {
+      const { error } = await supabase
+        .from('profiles')
+        .update({ role })
+        .eq('id', userId);
+      
+      if (error) throw error;
+      return { userId, role };
+    },
+    onSuccess: (data) => {
+      toast({
+        title: 'Role updated',
+        description: `User role has been updated to ${data.role}`,
+      });
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+      setRoleDialogOpen(false);
+    },
+    onError: (error) => {
+      console.error('Error updating role:', error);
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'Failed to update user role',
+      });
+    },
+  });
+
+  const handleUpdateRole = () => {
+    if (selectedUser && newRole) {
+      updateRoleMutation.mutate({
+        userId: selectedUser.id,
+        role: newRole
+      });
+    }
+  };
+
+  const openRoleDialog = (user: UserProfile) => {
+    setSelectedUser(user);
+    setNewRole(user.role);
+    setRoleDialogOpen(true);
+  };
+
   const totalPages = data ? Math.ceil(data.totalCount / pageSize) : 0;
 
   const viewUserDetails = (user: UserProfile) => {
@@ -122,7 +178,7 @@ const DashboardUsers = () => {
         <div>
           <h1 className="text-3xl font-bold tracking-tight">User Management</h1>
           <p className="text-muted-foreground mt-2">
-            View all registered users and their roles
+            View and manage all registered users and their roles
           </p>
         </div>
 
@@ -171,9 +227,12 @@ const DashboardUsers = () => {
                           <TableCell>
                             {formatDate(user.created_at)}
                           </TableCell>
-                          <TableCell className="text-right">
+                          <TableCell className="text-right space-x-2">
                             <Button variant="ghost" size="sm" onClick={() => viewUserDetails(user)}>
                               <Eye className="h-4 w-4 mr-1" /> View
+                            </Button>
+                            <Button variant="outline" size="sm" onClick={() => openRoleDialog(user)}>
+                              <ShieldAlert className="h-4 w-4 mr-1" /> Role
                             </Button>
                           </TableCell>
                         </TableRow>
@@ -259,6 +318,51 @@ const DashboardUsers = () => {
                 )}
               </AlertDialogDescription>
             </AlertDialogHeader>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
+
+      {/* Role Management Dialog */}
+      {selectedUser && (
+        <AlertDialog open={roleDialogOpen} onOpenChange={setRoleDialogOpen}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Update User Role</AlertDialogTitle>
+              <AlertDialogDescription>
+                Change the role for {selectedUser.full_name || "this user"}. This will modify their permissions in the system.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            
+            <div className="py-4">
+              <Select value={newRole} onValueChange={setNewRole}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select a role" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="admin">Admin</SelectItem>
+                  <SelectItem value="editor">Editor</SelectItem>
+                  <SelectItem value="customer">Customer</SelectItem>
+                  <SelectItem value="viewer">Viewer</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction 
+                onClick={handleUpdateRole}
+                disabled={updateRoleMutation.isPending}
+              >
+                {updateRoleMutation.isPending ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> 
+                    Updating...
+                  </>
+                ) : (
+                  "Update Role"
+                )}
+              </AlertDialogAction>
+            </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
       )}

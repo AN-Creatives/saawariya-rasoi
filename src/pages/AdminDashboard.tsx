@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -6,7 +5,7 @@ import { useAuth } from '@/hooks/useAuth';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Loader2, FileText, ImageIcon, ShoppingBag, BarChart, Users } from 'lucide-react';
+import { Loader2, FileText, ImageIcon, ShoppingBag, BarChart, Users, User, Shield } from 'lucide-react';
 
 const AdminDashboard = () => {
   const { profile } = useAuth();
@@ -80,7 +79,7 @@ const AdminDashboard = () => {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-lg">Users</CardTitle>
-            <CardDescription>View all system users</CardDescription>
+            <CardDescription>Manage all system users</CardDescription>
           </CardHeader>
           <CardContent>
             {loading ? (
@@ -93,7 +92,7 @@ const AdminDashboard = () => {
                 <p className="text-sm text-muted-foreground">Total registered users</p>
                 <Button className="mt-4 w-full" asChild>
                   <Link to="/dashboard/users">
-                    <Users className="mr-2 h-4 w-4" /> View All Users
+                    <Users className="mr-2 h-4 w-4" /> Manage Users
                   </Link>
                 </Button>
               </>
@@ -117,7 +116,7 @@ const AdminDashboard = () => {
                 <p className="text-sm text-muted-foreground">Registered customers</p>
                 <Button className="mt-4 w-full" asChild>
                   <Link to="/dashboard/customers">
-                    <Users className="mr-2 h-4 w-4" /> View Customers
+                    <User className="mr-2 h-4 w-4" /> View Customers
                   </Link>
                 </Button>
               </>
@@ -153,21 +152,20 @@ const AdminDashboard = () => {
       <div className="mt-8 grid gap-6 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Recent Orders</CardTitle>
-            <CardDescription>Last 5 orders received</CardDescription>
+            <CardTitle className="text-lg">User Management</CardTitle>
+            <CardDescription>Manage system users and their roles</CardDescription>
           </CardHeader>
-          <CardContent>
-            {loading ? (
-              <div className="flex justify-center py-4">
-                <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
-              </div>
-            ) : (
-              <Button className="w-full" asChild>
-                <Link to="/dashboard/orders">
-                  <ShoppingBag className="mr-2 h-4 w-4" /> View All Orders
-                </Link>
-              </Button>
-            )}
+          <CardContent className="space-y-4">
+            <Button className="w-full" variant="outline" asChild>
+              <Link to="/dashboard/users">
+                <Users className="mr-2 h-4 w-4" /> All Users
+              </Link>
+            </Button>
+            <Button className="w-full" variant="outline" asChild>
+              <Link to="/dashboard/customers">
+                <User className="mr-2 h-4 w-4" /> Customers
+              </Link>
+            </Button>
           </CardContent>
         </Card>
         
