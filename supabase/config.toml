@@ -1,6 +1,6 @@
 
 project_id = "malkshsszajmrpjvzsrx"
 
-[delete-user]
+[functions.delete-user]
 port = 54321
 verify_jwt = true
