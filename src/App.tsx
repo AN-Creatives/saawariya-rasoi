@@ -16,7 +16,7 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Auth from "./pages/Auth";
 import AdminSetup from "./pages/AdminSetup";
-import Dashboard from "./pages/Dashboard";
+import AdminDashboard from "./pages/AdminDashboard";
 import DashboardContent from "./pages/DashboardContent";
 import DashboardPosts from "./pages/DashboardPosts";
 import DashboardMedia from "./pages/DashboardMedia";
@@ -54,7 +54,7 @@ const App = () => (
             <Route path="/customer/profile" element={<AuthGuard customerOnly={true}><CustomerProfile /></AuthGuard>} />
             
             {/* Protected Dashboard Routes - Admin Only */}
-            <Route path="/dashboard" element={<AuthGuard adminOnly={true}><Dashboard /></AuthGuard>} />
+            <Route path="/dashboard" element={<AuthGuard adminOnly={true}><AdminDashboard /></AuthGuard>} />
             <Route path="/dashboard/content" element={<AuthGuard adminOnly={true}><DashboardContent /></AuthGuard>} />
             <Route path="/dashboard/posts" element={<AuthGuard adminOnly={true}><DashboardPosts /></AuthGuard>} />
             <Route path="/dashboard/media" element={<AuthGuard adminOnly={true}><DashboardMedia /></AuthGuard>} />

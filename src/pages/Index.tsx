@@ -10,20 +10,25 @@ import TakeawayContent from '@/components/TakeawayContent';
 import { useOrderMode } from '@/contexts/OrderModeContext';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
-import { LayoutDashboard } from 'lucide-react';
+import { LayoutDashboard, User } from 'lucide-react';
 
 const Index = () => {
   const { mode } = useOrderMode();
-  const { isAuthenticated, isAdmin, loading } = useAuth();
+  const { isAuthenticated, isAdmin, isCustomer, loading } = useAuth();
   const navigate = useNavigate();
   
-  // Redirect admin users to dashboard
+  // Redirect users based on roles
   useEffect(() => {
-    if (!loading && isAuthenticated && isAdmin) {
-      console.log('[Index] Admin user detected, redirecting to dashboard');
-      navigate('/dashboard');
+    if (!loading && isAuthenticated) {
+      if (isAdmin) {
+        console.log('[Index] Admin user detected, redirecting to admin dashboard');
+        navigate('/dashboard');
+      } else if (isCustomer) {
+        console.log('[Index] Customer user detected, redirecting to customer dashboard');
+        navigate('/customer');
+      }
     }
-  }, [isAuthenticated, isAdmin, loading, navigate]);
+  }, [isAuthenticated, isAdmin, isCustomer, loading, navigate]);
 
   return (
     <Layout>
@@ -31,16 +36,33 @@ const Index = () => {
       <div className="container mx-auto px-6 py-8">
         {mode === 'delivery' ? <DeliveryContent /> : <TakeawayContent />}
         
-        {isAuthenticated && isAdmin && (
-          <div className="mt-8 flex justify-center">
-            <Button asChild variant="outline" className="gap-2">
+        <div className="mt-8 flex justify-center space-x-4">
+          {isAuthenticated && isAdmin && (
+            <Button asChild variant="default" className="gap-2">
               <Link to="/dashboard">
                 <LayoutDashboard size={18} />
-                Dashboard
+                Admin Dashboard
               </Link>
             </Button>
-          </div>
-        )}
+          )}
+          
+          {isAuthenticated && isCustomer && (
+            <Button asChild variant="outline" className="gap-2">
+              <Link to="/customer">
+                <User size={18} />
+                My Account
+              </Link>
+            </Button>
+          )}
+          
+          {!isAuthenticated && (
+            <Button asChild variant="default" className="gap-2">
+              <Link to="/auth">
+                Sign In / Sign Up
+              </Link>
+            </Button>
+          )}
+        </div>
       </div>
       <FeaturedMenu />
       <Testimonials />
