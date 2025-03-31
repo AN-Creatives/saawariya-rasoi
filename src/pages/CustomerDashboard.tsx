@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/table';
 import { Loader2, ShoppingBag, User } from 'lucide-react';
 import { format } from 'date-fns';
-import { Layout } from '@/components/Layout';
+import Layout from '@/components/Layout';
 
 interface Order {
   id: string;
@@ -27,6 +27,7 @@ interface Order {
   order_date: string;
   order_status?: string;
   delivery_status?: string;
+  order_details?: any;
 }
 
 const CustomerDashboard = () => {
@@ -52,7 +53,19 @@ const CustomerDashboard = () => {
         
         if (error) throw error;
         
-        setOrders(data || []);
+        // Transform the data to match our Order interface
+        const transformedOrders: Order[] = data?.map(item => ({
+          id: item.id,
+          order_type: item.order_type,
+          total_price: item.total_price,
+          payment_status: item.payment_status,
+          order_date: item.order_date,
+          order_status: item.order_status,
+          delivery_status: item.delivery_status,
+          order_details: item.order_details
+        })) || [];
+        
+        setOrders(transformedOrders);
       } catch (error) {
         console.error('Error fetching orders:', error);
       } finally {
