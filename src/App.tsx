@@ -16,6 +16,7 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Auth from "./pages/Auth";
 import AdminSetup from "./pages/AdminSetup";
+import AdminRoleFix from "./pages/AdminRoleFix";
 import AdminDashboard from "./pages/AdminDashboard";
 import DashboardContent from "./pages/DashboardContent";
 import DashboardPosts from "./pages/DashboardPosts";
@@ -48,6 +49,7 @@ const App = () => (
             <Route path="/terms" element={<Terms />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/admin-setup" element={<AdminSetup />} />
+            <Route path="/admin-role-fix" element={<AdminRoleFix />} />
             
             {/* Customer Dashboard Routes */}
             <Route path="/customer" element={<AuthGuard customerOnly={true}><CustomerDashboard /></AuthGuard>} />
