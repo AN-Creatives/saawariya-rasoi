@@ -89,7 +89,7 @@ const AuthButtons = () => {
             className="bg-saawariya-yellow hover:bg-saawariya-red transition-colors"
           >
             <LogIn size={16} className="mr-2" />
-            Login
+            Log In/Sign Up
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
